@@ -1,0 +1,43 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Ink.Runtime;
+using UnityEngine;
+
+public class inkExternalFunctions
+{
+    public void bind(Story story)
+    {
+        story.BindExternalFunction("startQuest", (string questId) => startQuest(questId));
+        story.BindExternalFunction("advanceQuest", (string questId) => advanceQuest(questId));
+        story.BindExternalFunction("finishQuest", (string questId) => finishQuest(questId));
+        story.BindExternalFunction("expGained", (int exp) => expGained(exp));
+    }
+    public void unbind(Story story)
+    {
+        story.UnbindExternalFunction("startQuest");
+        story.UnbindExternalFunction("advanceQuest");
+        story.UnbindExternalFunction("finishQuest");
+        story.UnbindExternalFunction("expGained");
+    }
+
+    private void startQuest(string questId)
+    {
+        gameEventsManager.instance.questEvents.startQuest(questId);
+    }
+    private void advanceQuest(string questId)
+    {
+        gameEventsManager.instance.questEvents.advanceQuest(questId);
+
+    }
+    private void finishQuest(string questId)
+    {
+        gameEventsManager.instance.questEvents.finishQuest(questId);
+
+    }
+
+    private void expGained(int exp)
+    {
+        gameEventsManager.instance.playerEvents.ExperienceGained(exp);
+    }
+
+}

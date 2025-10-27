@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3d4114a9126d414a4f9a15beb29036, type: 3}
+  m_Name: PackUp
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: PackUp
+  displayName: Pack Up for School
+  lvlReq: 0
+  questPrerequisites: []
+  questStepPrefabs:
+  - {fileID: 582913551703879376, guid: c99efa9ca80bf7d80b92341900af8a6e, type: 3}
+  expReward: 80
