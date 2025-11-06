@@ -16,7 +16,6 @@ public class sceneManager : MonoBehaviour
     {
 
         transition = GetComponentInChildren<Animator>();
-
         // Subscribe to the scene loaded event
         // SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += onSceneUnloaded;

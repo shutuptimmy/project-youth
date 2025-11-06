@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerManager : MonoBehaviour
+public class playerManager : MonoBehaviour, IDataPersistence
 {
     [Header("Configuration")]
     [SerializeField] private int startingLevel = 1;
@@ -39,33 +39,35 @@ public class playerManager : MonoBehaviour
     {
         currentExperience += experience;
         // check if we're ready to level up
-        while (currentExperience >= 100)
+        while (currentExperience >= globalConstants.experienceToLevelUp)
         {
-            currentExperience -= 100;
+            currentExperience -= globalConstants.experienceToLevelUp;
             currentLevel++;
             gameEventsManager.instance.playerEvents.PlayerLevelChange(currentLevel);
         }
         gameEventsManager.instance.playerEvents.PlayerExperienceChange(currentExperience);
     }
 
+    public void loadData(gameData data)
+    {
+        currentLevel = data.playerLvl;
+        currentExperience = data.playerExp;
+    }
+
+    public void saveData(ref gameData data)
+    {
+        data.playerLvl = currentLevel;
+        data.playerExp = currentExperience;
+    }
+
+
+
     // public class playerManager : MonoBehaviour
     // {
     //     // public PlayerController2D playerController { get; private set; }
 
-    //     // [Header("Rapport Status")]
-    //     // Christopher
-    //     // public int npc1Level;
-    //     // public int npc1Exp;
 
-    //     // April
-    //     // public int npc2Level;
-    //     // public int npc2Exp;
-
-    //     // Harris
-    //     // public int npc3Level;
-    //     // public int npc3Exp;
-
-    //     // Weasel
+    //     // Wallace
     //     // public int npc4Level;
     //     // public int npc4Exp;
 

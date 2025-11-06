@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDataPersistence
 {
     private Vector2 velocity = Vector2.zero;
     private Rigidbody2D rb;
@@ -82,6 +82,16 @@ public class PlayerController : MonoBehaviour
         {
             sprite.flipX = false;
         }
+    }
+
+    public void loadData(gameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void saveData(ref gameData data)
+    {
+        data.playerPosition = this.transform.position;
     }
 
     // private void FixedUpdate()
