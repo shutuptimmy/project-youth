@@ -38,4 +38,10 @@ public class inputEvents
             onQuestLogTogglePressed();
         }
     }
+
+    public event Action<inputEventContext> onPausePressed;
+    public void PausePressed()
+    {
+        onPausePressed?.Invoke(this.inputEventContext);
+    }
 }

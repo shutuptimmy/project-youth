@@ -1050,6 +1050,17 @@ PrefabInstance:
       propertyPath: newPlayerPos.y
       value: -0.21
       objectReference: {fileID: 0}
+    - target: {fileID: 9219661107976321943, guid: 80ab331b71036e492bf243bebee50515,
+        type: 3}
+      propertyPath: sceneToLoad.m_SceneName
+      value: outsideClassroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 9219661107976321943, guid: 80ab331b71036e492bf243bebee50515,
+        type: 3}
+      propertyPath: sceneToLoad.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 2fc951546ab181c049f3fbe3bad34d49,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80ab331b71036e492bf243bebee50515, type: 3}
 --- !u!1001 &1695950271

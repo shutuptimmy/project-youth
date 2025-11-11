@@ -18,7 +18,7 @@ public class mainMenu : menu
     [SerializeField] private GameObject loadingBarObject;
     [SerializeField] private Image loadingBar;
     [SerializeField] private SceneField persistentObjects;
-    [SerializeField] private SceneField sceneToLoad;
+    // [SerializeField] private SceneField sceneToLoad;
     private List<AsyncOperation> loadScenes = new List<AsyncOperation>();
 
     // [SerializeField] private Button createProfileButton;
@@ -32,10 +32,7 @@ public class mainMenu : menu
 
     private void Start()
     {
-        if (!dataPersistenceManager.instance.hasGameData())
-        {
-            loadGameButton.interactable = false;
-        }
+        disableButtonsDependingOnData();
     }
 
     // public void createProfile()
@@ -68,22 +65,31 @@ public class mainMenu : menu
         // SceneManager.LoadScene(persistentSceneName, LoadSceneMode.Additive);
     }
 
+    void disableButtonsDependingOnData()
+    {
+        if (!dataPersistenceManager.instance.hasGameData())
+        {
+            loadGameButton.interactable = false;
+        }
+    }
+
     public void onLoadGameClicked()
     {
         saveSlotsMenu.activateMenu(true);
         this.deactivateMenu();
     }
 
-    public void loadGame()
-    {
-        disableMenuButtons();
-        dataPersistenceManager.instance.loadGame();
-        loadingBarObject.SetActive(true);
+    // continue the game which i havent implemented the continue button
+    // public void loadGame()
+    // {
+    //     disableMenuButtons();
+    //     dataPersistenceManager.instance.loadGame();
+    //     loadingBarObject.SetActive(true);
 
-        loadScenes.Add(SceneManager.LoadSceneAsync(persistentObjects));
-        loadScenes.Add(SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive));
-        StartCoroutine(progressLoadingBar());
-    }
+    //     loadScenes.Add(SceneManager.LoadSceneAsync(persistentObjects));
+    //     loadScenes.Add(SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive));
+    //     StartCoroutine(progressLoadingBar());
+    // }
 
     private IEnumerator progressLoadingBar()
     {
@@ -108,6 +114,7 @@ public class mainMenu : menu
     public void activateMenu()
     {
         this.gameObject.SetActive(true);
+        disableButtonsDependingOnData();
     }
 
     public void deactivateMenu()

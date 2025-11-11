@@ -1,23 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class menu : MonoBehaviour
 {
     [Header("First Selected Button")]
-    [SerializeField] private GameObject firstSelected;
+    [SerializeField] private Button firstSelected;
 
     protected virtual void OnEnable()
     {
-        StartCoroutine(setFirstSelected(firstSelected));
+        setFirstSelected(firstSelected);
     }
 
-    public IEnumerator setFirstSelected(GameObject firstSelectedObject)
+    public void setFirstSelected(Button firstSelectedButton)
     {
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(firstSelectedObject);
+        firstSelectedButton.Select();
 
     }
 }

@@ -17,11 +17,6 @@ public class experienceUI : MonoBehaviour
         gameEventsManager.instance.playerEvents.onPlayerExperienceChange += experienceGained;
         gameEventsManager.instance.playerEvents.onPlayerLevelChange += playerLevelUp;
     }
-
-    private void OnDisable()
-    {
-
-    }
     void experienceGained(int exp)
     {
         expSlider.value = (float)exp / (float)100;

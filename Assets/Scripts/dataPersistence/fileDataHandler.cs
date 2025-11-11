@@ -71,6 +71,34 @@ public class fileDataHandler
         }
     }
 
+    public void delete(string profileId)
+    {
+        // base case - if the profileId is null, return
+        if (profileId == null)
+        {
+            return;
+        }
+
+        string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+        try
+        {
+            // ensure data file exist at this path before deleting the directory
+            if (File.Exists(fullPath))
+            {
+                // delete the profile folder and its contents
+                Directory.Delete(Path.GetDirectoryName(fullPath), true);
+            }
+            else
+            {
+                Debug.LogWarning("Tried to delete data, but data was not found: " + fullPath);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Failed to delete data for profileId: " + fullPath + "\n" + e);
+        }
+    }
+
     public Dictionary<string, gameData> loadAllProfiles()
     {
         Dictionary<string, gameData> profileDictionary = new Dictionary<string, gameData>();
@@ -92,6 +120,7 @@ public class fileDataHandler
 
             // load the game data for this profile and put it in the dictionary
             gameData profileData = load(profileId);
+            Debug.LogWarning("test: " + profileId + profileData);
 
             // ensure all profiles isn't null. otherwise, something went wrong 
             if (profileData != null)

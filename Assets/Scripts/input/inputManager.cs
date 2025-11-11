@@ -44,6 +44,15 @@ public class inputManager : MonoBehaviour
         }
     }
 
+    public void PausePressed(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            gameEventsManager.instance.inputEvents.PausePressed();
+        }
+    }
+
+
 
     // private Vector2 movement;
     // private bool interactPressed = false;

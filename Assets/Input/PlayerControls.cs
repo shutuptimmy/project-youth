@@ -71,6 +71,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""93756cac-3afe-47b9-a69c-6e8c4410dc0f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -249,6 +258,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""QuestLog"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e00497a-72fd-4e11-8bae-666b6a691d98"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -413,6 +433,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_game_Submit = m_game.FindAction("Submit", throwIfNotFound: true);
         m_game_lvlUp = m_game.FindAction("lvlUp", throwIfNotFound: true);
         m_game_QuestLog = m_game.FindAction("QuestLog", throwIfNotFound: true);
+        m_game_Pause = m_game.FindAction("Pause", throwIfNotFound: true);
         // ui
         m_ui = asset.FindActionMap("ui", throwIfNotFound: true);
         m_ui_Click = m_ui.FindAction("Click", throwIfNotFound: true);
@@ -482,6 +503,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_game_Submit;
     private readonly InputAction m_game_lvlUp;
     private readonly InputAction m_game_QuestLog;
+    private readonly InputAction m_game_Pause;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -491,6 +513,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Submit => m_Wrapper.m_game_Submit;
         public InputAction @lvlUp => m_Wrapper.m_game_lvlUp;
         public InputAction @QuestLog => m_Wrapper.m_game_QuestLog;
+        public InputAction @Pause => m_Wrapper.m_game_Pause;
         public InputActionMap Get() { return m_Wrapper.m_game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -515,6 +538,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @QuestLog.started -= m_Wrapper.m_GameActionsCallbackInterface.OnQuestLog;
                 @QuestLog.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnQuestLog;
                 @QuestLog.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnQuestLog;
+                @Pause.started -= m_Wrapper.m_GameActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
@@ -534,6 +560,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @QuestLog.started += instance.OnQuestLog;
                 @QuestLog.performed += instance.OnQuestLog;
                 @QuestLog.canceled += instance.OnQuestLog;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -639,6 +668,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSubmit(InputAction.CallbackContext context);
         void OnLvlUp(InputAction.CallbackContext context);
         void OnQuestLog(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUiActions
     {

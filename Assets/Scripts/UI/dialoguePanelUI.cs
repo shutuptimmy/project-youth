@@ -123,6 +123,8 @@ public class dialoguePanelUI : MonoBehaviour
     private void resetPanel()
     {
         dialogueText.text = "";
+        dialogueName.text = "";
+        portraitAnimator = null;
     }
 
 }

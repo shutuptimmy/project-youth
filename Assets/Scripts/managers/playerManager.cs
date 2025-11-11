@@ -54,7 +54,7 @@ public class playerManager : MonoBehaviour, IDataPersistence
         currentExperience = data.playerExp;
     }
 
-    public void saveData(ref gameData data)
+    public void saveData(gameData data)
     {
         data.playerLvl = currentLevel;
         data.playerExp = currentExperience;

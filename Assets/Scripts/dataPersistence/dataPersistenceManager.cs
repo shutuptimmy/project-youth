@@ -49,27 +49,20 @@ public class dataPersistenceManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Onsceneloaded");
         this.dataPersistenceObjects = findAllDataPersistenceObjects();
+        // Debug.LogWarning(gameData);
         loadGame();
 
-    }
-
-    public void OnSceneUnloaded(Scene scene)
-    {
-        Debug.Log("Onsceneunloaded");
-        saveGame();
     }
 
     public void changeSelectedProfileId(string newProfileId)
@@ -78,7 +71,14 @@ public class dataPersistenceManager : MonoBehaviour
         this.selectedProfileId = newProfileId;
         // load the game, which will use that profile, updating our gamedata accordingly
         loadGame();
+    }
 
+    public void deleteProfileData(string profileId)
+    {
+        // delete data for the profile id
+        dataHandler.delete(profileId);
+        // reload the game so that our data matches to newly selected profile Id
+        loadGame();
     }
 
     public void newGame()
@@ -115,6 +115,7 @@ public class dataPersistenceManager : MonoBehaviour
             dataPersistenceObj.loadData(gameData);
         }
         // Debug.Log("loaded data: " + gameData.playerLvl + " " + gameData.playerExp);
+        // Debug.LogWarning(gameData.playerLocation);
     }
     public void saveGame()
     {
@@ -134,12 +135,9 @@ public class dataPersistenceManager : MonoBehaviour
         // pass the data to other scripts so they can update it
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
-            dataPersistenceObj.saveData(ref gameData);
+            dataPersistenceObj.saveData(gameData);
         }
         // Debug.Log("saved data: " + gameData.playerLvl + " " + gameData.playerExp);
-
-        // timestamp the data
-        // gameData.lastUpdated = System.DateTime.Now.ToBinary();
 
         // save that data to a file using data handler
         dataHandler.save(gameData, selectedProfileId);
@@ -147,7 +145,10 @@ public class dataPersistenceManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        saveGame();
+        if (overrideSelectedProfileId)
+        {
+            saveGame();
+        }
     }
 
     private List<IDataPersistence> findAllDataPersistenceObjects()

@@ -23,22 +23,29 @@ public class saveSlotsMenu : menu
 
     public void onSaveSlotClicked(saveSlot slot)
     {
+
         // disable all buttons
         disableMenuButtons();
 
         // update the selected profile id to be used for data persistence
         dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
 
+        string sceneName = slot.getPlayerLocationText();
+        string sceneToLoad = "";
         if (!isLoadingGame)
         {
             // create a new game - which will initialize our data to a clean state
             dataPersistenceManager.instance.newGame();
+            sceneToLoad = new gameData().playerLocation;
+            Debug.Log("Starting New Game. Scene to load: " + sceneToLoad);
 
         }
 
+        // save the game anytime before loading a new scene
+        dataPersistenceManager.instance.saveGame();
         // load the scene - which will in turn save the game because of onSceneUnloaded() in the dataPersistenceManager
-        SceneManager.LoadSceneAsync("persistentObjects");
-        SceneManager.LoadSceneAsync("bedroom", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("persistentObjects", LoadSceneMode.Single);
+        // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 
     public void onBackClicked()
@@ -47,6 +54,11 @@ public class saveSlotsMenu : menu
         this.deactivateMenu();
     }
 
+    public void onClearClicked(saveSlot slot)
+    {
+        dataPersistenceManager.instance.deleteProfileData(slot.getProfileId());
+        activateMenu(isLoadingGame);
+    }
 
     public void activateMenu(bool isLoadingGame)
     {
@@ -61,6 +73,7 @@ public class saveSlotsMenu : menu
 
         // loop through each save slot in the UI and set the content appropriately
         GameObject firstSelected = backButton.gameObject;
+
         foreach (saveSlot slot in saveSlots)
         {
             gameData profileData = null;
@@ -81,7 +94,8 @@ public class saveSlotsMenu : menu
             }
         }
         // set the first selected button
-        StartCoroutine(this.setFirstSelected(firstSelected));
+        Button firstSelectedButton = firstSelected.GetComponent<Button>();
+        this.setFirstSelected(firstSelectedButton);
     }
 
 

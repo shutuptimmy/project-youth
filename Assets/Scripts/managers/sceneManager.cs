@@ -3,29 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class sceneManager : MonoBehaviour
+public class sceneManager : MonoBehaviour, IDataPersistence
 {
     private Vector2 newPlayerPos;
     public Animator transition { get; private set; }
     public float transitionTime = 1f;
-    [SerializeField] private string currentBgScene = "";
-
-    private List<AsyncOperation> loadScenes = new List<AsyncOperation>();
+    private string currentBgScene = "";
+    private bool isInitialSceneLoaded = false;
 
     private void Awake()
     {
 
         transition = GetComponentInChildren<Animator>();
-        // Subscribe to the scene loaded event
-        // SceneManager.sceneLoaded += OnSceneLoaded;
+
         SceneManager.sceneUnloaded += onSceneUnloaded;
-
-        // **Important:** Initialize with the name of your default or first loaded background scene
-        // Assuming the scene this manager is in (the persistent scene) is *not* the initial background.
-        // If your initial background scene is loaded additively at the start, you may need to set this here.
-        // For simplicity, let's assume the first call to changeScene sets this.
-
-        Debug.Log(SceneManager.GetActiveScene().name);
     }
 
     private void OnEnable()
@@ -46,51 +37,55 @@ public class sceneManager : MonoBehaviour
 
     public void changeScene(SceneField scene, Vector2 playerPos)
     {
-        StartCoroutine(loadScene(scene));
+        // IMPORTANT: We use the SceneField's string conversion implicitly
+        StartCoroutine(loadNewScene(scene.SceneName));
         newPlayerPos = playerPos;
     }
 
-    IEnumerator loadScene(SceneField scene)
+    // NEW: Coroutine to handle the initial scene load after data is available.
+    IEnumerator InitializeSceneLoad(string sceneName)
+    {
+        // Wait for the end of the frame to ensure all Awake/Start methods have run
+        // after persistentObjects was loaded.
+        yield return new WaitForEndOfFrame();
+
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            Debug.Log($"SCENE MANAGER: Triggering initial load of scene: {sceneName}");
+            // Load the first scene additively, no transition needed yet.
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+            // Set the current tracked scene name.
+            currentBgScene = sceneName;
+            // Set the flag to true to prevent future re-triggers
+            isInitialSceneLoaded = true;
+        }
+    }
+
+    IEnumerator loadNewScene(string sceneName)
     {
         // play fade
         transition.Play("FadeIn");
 
         // wait
         yield return new WaitForSeconds(transitionTime);
-        // load scene
-        SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 
-        // TODO: Get the scene name instead the persistentobject
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+        if (!string.IsNullOrEmpty(currentBgScene))
+        {
+            Debug.Log($"SCENE MANAGER: Unloading scene: {currentBgScene}");
+            yield return SceneManager.UnloadSceneAsync(currentBgScene);
+        }
+        // SceneManager.UnloadSceneAsync(currentBgScene);
 
+        // load scene and set the currentBgScene
+        Debug.Log($"SCENE MANAGER: Loading new scene: {sceneName}");
+        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
-        // transition.Play("FadeOut");
-
-        // --------------------------------
-        // 2. Unload the previous background scene (if one was loaded)
-        // if (!string.IsNullOrEmpty(currentBgScene))
-        // {
-        //     // Unload the old scene using the stored name
-        //     yield return SceneManager.UnloadSceneAsync(currentBgScene);
-        //     Debug.Log($"Unloaded scene: {currentBgScene}");
-        // }
-
-        // 3. Load the new scene additively
-        // AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene.SceneName, LoadSceneMode.Additive);
-
-        // Wait until the new scene is fully loaded
-        // while (!asyncLoad.isDone)
-        // {
-        //     yield return null;
-        // }
-
-        // 4. Update the tracker for the current background scene
+        // update the tracker
+        currentBgScene = sceneName;
         // currentBgScene = scene.SceneName;
-
-        // 5. Optionally, set the new scene as the active scene if that is required for lighting/physics
-        // If the persistent scene handles all core logic, this might not be strictly necessary.
-        // SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene.SceneName));
-        // --------------------------------
+        Debug.Log("updated scene: " + currentBgScene);
 
     }
 
@@ -105,24 +100,21 @@ public class sceneManager : MonoBehaviour
         Debug.Log("unloaded event triggered");
     }
 
-    // public static sceneManager GetInstance()
-    // {
-    //     return instance;
-    // }
+    public void loadData(gameData data)
+    {
+        currentBgScene = data.playerLocation;
 
-    // private void OnDestroy()
-    // {
-    //     // Unsubscribe to prevent memory leaks
-    //     SceneManager.sceneLoaded -= OnSceneLoaded;
-    // }
+        if (!isInitialSceneLoaded)
+        {
+            StartCoroutine(InitializeSceneLoad(currentBgScene));
+        }
+    }
 
-    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     // Find the newly spawned player and set its position
-    //     GameObject newPlayer = GameObject.FindGameObjectWithTag("Player");
-    //     if (newPlayer != null)
-    //     {
-    //         newPlayer.transform.position = newPlayerPos;
-    //     }
-    // }
+    public void saveData(gameData data)
+    {
+        if (!string.IsNullOrEmpty(currentBgScene))
+        {
+            data.playerLocation = currentBgScene;
+        }
+    }
 }

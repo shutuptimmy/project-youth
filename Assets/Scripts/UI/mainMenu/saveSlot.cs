@@ -18,6 +18,9 @@ public class saveSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI chapterText;
     [SerializeField] private TextMeshProUGUI playTimeText;
 
+    [Header("Clear Data Button")]
+    [SerializeField] private Button clearButton;
+
     private Button saveSlotButton;
 
     private void Awake()
@@ -32,16 +35,19 @@ public class saveSlot : MonoBehaviour
         {
             noDataContent.SetActive(true);
             hasDataContent.SetActive(false);
+            clearButton.gameObject.SetActive(false);
         }
         // there's data for this profileId
         else
         {
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
+            clearButton.gameObject.SetActive(true);
 
             statusText.text = data.playerName + " | Level " + data.playerLvl.ToString();
             locationText.text = data.playerLocation;
-            chapterText.text = "Chapter: " + data.playerChapter.ToString();
+            Debug.Log(locationText.text);
+            chapterText.text = "Chapter " + data.playerChapter.ToString();
 
         }
     }
@@ -51,8 +57,16 @@ public class saveSlot : MonoBehaviour
         return this.profileId;
     }
 
+
     public void setInteractable(bool interactable)
     {
         saveSlotButton.interactable = interactable;
+        clearButton.interactable = false;
+    }
+
+    public string getPlayerLocationText()
+    {
+        // Return the current text content of the TextMeshPro component
+        return locationText.text;
     }
 }

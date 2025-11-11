@@ -18,27 +18,27 @@ public class questLogScrollList : MonoBehaviour
 
     private Dictionary<string, questLogButton> idToButtonMap = new Dictionary<string, questLogButton>();
 
-    private void Start()
-    {
-        // for (int i = 0; i < 20; i++)
-        // {
-        //     questInfoSO questInfoTest = ScriptableObject.CreateInstance<questInfoSO>();
-        //     questInfoTest.id = "test_" + i;
-        //     questInfoTest.displayName = "Test" + i;
-        //     questInfoTest.questStepPrefabs = new GameObject[0];
-        //     quest quest = new quest(questInfoTest);
+    // private void Start()
+    // {
+    //     for (int i = 0; i < 20; i++)
+    //     {
+    //         questInfoSO questInfoTest = ScriptableObject.CreateInstance<questInfoSO>();
+    //         questInfoTest.id = "test_" + i;
+    //         questInfoTest.displayName = "Test" + i;
+    //         questInfoTest.questStepPrefabs = new GameObject[0];
+    //         quest quest = new quest(questInfoTest);
 
-        //     questLogButton questLogButton = CreateButtonIfNotExists(quest, () =>
-        //     {
-        //         Debug.Log("SELECTED: " + questInfoTest.displayName);
-        //     });
+    //         questLogButton questLogButton = CreateButtonIfNotExists(quest, () =>
+    //         {
+    //             Debug.Log("SELECTED: " + questInfoTest.displayName);
+    //         });
 
-        //     if (i == 0)
-        //     {
-        //         questLogButton.button.Select();
-        //     }
-        // }
-    }
+    //         if (i == 0)
+    //         {
+    //             questLogButton.button.Select();
+    //         }
+    //     }
+    // }
 
     public questLogButton CreateButtonIfNotExists(quest quest, UnityAction selectAction)
     {
