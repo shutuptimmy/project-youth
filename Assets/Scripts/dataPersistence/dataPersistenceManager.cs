@@ -137,7 +137,6 @@ public class dataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObj.saveData(gameData);
         }
-        // Debug.Log("saved data: " + gameData.playerLvl + " " + gameData.playerExp);
 
         // save that data to a file using data handler
         dataHandler.save(gameData, selectedProfileId);

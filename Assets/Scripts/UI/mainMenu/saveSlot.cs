@@ -21,6 +21,8 @@ public class saveSlot : MonoBehaviour
     [Header("Clear Data Button")]
     [SerializeField] private Button clearButton;
 
+    public bool hasData { get; private set; } = false;
+
     private Button saveSlotButton;
 
     private void Awake()
@@ -33,6 +35,7 @@ public class saveSlot : MonoBehaviour
         // there's no data for this profileId
         if (data == null)
         {
+            hasData = false;
             noDataContent.SetActive(true);
             hasDataContent.SetActive(false);
             clearButton.gameObject.SetActive(false);
@@ -40,6 +43,7 @@ public class saveSlot : MonoBehaviour
         // there's data for this profileId
         else
         {
+            hasData = true;
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
             clearButton.gameObject.SetActive(true);
@@ -61,12 +65,11 @@ public class saveSlot : MonoBehaviour
     public void setInteractable(bool interactable)
     {
         saveSlotButton.interactable = interactable;
-        clearButton.interactable = false;
+        // clearButton.interactable = false;
     }
 
     public string getPlayerLocationText()
     {
-        // Return the current text content of the TextMeshPro component
         return locationText.text;
     }
 }
