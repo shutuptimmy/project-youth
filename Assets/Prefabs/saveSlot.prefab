@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 3811520026304222760}
   - component: {fileID: 3811520026304222762}
   - component: {fileID: 3811520026304222763}
+  - component: {fileID: 8867213417335189256}
   m_Layer: 5
   m_Name: profileImage
   m_TagString: Untagged
@@ -207,6 +208,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &8867213417335189256
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811520026304222761}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 069b986e1db31d5f2b34f3389f02e470, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3811520026539101537
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,7 +557,8 @@ MonoBehaviour:
   locationText: {fileID: 3811520027513952018}
   chapterText: {fileID: 3811520026201397969}
   playTimeText: {fileID: 3811520027085275511}
-  clearButton: {fileID: 0}
+  playerPortrait: {fileID: 8867213417335189256}
+  clearButton: {fileID: 3811520027161854193}
 --- !u!1 &3811520026886285121
 GameObject:
   m_ObjectHideFlags: 0

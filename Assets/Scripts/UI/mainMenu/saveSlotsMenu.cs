@@ -12,12 +12,12 @@ public class saveSlotsMenu : menu
     [Header("Menu Buttons")]
     [SerializeField] private Button backButton;
     [Header("Confirmation Popup Menu")]
-    [SerializeField]
-    private confirmationPopupMenu confirmationPopupMenu;
+    [SerializeField] private confirmationPopupMenu confirmationPopupMenu;
+    [SerializeField] private newProfileMenu newProfileMenu;
 
     private saveSlot[] saveSlots;
 
-    private bool isLoadingGame = false;
+    private bool isLoadingGame = false; // for loading the saved game data
 
     private void Awake()
     {
@@ -33,28 +33,27 @@ public class saveSlotsMenu : menu
         // update the selected profile id to be used for data persistence
         dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
 
-        string sceneToLoad = ""; // check the default bg location when creating new game data
         // case - loading game
         if (isLoadingGame)
         {
-            // create a new game - which will initialize our data to a clean state
             dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
             saveGameAndLoadScene();
-            sceneToLoad = new gameData().playerLocation;
-            Debug.Log("Starting New Game. Scene to load: " + sceneToLoad);
+
 
         }
         // case - new game, but the save slot has data
         else if (slot.hasData)
         {
             confirmationPopupMenu.activateMenu(
-                "Starting a new game with this slot will override the existing data. Are you sure?",
+                "All data in this slot will be lost after creating a new profile! Are you sure?",
+                // "Starting a new game with this slot will override the existing data. Are you sure?",
                 // function to execute if clicked "Yes"
                 () =>
                 {
                     dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
-                    dataPersistenceManager.instance.newGame();
-                    saveGameAndLoadScene();
+                    newProfileMenu.activateMenu();
+                    // dataPersistenceManager.instance.newGame();
+                    // saveGameAndLoadScene();
                 },
                 // function to execute if clicked "No"
                 () =>
@@ -67,8 +66,9 @@ public class saveSlotsMenu : menu
         else
         {
             dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
-            dataPersistenceManager.instance.newGame();
-            saveGameAndLoadScene();
+            newProfileMenu.activateMenu();
+            // dataPersistenceManager.instance.newGame();
+            // saveGameAndLoadScene();
         }
     }
 

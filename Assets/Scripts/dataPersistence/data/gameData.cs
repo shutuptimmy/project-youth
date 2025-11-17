@@ -18,8 +18,10 @@ public class gameData
 
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
-    public gameData()
+    public gameData(string playerName, int playerGender)
     {
+        this.playerName = playerName;
+        this.playerGender = playerGender;
         this.playerChapter = 1;
         this.playerLvl = 1;
         this.playerExp = 0;

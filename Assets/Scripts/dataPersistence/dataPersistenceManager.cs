@@ -81,9 +81,9 @@ public class dataPersistenceManager : MonoBehaviour
         loadGame();
     }
 
-    public void newGame()
+    public void newGame(string playerName, int playerGender)
     {
-        this.gameData = new gameData();
+        this.gameData = new gameData(playerName, playerGender);
     }
     public void loadGame()
     {
@@ -93,13 +93,13 @@ public class dataPersistenceManager : MonoBehaviour
             return;
         }
 
-        // TODO - load any game data using data handler
+        // load any game data using data handler
         this.gameData = dataHandler.load(selectedProfileId);
 
         // start new game if data is null and we're configured to initialize data for debugging purposes
         if (this.gameData == null && initializeDataIfNull)
         {
-            newGame();
+            newGame("testWithDataNull", 0);
         }
 
         // if no data, don't continue
@@ -109,13 +109,12 @@ public class dataPersistenceManager : MonoBehaviour
             return;
         }
 
-        // TODO - push the loaded data to all other scripts that need it
+        // push the loaded data to all other scripts that need it
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.loadData(gameData);
         }
-        // Debug.Log("loaded data: " + gameData.playerLvl + " " + gameData.playerExp);
-        // Debug.LogWarning(gameData.playerLocation);
+
     }
     public void saveGame()
     {

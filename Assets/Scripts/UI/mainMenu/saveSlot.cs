@@ -17,6 +17,7 @@ public class saveSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI locationText;
     [SerializeField] private TextMeshProUGUI chapterText;
     [SerializeField] private TextMeshProUGUI playTimeText;
+    [SerializeField] private Animator playerPortrait;
 
     [Header("Clear Data Button")]
     [SerializeField] private Button clearButton;
@@ -38,7 +39,6 @@ public class saveSlot : MonoBehaviour
             hasData = false;
             noDataContent.SetActive(true);
             hasDataContent.SetActive(false);
-            clearButton.gameObject.SetActive(false);
         }
         // there's data for this profileId
         else
@@ -50,9 +50,21 @@ public class saveSlot : MonoBehaviour
 
             statusText.text = data.playerName + " | Level " + data.playerLvl.ToString();
             locationText.text = data.playerLocation;
-            Debug.Log(locationText.text);
             chapterText.text = "Chapter " + data.playerChapter.ToString();
 
+            switch (data.playerGender)
+            {
+                case 0:
+                    playerPortrait.Play("playerBoyNormal");
+                    break;
+                case 1:
+                    playerPortrait.Play("playerGirlNormal");
+                    break;
+                default:
+                    playerPortrait.Play(null);
+                    Debug.LogWarning("Player portrait cannot be defined by this value: " + data.playerGender);
+                    break;
+            }
         }
     }
 
