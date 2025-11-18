@@ -222,5 +222,17 @@ public class questManager : MonoBehaviour
         }
         return quest;
     }
+
+    public quest getQuestInProgress()
+    {
+        foreach (quest quest in questMap.Values)
+        {
+            if (quest.state == questState.IN_PROGRESS)
+            {
+                return quest;
+            }
+        }
+        return null; // Return null if no quest is currently in progress
+    }
 }
 

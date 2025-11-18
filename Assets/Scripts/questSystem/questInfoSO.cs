@@ -9,8 +9,10 @@ public class questInfoSO : ScriptableObject
 
     [Header("General")]
     public string displayName;
+    public bool isSubQuest;
 
     [Header("Requirements")]
+    public int chapter = 1;
     public int lvlReq;
     public questInfoSO[] questPrerequisites;
 

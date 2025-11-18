@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private SpriteRenderer sprite;
     private Animator animator;
 
+    private int playerGender;
+
     private float moveSpeed = 1f;
 
     private bool movementDisabled = false;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.inputEvents.onMovePressed += MovePressed;
         gameEventsManager.instance.playerEvents.onDisablePlayerMovement += DisablePlayerMovement;
         gameEventsManager.instance.playerEvents.onEnablePlayerMovement += EnablePlayerMovement;
+        animator.SetInteger("gender", playerGender);
     }
 
     private void OnDestroy()
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public void loadData(gameData data)
     {
         this.transform.position = data.playerPosition;
+        this.playerGender = data.playerGender;
     }
 
     public void saveData(gameData data)

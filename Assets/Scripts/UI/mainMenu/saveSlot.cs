@@ -39,6 +39,7 @@ public class saveSlot : MonoBehaviour
             hasData = false;
             noDataContent.SetActive(true);
             hasDataContent.SetActive(false);
+            clearButton.gameObject.SetActive(false);
         }
         // there's data for this profileId
         else
