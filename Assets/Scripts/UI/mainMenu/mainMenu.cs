@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class mainMenu : menu
 {
     [Header("Menu Buttons")]
+    [SerializeField] private Button newGameButton;
     [SerializeField] private Button loadGameButton;
 
     [Header("Menu Navigations")]
@@ -14,10 +15,27 @@ public class mainMenu : menu
 
     private void Start()
     {
+        newGameButton.onClick.RemoveAllListeners();
+        loadGameButton.onClick.RemoveAllListeners();
+        if (dataPersistenceManager.instance.isDataATest())
+        {
+            newGameButton.onClick.AddListener(() =>
+            {
+                dataPersistenceManager.instance.newGame("test", 0);
+                saveSlotsMenu.saveGameAndLoadScene();
+            });
+
+            loadGameButton.onClick.AddListener(() => saveSlotsMenu.saveGameAndLoadScene());
+        }
+        else
+        {
+            newGameButton.onClick.AddListener(() => startGame());
+            loadGameButton.onClick.AddListener(() => onLoadGameClicked());
+        }
         disableButtonsDependingOnData();
     }
 
-    public void startGame()
+    void startGame()
     {
         saveSlotsMenu.activateMenu(false);
         this.deactivateMenu();
@@ -31,7 +49,7 @@ public class mainMenu : menu
         }
     }
 
-    public void onLoadGameClicked()
+    void onLoadGameClicked()
     {
         saveSlotsMenu.activateMenu(true);
         this.deactivateMenu();

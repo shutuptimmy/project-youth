@@ -851,14 +851,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstSelected: {fileID: 353736443}
-  saveSlotsMenu: {fileID: 402242518}
   newGameButton: {fileID: 353736443}
   loadGameButton: {fileID: 722200011}
-  loadingBarObject: {fileID: 777931954}
-  loadingBar: {fileID: 0}
-  persistentObjects:
-    m_SceneAsset: {fileID: 102900000, guid: 90b27b0e820788bc6b5346849066d841, type: 3}
-    m_SceneName: persistentObjects
+  saveSlotsMenu: {fileID: 402242518}
 --- !u!1 &255776021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,18 +1576,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 353736444}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 205692654}
-        m_MethodName: startGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &353736444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2176,9 +2160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableDataPersistence: 0
-  initializeDataIfNull: 1
-  overrideSelectedProfileId: 0
-  testSelectedProfileId: test
+  initializeDataWithTest: 0
   fileName: data.game
 --- !u!4 &521447552
 Transform:
@@ -2607,18 +2589,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 722200012}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 205692654}
-        m_MethodName: onLoadGameClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &722200012
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class questManager : MonoBehaviour, IDataPersistence
 {
-    // NEW CONFIGURATION: Set this ID in the Inspector to your very first quest.
-    // [Header("Starting Quest")]
-    // [SerializeField] private string startingQuestId = "";
-
-
     private Dictionary<string, quest> questMap;
 
     private int currentPlayerLevel;
@@ -46,7 +41,6 @@ public class questManager : MonoBehaviour, IDataPersistence
             // broadcast the initial state of all quests on startup
             gameEventsManager.instance.questEvents.questStateChange(quest);
         }
-        // StartFirstQuest();
     }
 
     private void Update()
@@ -198,36 +192,8 @@ public class questManager : MonoBehaviour, IDataPersistence
         {
             return quest.state == questState.FINISHED;
         }
-
-        // If the quest ID is not found, it cannot be completed yet.
         return false;
     }
-
-    // NEW METHOD: Handles the logic for starting the game's initial quest
-    // private void StartFirstQuest()
-    // {
-    //     Debug.Log("during first quest");
-    //     if (string.IsNullOrEmpty(startingQuestId))
-    //     {
-    //         Debug.LogWarning("Starting Quest ID is not set in Quest Manager.");
-    //         return;
-    //     }
-
-    //     quest startingQuest = getQuestById(startingQuestId);
-
-    //     // Check if the quest is still in the REQ_NOT_MET state (meaning it's a fresh start 
-    //     // or hasn't been started/completed yet).
-    //     if (startingQuest.state == questState.REQ_NOT_MET || startingQuest.state == questState.CAN_START)
-    //     {
-    //         // Use the established event method to trigger the quest start
-    //         gameEventsManager.instance.questEvents.startQuest(startingQuestId);
-    //         Debug.Log($"Automatically started the first quest: {startingQuestId}");
-    //     }
-    //     else
-    //     {
-    //         Debug.Log($"Starting quest {startingQuestId} is already in state: {startingQuest.state}. Skipping automatic start.");
-    //     }
-    // }
 
     public void loadData(gameData data)
     {
@@ -240,9 +206,7 @@ public class questManager : MonoBehaviour, IDataPersistence
             {
                 // Reconstruct the quest object from saved data
                 quest.state = questData.state;
-                // FIX 1: Use the new public method to load the index
                 quest.loadCurrentQuestStepIndex(questData.questStepIndex);
-                // FIX 2: Use the existing helper method to load step states
                 quest.loadQuestStepStates(questData.questStepStates);
             }
         }

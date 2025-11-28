@@ -8,9 +8,9 @@ public class dataPersistenceManager : MonoBehaviour
 {
     [Header("Debugging")]
     [SerializeField] private bool disableDataPersistence = false;
-    // [SerializeField] private bool initializeDataIfNull = false;
-    [SerializeField] private bool overrideSelectedProfileId = false;
-    [SerializeField] private string testSelectedProfileId = "test";
+    [SerializeField] private bool initializeDataWithTest = false;
+    // [SerializeField] private bool overrideSelectedProfileId = false;
+    // [SerializeField] private string testSelectedProfileId = "test";
 
 
     [Header("File Storage Config")]
@@ -39,10 +39,10 @@ public class dataPersistenceManager : MonoBehaviour
         }
 
         this.dataHandler = new fileDataHandler(Application.persistentDataPath, fileName);
-        if (overrideSelectedProfileId)
+        if (initializeDataWithTest)
         {
-            this.selectedProfileId = testSelectedProfileId;
-            Debug.LogWarning("overrode selected profile id with test id: " + testSelectedProfileId);
+            this.selectedProfileId = "test";
+            Debug.LogWarning("overrode selected profile id with \"test\" id");
         }
     }
 
@@ -165,5 +165,10 @@ public class dataPersistenceManager : MonoBehaviour
     public Dictionary<string, gameData> getAllProfilesGameData()
     {
         return dataHandler.loadAllProfiles();
+    }
+
+    public bool isDataATest()
+    {
+        return initializeDataWithTest;
     }
 }

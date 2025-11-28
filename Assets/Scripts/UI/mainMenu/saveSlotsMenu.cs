@@ -47,7 +47,6 @@ public class saveSlotsMenu : menu
                 {
                     dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
                     newProfileMenu.activateMenu();
-                    // saveGameAndLoadScene();
                 },
                 // function to execute if clicked "No"
                 () =>
@@ -61,7 +60,6 @@ public class saveSlotsMenu : menu
         {
             dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
             newProfileMenu.activateMenu();
-            // saveGameAndLoadScene();
         }
     }
 

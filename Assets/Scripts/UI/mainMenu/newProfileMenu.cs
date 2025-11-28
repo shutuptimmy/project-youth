@@ -26,29 +26,11 @@ public class newProfileMenu : menu
         {
             confirmationPopupMenu.activateMenu(
                 "You name is empty. You will be named \"" + placeholderName.text + "\" by default. Continue?",
-                () =>
-                {
-                    // create profile with inputs below
-                    // dataPersistenceManager.instance.newGame(placeholderName.text, playerGender);
-                    // dataPersistenceManager.instance.saveGame();
-                    // this.deactivateMenu();
-
-                    // reload the saved slots from newly created slot
-                    // dataPersistenceManager.instance.loadGame();
-                    // saveSlotsMenu.activateMenu(true);
-                    storeProfileToData(placeholderName.text, playerGender);
-                },
+                () => storeProfileToData(placeholderName.text, playerGender),
                 () => { }
             );
         }
-        else
-        {
-            // dataPersistenceManager.instance.newGame(playerNameInput.text, playerGender);
-            // dataPersistenceManager.instance.saveGame();
-            // this.deactivateMenu();
-            // saveSlotsMenu.activateMenu(true);
-            storeProfileToData(playerNameInput.text, playerGender);
-        }
+        else storeProfileToData(playerNameInput.text, playerGender);
 
 
     }
