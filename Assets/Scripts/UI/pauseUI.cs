@@ -40,7 +40,7 @@ public class pauseUI : MonoBehaviour, IDataPersistence
     {
         pauseToggle();
 
-        // check if gameplay is other than main
+        // check if gameplay is other than main then set to main pause menu, otherwise to partial pause menu
         if (inputEventContext.Equals(inputEventContext.DEFAULT))
         {
             normalPauseMenu.SetActive(true);
@@ -59,11 +59,14 @@ public class pauseUI : MonoBehaviour, IDataPersistence
         if (contentParent.activeInHierarchy)
         {
             contentParent.SetActive(false);
-
+            Time.timeScale = 1f;
+            gameEventsManager.instance.playerEvents.EnablePlayerMovement();
         }
         else
         {
             contentParent.SetActive(true);
+            Time.timeScale = 0f;
+            gameEventsManager.instance.playerEvents.DisablePlayerMovement();
         }
     }
 
@@ -81,7 +84,8 @@ public class pauseUI : MonoBehaviour, IDataPersistence
 
     public void quitAndSavePressed()
     {
+        Time.timeScale = 1f;
         dataPersistenceManager.instance.saveGame();
-        SceneManager.LoadSceneAsync("Main Menu");
+        SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
     }
 }

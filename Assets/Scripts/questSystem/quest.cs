@@ -128,4 +128,23 @@ public class quest
 
         return fullStatus;
     }
+
+    public void loadQuestStepStates(questStepState[] questStepStates)
+    {
+        // Only load if the lengths match to prevent errors from game updates
+        if (this.questStepStates.Length == questStepStates.Length)
+        {
+            this.questStepStates = questStepStates;
+        }
+        else
+        {
+            Debug.LogWarning("Quest Step State array mismatch during load for Quest ID: " + info.id);
+        }
+    }
+
+    public void loadCurrentQuestStepIndex(int questStepIndex)
+    {
+        // Simply set the private field from the saved data
+        this.currentQuestStepIndex = questStepIndex;
+    }
 }

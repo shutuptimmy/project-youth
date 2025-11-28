@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class newProfileMenu : menu
 {
     [Header("Components")]
-    // todo: get input from playerNameInput
     [SerializeField] private TMP_InputField playerNameInput;
     [SerializeField] private TextMeshProUGUI placeholderName;
     [SerializeField] private Button backButton;
@@ -30,26 +29,34 @@ public class newProfileMenu : menu
                 () =>
                 {
                     // create profile with inputs below
-                    dataPersistenceManager.instance.newGame(placeholderName.text, playerGender);
-                    dataPersistenceManager.instance.saveGame();
-                    this.deactivateMenu();
+                    // dataPersistenceManager.instance.newGame(placeholderName.text, playerGender);
+                    // dataPersistenceManager.instance.saveGame();
+                    // this.deactivateMenu();
 
                     // reload the saved slots from newly created slot
-                    dataPersistenceManager.instance.loadGame();
-                    saveSlotsMenu.activateMenu(true);
+                    // dataPersistenceManager.instance.loadGame();
+                    // saveSlotsMenu.activateMenu(true);
+                    storeProfileToData(placeholderName.text, playerGender);
                 },
-                () => { saveSlotsMenu.deactivateMenu(); } // simply close the confirmation popup when clicking cancel.
+                () => { }
             );
         }
         else
         {
-            dataPersistenceManager.instance.newGame(playerNameInput.text, playerGender);
-            dataPersistenceManager.instance.saveGame();
-            this.deactivateMenu();
-            saveSlotsMenu.activateMenu(true);
+            // dataPersistenceManager.instance.newGame(playerNameInput.text, playerGender);
+            // dataPersistenceManager.instance.saveGame();
+            // this.deactivateMenu();
+            // saveSlotsMenu.activateMenu(true);
+            storeProfileToData(playerNameInput.text, playerGender);
         }
 
 
+    }
+
+    void storeProfileToData(string playerName, int playerGender)
+    {
+        dataPersistenceManager.instance.newGame(playerName, playerGender);
+        saveSlotsMenu.saveGameAndLoadScene();
     }
 
     public void onBackClicked()

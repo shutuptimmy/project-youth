@@ -8,7 +8,7 @@ public class dataPersistenceManager : MonoBehaviour
 {
     [Header("Debugging")]
     [SerializeField] private bool disableDataPersistence = false;
-    [SerializeField] private bool initializeDataIfNull = false;
+    // [SerializeField] private bool initializeDataIfNull = false;
     [SerializeField] private bool overrideSelectedProfileId = false;
     [SerializeField] private string testSelectedProfileId = "test";
 
@@ -60,7 +60,6 @@ public class dataPersistenceManager : MonoBehaviour
     {
         Debug.Log("Onsceneloaded");
         this.dataPersistenceObjects = findAllDataPersistenceObjects();
-        // Debug.LogWarning(gameData);
         loadGame();
 
     }
@@ -97,10 +96,10 @@ public class dataPersistenceManager : MonoBehaviour
         this.gameData = dataHandler.load(selectedProfileId);
 
         // start new game if data is null and we're configured to initialize data for debugging purposes
-        if (this.gameData == null && initializeDataIfNull)
-        {
-            newGame("testWithDataNull", 0);
-        }
+        // if (this.gameData == null && initializeDataIfNull)
+        // {
+        //     newGame("testWithDataNull", 0);
+        // }
 
         // if no data, don't continue
         if (this.gameData == null)
@@ -124,6 +123,7 @@ public class dataPersistenceManager : MonoBehaviour
             return;
         }
 
+
         // if no data to save, log warning here
         if (this.gameData == null)
         {
@@ -141,13 +141,13 @@ public class dataPersistenceManager : MonoBehaviour
         dataHandler.save(gameData, selectedProfileId);
     }
 
-    private void OnApplicationQuit()
-    {
-        if (overrideSelectedProfileId)
-        {
-            saveGame();
-        }
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     if (overrideSelectedProfileId)
+    //     {
+    //         saveGame();
+    //     }
+    // }
 
     private List<IDataPersistence> findAllDataPersistenceObjects()
     {
@@ -158,7 +158,8 @@ public class dataPersistenceManager : MonoBehaviour
 
     public bool hasGameData()
     {
-        return gameData != null;
+        Dictionary<string, gameData> profilesGameData = getAllProfilesGameData();
+        return profilesGameData.Count > 0;
     }
 
     public Dictionary<string, gameData> getAllProfilesGameData()

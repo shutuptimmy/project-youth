@@ -11,12 +11,12 @@ public class saveSlotsMenu : menu
 
     [Header("Menu Buttons")]
     [SerializeField] private Button backButton;
+
     [Header("Confirmation Popup Menu")]
     [SerializeField] private confirmationPopupMenu confirmationPopupMenu;
     [SerializeField] private newProfileMenu newProfileMenu;
 
     private saveSlot[] saveSlots;
-
     private bool isLoadingGame = false; // for loading the saved game data
 
     private void Awake()
@@ -30,29 +30,23 @@ public class saveSlotsMenu : menu
         // disable all buttons
         disableMenuButtons();
 
-        // update the selected profile id to be used for data persistence
-        dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
-
         // case - loading game
         if (isLoadingGame)
         {
             dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
             saveGameAndLoadScene();
 
-
         }
         // case - new game, but the save slot has data
         else if (slot.hasData)
         {
             confirmationPopupMenu.activateMenu(
-                "All data in this slot will be lost after creating a new profile! Are you sure?",
-                // "Starting a new game with this slot will override the existing data. Are you sure?",
+                "The data in this slot will be lost after creating a new profile! Are you sure?",
                 // function to execute if clicked "Yes"
                 () =>
                 {
                     dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
                     newProfileMenu.activateMenu();
-                    // dataPersistenceManager.instance.newGame();
                     // saveGameAndLoadScene();
                 },
                 // function to execute if clicked "No"
@@ -67,12 +61,11 @@ public class saveSlotsMenu : menu
         {
             dataPersistenceManager.instance.changeSelectedProfileId(slot.getProfileId());
             newProfileMenu.activateMenu();
-            // dataPersistenceManager.instance.newGame();
             // saveGameAndLoadScene();
         }
     }
 
-    void saveGameAndLoadScene()
+    public void saveGameAndLoadScene()
     {
         // save the game anytime before loading a new scene
         dataPersistenceManager.instance.saveGame();

@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea3d4114a9126d414a4f9a15beb29036, type: 3}
-  m_Name: PackUp
+  m_Name: prologue
   m_EditorClassIdentifier: 
-  <id>k__BackingField: PackUp
-  displayName: Pack Up for School
+  <id>k__BackingField: prologue
+  displayName: Prologue
   isSubQuest: 0
-  chapter: 0
-  lvlReq: 0
+  chapter: 1
+  lvlReq: 1
   questPrerequisites: []
   questStepPrefabs:
+  - {fileID: 3505889784868380904, guid: 1360c0f9740506493b3568a596ee3c3a, type: 3}
   - {fileID: 582913551703879376, guid: c99efa9ca80bf7d80b92341900af8a6e, type: 3}
-  expReward: 80
+  expReward: 100

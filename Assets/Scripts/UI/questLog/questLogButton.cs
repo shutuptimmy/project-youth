@@ -11,13 +11,16 @@ public class questLogButton : MonoBehaviour, ISelectHandler
     public Button button { get; private set; }
     private TextMeshProUGUI buttonText;
     private UnityAction onSelectAction;
+    public bool isSubQuest { get; private set; }
 
-    public void Initialize(string displayName, UnityAction selectAction)
+    public void Initialize(string displayName, bool isSubQuest, UnityAction selectAction)
     {
         this.button = this.GetComponent<Button>();
         this.buttonText = this.GetComponentInChildren<TextMeshProUGUI>();
         this.buttonText.text = displayName;
         this.onSelectAction = selectAction;
+        this.isSubQuest = isSubQuest;
+
     }
 
     public void OnSelect(BaseEventData eventData)

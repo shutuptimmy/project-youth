@@ -18,27 +18,6 @@ public class questLogScrollList : MonoBehaviour
 
     private Dictionary<string, questLogButton> idToButtonMap = new Dictionary<string, questLogButton>();
 
-    // private void Start()
-    // {
-    //     for (int i = 0; i < 20; i++)
-    //     {
-    //         questInfoSO questInfoTest = ScriptableObject.CreateInstance<questInfoSO>();
-    //         questInfoTest.id = "test_" + i;
-    //         questInfoTest.displayName = "Test" + i;
-    //         questInfoTest.questStepPrefabs = new GameObject[0];
-    //         quest quest = new quest(questInfoTest);
-
-    //         questLogButton questLogButton = CreateButtonIfNotExists(quest, () =>
-    //         {
-    //             Debug.Log("SELECTED: " + questInfoTest.displayName);
-    //         });
-
-    //         if (i == 0)
-    //         {
-    //             questLogButton.button.Select();
-    //         }
-    //     }
-    // }
 
     public questLogButton CreateButtonIfNotExists(quest quest, UnityAction selectAction)
     {
@@ -66,7 +45,7 @@ public class questLogScrollList : MonoBehaviour
         questLogButton.gameObject.name = quest.info.id + "_button";
         // initialize and setup function for when the button is selected
         RectTransform buttonRectTransform = questLogButton.GetComponent<RectTransform>();
-        questLogButton.Initialize(quest.info.displayName, () =>
+        questLogButton.Initialize(quest.info.displayName, quest.info.isSubQuest, () =>
         {
             selectAction();
             updateScrolling(buttonRectTransform);
@@ -74,6 +53,23 @@ public class questLogScrollList : MonoBehaviour
         // add map to keep track of the new button
         idToButtonMap[quest.info.id] = questLogButton;
         return questLogButton;
+    }
+
+    public void ShowTab(bool showSubQuests)
+    {
+        foreach (questLogButton button in idToButtonMap.Values)
+        {
+            // If we want SubQuests, show only buttons where isSubQuest is true
+            // If we want MainQuests (false), show only buttons where isSubQuest is false
+            if (button.isSubQuest == showSubQuests)
+            {
+                button.gameObject.SetActive(true);
+            }
+            else
+            {
+                button.gameObject.SetActive(false);
+            }
+        }
     }
 
     void updateScrolling(RectTransform buttonRectTransform)

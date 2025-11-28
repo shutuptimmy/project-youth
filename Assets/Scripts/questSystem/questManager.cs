@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class questManager : MonoBehaviour
+public class questManager : MonoBehaviour, IDataPersistence
 {
-    [Header("Config")]
-    [SerializeField] private bool loadQuestState = true;
+    // NEW CONFIGURATION: Set this ID in the Inspector to your very first quest.
+    // [Header("Starting Quest")]
+    // [SerializeField] private string startingQuestId = "";
+
 
     private Dictionary<string, quest> questMap;
 
     private int currentPlayerLevel;
+
+    private gameData gameData;
 
     private void Awake()
     {
@@ -39,15 +43,10 @@ public class questManager : MonoBehaviour
     {
         foreach (quest quest in questMap.Values)
         {
-            // initialize any loaded quest steps
-            // if (quest.state == questState.IN_PROGRESS)
-            // {
-            //     quest.instantiateCurrentQuestStep(this.transform);
-            // }
-
             // broadcast the initial state of all quests on startup
             gameEventsManager.instance.questEvents.questStateChange(quest);
         }
+        // StartFirstQuest();
     }
 
     private void Update()
@@ -148,7 +147,6 @@ public class questManager : MonoBehaviour
                 Debug.LogWarning("Duplicate ID found when creating quest map: " + questInfo.id);
             }
             idToQuestMap.Add(questInfo.id, new quest(questInfo));
-            // idToQuestMap.Add(questInfo.id, loadQuest(questInfo));
         }
         return idToQuestMap;
     }
@@ -163,65 +161,22 @@ public class questManager : MonoBehaviour
         return quest;
     }
 
-    private void OnApplicationQuit()
-    {
-        foreach (quest quest in questMap.Values)
-        {
-            questData questData = quest.getQuestData();
-            Debug.Log(quest.info.id);
-            Debug.Log("state: " + questData.state);
-            Debug.Log("index: " + questData.questStepIndex);
-            foreach (questStepState stepState in questData.questStepStates)
-            {
-                Debug.Log("step state: " + stepState.state);
+    // private void OnApplicationQuit()
+    // {
+    //     foreach (quest quest in questMap.Values)
+    //     {
+    //         questData questData = quest.getQuestData();
+    //         Debug.Log(quest.info.id);
+    //         Debug.Log("state: " + questData.state);
+    //         Debug.Log("index: " + questData.questStepIndex);
+    //         foreach (questStepState stepState in questData.questStepStates)
+    //         {
+    //             Debug.Log("step state: " + stepState.state);
 
-            }
-            // saveQuest(quest);
-        }
+    //         }
+    //     }
 
-    }
-
-
-    private void saveQuest(quest quest)
-    {
-        try
-        {
-            questData questData = quest.getQuestData();
-            string serializedData = JsonUtility.ToJson(questData);
-            PlayerPrefs.SetString(quest.info.id, serializedData);
-
-            Debug.Log(serializedData);
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("failed to save quest with id " + quest.info.id + ": " + e);
-        }
-    }
-
-    private quest loadQuest(questInfoSO questInfo)
-    {
-        quest quest = null;
-        try
-        {
-            // load quest from saved data 
-            if (PlayerPrefs.HasKey(quest.info.id) && loadQuestState)
-            {
-                string serializedData = PlayerPrefs.GetString(questInfo.id);
-                questData questData = JsonUtility.FromJson<questData>(serializedData);
-                quest = new quest(questInfo, questData.state, questData.questStepIndex, questData.questStepStates);
-            }
-            // otherwise initialize a new quest
-            else
-            {
-                quest = new quest(questInfo);
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Failed to load quest with id " + quest.info.id + ": " + e);
-        }
-        return quest;
-    }
+    // }
 
     public quest getQuestInProgress()
     {
@@ -234,5 +189,72 @@ public class questManager : MonoBehaviour
         }
         return null; // Return null if no quest is currently in progress
     }
-}
 
+    // check quest status for locked scenes
+    public bool IsQuestCompleted(string questId)
+    {
+        // Use the internal questMap to check the live quest state
+        if (questMap.TryGetValue(questId, out quest quest))
+        {
+            return quest.state == questState.FINISHED;
+        }
+
+        // If the quest ID is not found, it cannot be completed yet.
+        return false;
+    }
+
+    // NEW METHOD: Handles the logic for starting the game's initial quest
+    // private void StartFirstQuest()
+    // {
+    //     Debug.Log("during first quest");
+    //     if (string.IsNullOrEmpty(startingQuestId))
+    //     {
+    //         Debug.LogWarning("Starting Quest ID is not set in Quest Manager.");
+    //         return;
+    //     }
+
+    //     quest startingQuest = getQuestById(startingQuestId);
+
+    //     // Check if the quest is still in the REQ_NOT_MET state (meaning it's a fresh start 
+    //     // or hasn't been started/completed yet).
+    //     if (startingQuest.state == questState.REQ_NOT_MET || startingQuest.state == questState.CAN_START)
+    //     {
+    //         // Use the established event method to trigger the quest start
+    //         gameEventsManager.instance.questEvents.startQuest(startingQuestId);
+    //         Debug.Log($"Automatically started the first quest: {startingQuestId}");
+    //     }
+    //     else
+    //     {
+    //         Debug.Log($"Starting quest {startingQuestId} is already in state: {startingQuest.state}. Skipping automatic start.");
+    //     }
+    // }
+
+    public void loadData(gameData data)
+    {
+        this.gameData = data;
+
+        // Load the stored quest data into the quest map
+        foreach (quest quest in questMap.Values)
+        {
+            if (data.questDataMap.TryGetValue(quest.info.id, out questData questData))
+            {
+                // Reconstruct the quest object from saved data
+                quest.state = questData.state;
+                // FIX 1: Use the new public method to load the index
+                quest.loadCurrentQuestStepIndex(questData.questStepIndex);
+                // FIX 2: Use the existing helper method to load step states
+                quest.loadQuestStepStates(questData.questStepStates);
+            }
+        }
+    }
+
+    public void saveData(gameData data)
+    {
+        foreach (quest quest in questMap.Values)
+        {
+            // Use the indexer [key] to automatically ADD if the key is new
+            // OR OVERWRITE/UPDATE if the key already exists.
+            data.questDataMap[quest.info.id] = quest.getQuestData();
+        }
+    }
+}

@@ -1,12 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Ink.Runtime;
-using TMPro;
+﻿using Ink.Runtime;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class dialogueManager : MonoBehaviour
 {

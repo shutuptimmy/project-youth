@@ -15,19 +15,13 @@ public class dialogueEvents
     public event Action onDialogueStarted;
     public void DialogueStarted()
     {
-        if (onDialogueStarted != null)
-        {
-            onDialogueStarted();
-        }
+        onDialogueStarted?.Invoke();
     }
 
     public event Action onDialogueFinished;
     public void DialogueFinished()
     {
-        if (onDialogueFinished != null)
-        {
-            onDialogueFinished();
-        }
+        onDialogueFinished?.Invoke();
     }
 
     public event Action<string, List<Choice>, List<string>> onDisplayDialogue;

@@ -55,7 +55,7 @@ public class questPoint : MonoBehaviour
         {
             return;
         }
-        Debug.Log("PLayer detected");
+        Debug.Log("Player detected");
         if (!dialogueKnotName.Equals(""))
         {
             gameEventsManager.instance.dialogueEvents.enterDialogue(dialogueKnotName);

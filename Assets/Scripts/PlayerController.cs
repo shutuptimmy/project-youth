@@ -97,35 +97,4 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         data.playerPosition = this.transform.position;
     }
-
-    // private void FixedUpdate()
-    // {
-    //     HandleHorizontalMovement();
-    // }
-
-    // private void HandleHorizontalMovement()
-    // {
-    //     Vector2 movement = inputManager.GetInstance().GetMoveDirection();
-
-    //     // stops the movement if dialogue is playing
-    //     // if (dialogueManager.GetInstance().isDialoguePlayin)
-    //     // {
-    //     //     movement = Vector2.zero;
-    //     // }
-
-    //     rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * (moveSpeed / 2));
-
-
-
-    //     // handles sprite animation
-    //     animator.SetFloat("speed", (rb.velocity != Vector2.zero) ? 1 : 0);
-    //     if (rb.velocity.x < 0)
-    //     {
-    //         sprite.flipX = true;
-    //     }
-    //     else if (rb.velocity.x > 0)
-    //     {
-    //         sprite.flipX = false;
-    //     }
-    // }
 }

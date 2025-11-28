@@ -5,19 +5,13 @@ public class playerEvents
     public event Action onDisablePlayerMovement;
     public void DisablePlayerMovement()
     {
-        if (onDisablePlayerMovement != null)
-        {
-            onDisablePlayerMovement();
-        }
+        onDisablePlayerMovement?.Invoke();
     }
 
     public event Action onEnablePlayerMovement;
     public void EnablePlayerMovement()
     {
-        if (onEnablePlayerMovement != null)
-        {
-            onEnablePlayerMovement();
-        }
+        onEnablePlayerMovement?.Invoke();
     }
 
     public event Action<int> onExperienceGained;

@@ -14,26 +14,18 @@ public abstract class InteractableBase : MonoBehaviour
         interactableVisualCue.SetActive(false);
     }
 
-    // private void Update()
-    // {
-    //     if (isInteractable && inputManager.GetInstance().GetInteractPressed())
-    //     {
-    //         Interact();
-    //     }
-    // }
-
     private void OnEnable()
     {
-        gameEventsManager.instance.inputEvents.onSubmitPressed += submitPressed;
+        gameEventsManager.instance.inputEvents.onInteractPressed += interactPressed;
     }
 
     private void OnDisable()
     {
-        gameEventsManager.instance.inputEvents.onSubmitPressed -= submitPressed;
+        gameEventsManager.instance.inputEvents.onInteractPressed -= interactPressed;
 
     }
 
-    private void submitPressed(inputEventContext inputEventContext)
+    private void interactPressed(inputEventContext inputEventContext)
     {
         if (!isInteractable)
         {
@@ -55,8 +47,15 @@ public abstract class InteractableBase : MonoBehaviour
     {
         if (collider.gameObject == player)
         {
-            interactableVisualCue.SetActive(false);
-            isInteractable = false;
+            pushableBox box = GetComponent<pushableBox>();
+
+            bool currentlyDragging = box != null && box.IsCurrentlyDragging();
+
+            if (!currentlyDragging)
+            {
+                interactableVisualCue.SetActive(false);
+                isInteractable = false;
+            }
         }
 
     }
