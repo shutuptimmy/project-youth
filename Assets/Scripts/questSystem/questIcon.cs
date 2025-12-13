@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class questIcon : MonoBehaviour
 {
-    [SerializeField] private GameObject reqNotMetToStartIcon;
     [SerializeField] private GameObject canStartIcon;
     [SerializeField] private GameObject reqNotMetToFinishIcon;
     [SerializeField] private GameObject canFinishIcon;
@@ -12,7 +11,6 @@ public class questIcon : MonoBehaviour
     public void setState(questState newState, bool startPoint, bool finishPoint)
     {
         // set all inactive
-        reqNotMetToStartIcon.SetActive(false);
         canStartIcon.SetActive(false);
         reqNotMetToFinishIcon.SetActive(false);
         canFinishIcon.SetActive(false);
@@ -20,12 +18,6 @@ public class questIcon : MonoBehaviour
         // set appropriate one to active based on the new state
         switch (newState)
         {
-            case questState.REQ_NOT_MET:
-                if (startPoint)
-                {
-                    reqNotMetToStartIcon.SetActive(true);
-                }
-                break;
 
             case questState.CAN_START:
                 if (startPoint)

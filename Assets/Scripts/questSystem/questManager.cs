@@ -10,8 +10,17 @@ public class questManager : MonoBehaviour, IDataPersistence
 
     private gameData gameData;
 
+    public static questManager instance { get; private set; }
+
     private void Awake()
     {
+        if (instance != null)
+        {
+            Debug.Log("Found more than one Quest Manager in the scene. Removing duplicate..");
+            Destroy(gameObject);
+            return;
+        }
+
         questMap = createQuestMap();
     }
 
@@ -99,7 +108,6 @@ public class questManager : MonoBehaviour, IDataPersistence
 
         if (quest.currentStepExists())
         {
-
             quest.instantiateCurrentQuestStep(this.transform);
         }
         else
@@ -184,11 +192,11 @@ public class questManager : MonoBehaviour, IDataPersistence
         return null; // Return null if no quest is currently in progress
     }
 
-    // check quest status for locked scenes
-    public bool IsQuestCompleted(string questId)
+    // TODO: check quest status for locked scenes
+    public bool IsQuestCompleted(string id)
     {
         // Use the internal questMap to check the live quest state
-        if (questMap.TryGetValue(questId, out quest quest))
+        if (questMap.TryGetValue(id, out quest quest))
         {
             return quest.state == questState.FINISHED;
         }

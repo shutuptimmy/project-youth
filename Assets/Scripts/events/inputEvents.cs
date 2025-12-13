@@ -9,7 +9,10 @@ public class inputEvents
 
     public void ChangeInputEventContext(inputEventContext newContext)
     {
+        inputEventContext oldContext = this.inputEventContext;
         this.inputEventContext = newContext;
+
+        Debug.Log($"Input Context Changed: {oldContext} -> {newContext}");
     }
 
     public event Action<Vector2> onMovePressed;
@@ -39,9 +42,9 @@ public class inputEvents
         }
     }
 
-    public event Action<inputEventContext> onPausePressed;
+    public event Action onPausePressed;
     public void PausePressed()
     {
-        onPausePressed?.Invoke(this.inputEventContext);
+        onPausePressed?.Invoke();
     }
 }

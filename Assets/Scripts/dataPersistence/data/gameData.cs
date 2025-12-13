@@ -55,6 +55,8 @@ public class gameData
 
     public SerializableQuestDataMap questDataMap;
 
+    public List<string> unlockedRewardIds;
+
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
     public gameData(string playerName, int playerGender)
@@ -66,6 +68,9 @@ public class gameData
         this.playerExp = 0;
         this.playerPosition = new Vector3(-0.9f, -0.1f, 0);
         this.playerLocation = "bedroom";
+
+        // initialize new list of reward
+        this.unlockedRewardIds = new List<string>();
 
         // initialize new quest data map
         this.questDataMap = new SerializableQuestDataMap();

@@ -18,24 +18,25 @@ public class DoorInteraction : InteractableBase
         // 1. Check if a quest ID is required
         if (!string.IsNullOrEmpty(requiredQuestId))
         {
-            // Access the running questManager instance
-            questManager manager = FindObjectOfType<questManager>();
+            questManager manager = questManager.instance;
 
-            // CRITICAL CHECK: Call the public method on the manager
-            bool questCompleted = manager != null && manager.IsQuestCompleted(requiredQuestId);
+            if (manager == null)
+            {
+                Debug.LogError("DoorInteraction failed: QuestManager instance is missing!");
+                return;
+            }
+
+            bool questCompleted = manager.IsQuestCompleted(requiredQuestId);
 
             if (!questCompleted)
             {
                 // Door is locked! Trigger dialogue and return.
                 Debug.Log($"Door is locked. Quest required: {requiredQuestId}");
-
-                // Assuming your dialogue system uses gameEventsManager for dialogue
                 gameEventsManager.instance.dialogueEvents.enterDialogue("doorLocked");
-                return; // Stop execution, do not load the scene
+                return;
             }
         }
 
-        // 2. If the door is unlocked, change the scene.
         gameEventsManager.instance.sceneEvents.changeScene(sceneToLoad, newPlayerPos);
     }
 

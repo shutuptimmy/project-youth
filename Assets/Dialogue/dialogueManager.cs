@@ -11,8 +11,19 @@ public class dialogueManager : MonoBehaviour
     private inkExternalFunctions inkExternalFunctions;
     private inkDialogueVariables inkDialogueVariables;
 
+    // this instance is only required for cutscene's cross-script ref
+    public static dialogueManager instance { get; private set; }
+
+
     private void Awake()
     {
+        if (instance != null)
+        {
+            Debug.Log("Found more than one Dialogue Manager in the scene. Removing duplicate..");
+            Destroy(gameObject);
+            return;
+        }
+
         story = new Story(inkJSON.text);
         inkExternalFunctions = new inkExternalFunctions();
         inkExternalFunctions.bind(story);

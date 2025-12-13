@@ -149,6 +149,7 @@ public class dataPersistenceManager : MonoBehaviour
     //     }
     // }
 
+    // get all gameobjects that have IDataPersistence
     private List<IDataPersistence> findAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();

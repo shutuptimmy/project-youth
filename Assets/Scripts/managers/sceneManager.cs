@@ -22,11 +22,13 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     private void OnEnable()
     {
         gameEventsManager.instance.sceneEvents.onChangeScene += changeScene;
+        gameEventsManager.instance.sceneEvents.onPlayCrossFade += playCrossFade;
     }
 
     private void OnDisable()
     {
         gameEventsManager.instance.sceneEvents.onChangeScene -= changeScene;
+        gameEventsManager.instance.sceneEvents.onPlayCrossFade -= playCrossFade;
     }
 
     private void OnDestroy()
@@ -37,12 +39,15 @@ public class sceneManager : MonoBehaviour, IDataPersistence
 
     public void changeScene(SceneField scene, Vector2 playerPos)
     {
-        // IMPORTANT: We use the SceneField's string conversion implicitly
         StartCoroutine(loadNewScene(scene.SceneName));
         newPlayerPos = playerPos;
     }
 
-    // NEW: Coroutine to handle the initial scene load after data is available.
+    public void playCrossFade()
+    {
+        transition.Play("FadeIn");
+    }
+
     IEnumerator InitializeSceneLoad(string sceneName)
     {
         // Wait for the end of the frame to ensure all Awake/Start methods have run
@@ -65,7 +70,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     IEnumerator loadNewScene(string sceneName)
     {
         // play fade
-        transition.Play("FadeIn");
+        playCrossFade();
 
         // wait
         yield return new WaitForSeconds(transitionTime);

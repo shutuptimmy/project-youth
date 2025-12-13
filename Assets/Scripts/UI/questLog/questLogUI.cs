@@ -16,42 +16,18 @@ public class questLogUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI expRewardsText;
     [SerializeField] private TextMeshProUGUI lvlReqsText;
     [SerializeField] private TextMeshProUGUI questReqsText;
-
-    private bool isShowingSubQuests = false;
-
     private Button firstSelectButton;
 
     private void OnEnable()
     {
         gameEventsManager.instance.inputEvents.onQuestLogTogglePressed += questLogTogglePressed;
         gameEventsManager.instance.questEvents.onQuestStateChange += questStateChange;
-
-        // Set default tab state when opening (Main Quests)
-        OnMainQuestTabClicked();
     }
 
     private void OnDisable()
     {
         gameEventsManager.instance.questEvents.onQuestStateChange -= questStateChange;
 
-    }
-
-    // for main quest tab button
-    public void OnMainQuestTabClicked()
-    {
-        isShowingSubQuests = false;
-
-        // Update list
-        scrollList.ShowTab(false);
-    }
-
-    // for sub quest tab button
-    public void OnSubQuestTabClicked()
-    {
-        isShowingSubQuests = true;
-
-        // Update list
-        scrollList.ShowTab(true);
     }
 
 
@@ -101,9 +77,6 @@ public class questLogUI : MonoBehaviour
 
         // set button color based on quest state
         questLogButton.setState(quest.state);
-
-        // Refresh the current tab view so the new button is hidden/shown correctly
-        scrollList.ShowTab(isShowingSubQuests);
     }
 
     void setQuestLogInfo(quest quest)

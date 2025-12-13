@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private SpriteRenderer sprite;
     private Animator animator;
 
+    private const string horizontal = "horizontal";
+    private const string vertical = "vertical";
+    private const string lastHorizontal = "lastHorizontal";
+    private const string lastVertical = "lastVertical";
+
     private int playerGender;
 
     private float moveSpeed = 1f;
@@ -76,7 +81,16 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private void UpdateAnimations()
     {
         // handles sprite animation
-        animator.SetFloat("speed", (rb.velocity != Vector2.zero) ? 1 : 0);
+        animator.SetFloat(horizontal, velocity.x);
+        animator.SetFloat(vertical, velocity.y);
+
+        if (velocity != Vector2.zero)
+        {
+            animator.SetFloat(lastHorizontal, velocity.x);
+            animator.SetFloat(lastVertical, velocity.y);
+        }
+
+        // animator.SetFloat("speed", (rb.velocity != Vector2.zero) ? 1 : 0);
         if (rb.velocity.x < 0)
         {
             sprite.flipX = true;

@@ -222,8 +222,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableVisualCue: {fileID: 1791606136}
-  sceneToLoad: insideClassroom
+  sceneToLoad:
+    m_SceneAsset: {fileID: 0}
+    m_SceneName: 
   newPlayerPos: {x: 0.6, y: -0.38}
+  requiredQuestId: 
 --- !u!61 &210395744
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -635,7 +638,7 @@ PrefabInstance:
     - target: {fileID: 133313514097827285, guid: e1c6b6d4cb42de038a321a91c1530e97,
         type: 3}
       propertyPath: m_Name
-      value: npc
+      value: chris
       objectReference: {fileID: 0}
     - target: {fileID: 133313514536153490, guid: e1c6b6d4cb42de038a321a91c1530e97,
         type: 3}

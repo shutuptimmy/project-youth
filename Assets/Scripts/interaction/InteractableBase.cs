@@ -14,12 +14,12 @@ public abstract class InteractableBase : MonoBehaviour
         interactableVisualCue.SetActive(false);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         gameEventsManager.instance.inputEvents.onInteractPressed += interactPressed;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         gameEventsManager.instance.inputEvents.onInteractPressed -= interactPressed;
 
@@ -27,7 +27,7 @@ public abstract class InteractableBase : MonoBehaviour
 
     private void interactPressed(inputEventContext inputEventContext)
     {
-        if (!isInteractable)
+        if (!isInteractable || !inputEventContext.Equals(inputEventContext.DEFAULT))
         {
             return;
         }

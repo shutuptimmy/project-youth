@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class questPoint : MonoBehaviour
+public class questPoint : MonoBehaviour, IDataPersistence
 {
+    [Header("Reward Id")]
+    [SerializeField] private string requiredRewardId;
+
     [Header("Dialogue")]
     [SerializeField] private string dialogueKnotName;
 
@@ -20,34 +24,35 @@ public class questPoint : MonoBehaviour
 
     private string questId;
     private questState currentQuestState;
-
     private questIcon questIcon;
+
+    private SpriteRenderer spriteRenderer;
+    private CircleCollider2D circleCollider2D;
+    private Transform childVisuals;
 
 
     private void Awake()
     {
         questId = questInfoForPoint.id;
         questIcon = GetComponentInChildren<questIcon>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
+
+        if (questIcon != null) childVisuals = questIcon.transform;
+
+        // If a reward ID is required, hide immediately to prevent flickering
+        if (!string.IsNullOrEmpty(requiredRewardId))
+        {
+            SetVisualsActive(false);
+        }
     }
 
-
-    // private void Update()
-    // {
-    //     // if (isPlayerNear && inputManager.GetInstance().GetSubmitPressed())
-    //     // {
-    //     //     // gameEventsManager.instance.questEvents.advanceQuest(questId);
-    //     // }
-    //     // else
-    //     // {
-    //     //     return;
-    //     // }
-    //     // if (inputManager.GetInstance().GetSubmitPressed())
-    //     // {
-    //     //     submitPressed();
-    //     // }
-
-
-    // }
+    void SetVisualsActive(bool isActive)
+    {
+        if (spriteRenderer != null) spriteRenderer.enabled = isActive;
+        if (circleCollider2D != null) circleCollider2D.enabled = isActive;
+        if (childVisuals != null) childVisuals.gameObject.SetActive(isActive);
+    }
 
     private void submitPressed(inputEventContext inputEventContext)
     {
@@ -55,7 +60,7 @@ public class questPoint : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Player detected");
+
         if (!dialogueKnotName.Equals(""))
         {
             gameEventsManager.instance.dialogueEvents.enterDialogue(dialogueKnotName);
@@ -95,12 +100,14 @@ public class questPoint : MonoBehaviour
     {
         gameEventsManager.instance.questEvents.onQuestStateChange += questStateChange;
         gameEventsManager.instance.inputEvents.onSubmitPressed += submitPressed;
+        gameEventsManager.instance.miscEvents.onQuestReward += rewardUnlocked;
     }
 
     private void OnDisable()
     {
         gameEventsManager.instance.questEvents.onQuestStateChange -= questStateChange;
         gameEventsManager.instance.inputEvents.onSubmitPressed -= submitPressed;
+        gameEventsManager.instance.miscEvents.onQuestReward -= rewardUnlocked;
     }
 
     private void questStateChange(quest quest)
@@ -112,5 +119,29 @@ public class questPoint : MonoBehaviour
             questIcon.setState(currentQuestState, startPoint, finishPoint);
             Debug.Log("quest id: " + questId + " updated to state: " + currentQuestState);
         }
+    }
+
+
+    void rewardUnlocked(string id)
+    {
+        // If the unlocked ID matches MY required ID, show myself!
+        if (id == requiredRewardId)
+        {
+            SetVisualsActive(true);
+        }
+    }
+
+    public void loadData(gameData data)
+    {
+        if (!string.IsNullOrEmpty(requiredRewardId))
+        {
+            bool isUnlocked = data.unlockedRewardIds.Contains(requiredRewardId);
+            SetVisualsActive(isUnlocked);
+        }
+    }
+
+    public void saveData(gameData data)
+    {
+        // nothin here
     }
 }

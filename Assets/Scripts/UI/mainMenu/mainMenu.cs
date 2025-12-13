@@ -65,4 +65,9 @@ public class mainMenu : menu
     {
         this.gameObject.SetActive(false);
     }
+
+    public void onQuitPressed()
+    {
+        Application.Quit();
+    }
 }

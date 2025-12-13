@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class experienceUI : MonoBehaviour
+public class experienceUI : MonoBehaviour, IDataPersistence
 {
     [Header("Components")]
     [SerializeField] private Slider expSlider;
@@ -27,5 +27,15 @@ public class experienceUI : MonoBehaviour
     {
 
         currentLevelText.text = "Level " + lvl;
+    }
+
+    public void loadData(gameData data)
+    {
+        this.expText.text = data.playerExp.ToString();
+        this.currentLevelText.text = data.playerLvl.ToString();
+    }
+
+    public void saveData(gameData data)
+    {
     }
 }

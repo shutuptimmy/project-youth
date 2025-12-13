@@ -10,4 +10,10 @@ public class sceneEvents
     {
         onChangeScene?.Invoke(scene, newPos);
     }
+
+    public event Action onPlayCrossFade;
+    public void playCrossFade()
+    {
+        onPlayCrossFade?.Invoke();
+    }
 }

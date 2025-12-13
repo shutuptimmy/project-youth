@@ -11,6 +11,7 @@ public class inkExternalFunctions
         story.BindExternalFunction("advanceQuest", (string questId) => advanceQuest(questId));
         story.BindExternalFunction("finishQuest", (string questId) => finishQuest(questId));
         story.BindExternalFunction("expGained", (int exp) => expGained(exp));
+        story.BindExternalFunction("itemReward", (string itemId) => itemReward(itemId));
     }
     public void unbind(Story story)
     {
@@ -18,6 +19,7 @@ public class inkExternalFunctions
         story.UnbindExternalFunction("advanceQuest");
         story.UnbindExternalFunction("finishQuest");
         story.UnbindExternalFunction("expGained");
+        story.UnbindExternalFunction("itemReward");
     }
 
     private void startQuest(string questId)
@@ -40,4 +42,9 @@ public class inkExternalFunctions
         gameEventsManager.instance.playerEvents.ExperienceGained(exp);
     }
 
+
+    private void itemReward(string itemId)
+    {
+        gameEventsManager.instance.miscEvents.questReward(itemId);
+    }
 }

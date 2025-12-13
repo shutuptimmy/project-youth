@@ -9,6 +9,7 @@ public class gameEventsManager : MonoBehaviour
     public playerEvents playerEvents;
     public dialogueEvents dialogueEvents;
     public sceneEvents sceneEvents;
+    public miscEvents miscEvents;
     // public cutsceneEvents cutsceneEvents;
 
     public static gameEventsManager instance { get; private set; }
@@ -29,6 +30,7 @@ public class gameEventsManager : MonoBehaviour
         playerEvents = new playerEvents();
         dialogueEvents = new dialogueEvents();
         sceneEvents = new sceneEvents();
+        miscEvents = new miscEvents();
         // cutsceneEvents = new cutsceneEvents();
     }
 

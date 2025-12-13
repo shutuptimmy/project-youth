@@ -36,12 +36,13 @@ public class pauseUI : MonoBehaviour, IDataPersistence
     }
 
 
-    void pausePressed(inputEventContext inputEventContext)
+    void pausePressed()
     {
+        inputEventContext currentContext = gameEventsManager.instance.inputEvents.inputEventContext;
         pauseToggle();
 
         // check if gameplay is other than main then set to main pause menu, otherwise to partial pause menu
-        if (inputEventContext.Equals(inputEventContext.DEFAULT))
+        if (currentContext.Equals(inputEventContext.DEFAULT))
         {
             normalPauseMenu.SetActive(true);
             inProgressPauseMenu.SetActive(false);

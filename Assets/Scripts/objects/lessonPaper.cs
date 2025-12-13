@@ -1,0 +1,103 @@
+﻿using UnityEngine;
+
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
+public class lessonPaper : InteractableBase, IDataPersistence
+{
+    [Header("Components")]
+    [SerializeField] private string paperId;
+    [SerializeField] private lessonInfoSO lessonInfo;
+    private SpriteRenderer sprite;
+    private BoxCollider2D boxCollider;
+    private bool isCollectible = false;
+
+    private void Reset()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+        boxCollider.offset = new Vector2(0f, -0.015f);
+        boxCollider.size = new Vector2(0.16f, 0.11f);
+    }
+
+    private void Start()
+    {
+        if (!string.IsNullOrEmpty(paperId))
+        {
+            SetVisualsActive(false);
+        }
+    }
+
+    private void OnEnable()
+    {
+        base.OnEnable();
+        gameEventsManager.instance.miscEvents.onQuestReward += rewardUnlocked;
+    }
+
+    private void OnDisable()
+    {
+        base.OnDisable();
+        gameEventsManager.instance.miscEvents.onQuestReward -= rewardUnlocked;
+
+    }
+
+    void SetVisualsActive(bool isActive)
+    {
+        // Safety Check (Lazy Loading)
+        if (sprite == null) sprite = GetComponent<SpriteRenderer>();
+        if (boxCollider == null) boxCollider = GetComponent<BoxCollider2D>();
+
+
+        sprite.enabled = isActive;
+        boxCollider.enabled = isActive;
+        interactableVisualCue.SetActive(isActive);
+        isCollectible = isActive;
+    }
+
+    public override void Interact()
+    {
+        if (!isCollectible)
+        {
+            return;
+        }
+        gameEventsManager.instance.miscEvents.showLessonPanel(lessonInfo);
+        gameEventsManager.instance.miscEvents.questReward(paperId + "_READ");
+        Destroy(this.gameObject);
+    }
+
+    void rewardUnlocked(string id)
+    {
+        // show if id is present during gameplay
+        if (id == paperId)
+        {
+            SetVisualsActive(true);
+        }
+    }
+
+    public void loadData(gameData data)
+    {
+        if (!string.IsNullOrEmpty(paperId))
+        {
+            bool isRead = data.unlockedRewardIds.Contains(paperId + "_READ");
+            bool isUnlocked = data.unlockedRewardIds.Contains(paperId);
+
+            Debug.LogWarning("has been read? " + isRead);
+            Debug.LogWarning("is unlocked?" + isUnlocked);
+
+            if (isRead)
+            {
+                Destroy(this.gameObject);
+            }
+            else if (isUnlocked)
+            {
+                isCollectible = true;
+                SetVisualsActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("visuals off");
+                SetVisualsActive(false);
+            }
+        }
+    }
+    public void saveData(gameData data) { }
+}

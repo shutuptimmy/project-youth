@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: preTest
   displayName: Take a Pretest
-  isSubQuest: 0
-  chapter: 0
   lvlReq: 0
   questPrerequisites: []
   questStepPrefabs:
