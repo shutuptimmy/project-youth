@@ -25,17 +25,15 @@ public class experienceUI : MonoBehaviour, IDataPersistence
 
     void playerLevelUp(int lvl)
     {
-
         currentLevelText.text = "Level " + lvl;
     }
 
     public void loadData(gameData data)
     {
-        this.expText.text = data.playerExp.ToString();
-        this.currentLevelText.text = data.playerLvl.ToString();
+        experienceGained(data.playerExp);
+        playerLevelUp(data.playerLvl);
+
     }
 
-    public void saveData(gameData data)
-    {
-    }
+    public void saveData(gameData data) { }
 }

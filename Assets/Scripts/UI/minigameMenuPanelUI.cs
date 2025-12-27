@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class minigameMenuPanelUI : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private GameObject contentParent;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI displayText;
     [SerializeField] private TextMeshProUGUI playerHighscoreText;

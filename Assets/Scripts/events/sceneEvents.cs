@@ -16,4 +16,16 @@ public class sceneEvents
     {
         onPlayCrossFade?.Invoke();
     }
+
+    public event Action onStartMinigame;
+    public void startMinigame()
+    {
+        onStartMinigame?.Invoke();
+    }
+
+    public event Action onQuitMinigame;
+    public void quitMinigame()
+    {
+        onQuitMinigame?.Invoke();
+    }
 }

@@ -1,18 +1,280 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class sortingBoxesManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Components")]
+    [SerializeField] private GameObject mainContentParent;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private GameObject gameplayGameObject;
+    [SerializeField] private GameObject minigamePlayer;
+
+    [Header("Quest Step")]
+    [SerializeField] private helpingHandQuestStep helpingHandQuestStep;
+    private bool isQuestStepPresent;
+
+    [Header("Menu Panel")]
+    [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
+
+    // [Header("Lives UI")]
+    // [SerializeField] private Image[] heartImages; // 3 Heart Image gameobjects
+    // [SerializeField] private Sprite fullHeartSprite;
+    // [SerializeField] private Sprite emptyHeartSprite;
+
+    [Header("Boxes Config")]
+    [SerializeField] private Transform boxesParent;
+    private List<BoxInitialState> originalBoxStates = new List<BoxInitialState>();
+    private struct BoxInitialState
     {
-        
+        public sortingBox script;
+        public Vector3 position;
+        public Transform originalParent;
     }
 
-    // Update is called once per frame
-    void Update()
+    [Header("Box Info UI")]
+    [SerializeField] private GameObject boxInfoPanel; // Panel showing Name & Image
+    [SerializeField] private TextMeshProUGUI boxNameText;
+    [SerializeField] private Image boxImageDisplay;
+
+    [Header("Game Config")]
+    // [SerializeField] private int maxLives = 3;
+    [SerializeField] private float timeLimit = 61f;
+    [SerializeField] private float timeBonus = 5f;
+    [SerializeField] private int totalBoxes = 10;
+    // private int currentLives;
+
+    private float timeElapsed;
+    private int playerScore;
+    private int boxesRemaining;
+    private bool isGameActive = false;
+    private bool playerHasWon = false;
+
+    private void Awake()
     {
-        
+        foreach (Transform child in boxesParent)
+        {
+            sortingBox box = child.GetComponent<sortingBox>();
+            if (box != null)
+            {
+                box.overridePlayer(minigamePlayer);
+
+                BoxInitialState state = new BoxInitialState
+                {
+                    script = box,
+                    position = child.position,
+                    originalParent = boxesParent
+                };
+                originalBoxStates.Add(state);
+            }
+        }
     }
+
+    // Hide the minigame before the crossfade
+    IEnumerator Start()
+    {
+        gameplayGameObject.SetActive(false);
+
+        gameEventsManager.instance.sceneEvents.startMinigame();
+        yield return new WaitForSeconds(1f);
+
+        isQuestStepPresent = helpingHandQuestStep == null;
+        Debug.Log("Quest Step Status: " + helpingHandQuestStep);
+
+        showStartMenu();
+    }
+
+    void showStartMenu()
+    {
+        gameplayGameObject.SetActive(true);
+        mainContentParent.SetActive(false);
+
+        minigameMenuPanelUI.activateMenu(
+            "Sorting the Boxes",
+            "Move the boxes to the right place before the timer runs out!",
+            "All time record: ", // + GetHighScore()
+            () => startMinigame(),
+            "Start",
+            () => quitMinigameButton(),
+            isQuestStepPresent
+        );
+    }
+
+    void ShowResultMenu(string title, string status)
+    {
+        bool showQuit = isQuestStepPresent || playerHasWon;
+        // mainContentParent.SetActive(false);
+
+        minigameMenuPanelUI.activateMenu(
+            title,
+            status,
+            "Total Score: " + playerScore,
+            () => startMinigame(),
+            "Retry",
+            () => quitMinigameButton(),
+            showQuit
+        );
+    }
+
+    private void Update()
+    {
+        if (isGameActive)
+        {
+            timeElapsed -= Time.deltaTime;
+            timerText.text = Mathf.FloorToInt(timeElapsed).ToString() + "s";
+            if (timeElapsed < 0f) minigameComplete(false);
+        }
+    }
+
+    public void startMinigame()
+    {
+        mainContentParent.SetActive(true);
+
+        // reset game state when retry
+        boxesRemaining = totalBoxes;
+        // currentLives = maxLives;
+        playerScore = 0;
+        scoreText.text = "Score: " + 0;
+        timeElapsed = timeLimit;
+        minigamePlayer.transform.position = new Vector2(0, 0);
+        isGameActive = true;
+        resetBoxes();
+        // updateLivesUI();
+
+        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
+    }
+
+    IEnumerator quitMinigame()
+    {
+        Debug.Log("suceess");
+        gameEventsManager.instance.sceneEvents.quitMinigame();
+        yield return new WaitForSeconds(1f);
+
+        helpingHandQuestStep?.playerWon();
+
+        Destroy(gameObject);
+    }
+
+    public void quitMinigameButton()
+    {
+        StartCoroutine(quitMinigame());
+    }
+
+    void minigameComplete(bool playerWon)
+    {
+        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
+        isGameActive = false;
+
+        mainContentParent.SetActive(false);
+
+        if (playerWon)
+        {
+            playerHasWon = true;
+            ShowResultMenu("All boxes cleared!", "You won!");
+        }
+        else ShowResultMenu("You Lost!", "Try again!");
+    }
+
+    void resetBoxes()
+    {
+        foreach (var state in originalBoxStates)
+        {
+            GameObject obj = state.script.gameObject;
+
+            // Ensure it's active
+            obj.SetActive(true);
+
+            // Reset Transforms
+            obj.transform.SetParent(state.originalParent);
+            obj.transform.position = state.position;
+
+            // Reset Physics to stop momentum
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+
+            // Reset internal script state (ensure it's not "dragged")
+            state.script.forceReset();
+        }
+    }
+
+    public void showBoxDetails(boxDataSO data)
+    {
+        boxInfoPanel.SetActive(true);
+        boxNameText.text = data.boxName;
+        boxImageDisplay.sprite = data.picture;
+    }
+
+    public void hideBoxDetails()
+    {
+        boxInfoPanel.SetActive(false);
+        boxNameText.text = "";
+        boxImageDisplay.sprite = null;
+
+    }
+
+    void disableBox(sortingBox box)
+    {
+        // Force release and disable box
+        box.Release();
+        box.gameObject.SetActive(false);
+        hideBoxDetails();
+    }
+
+    // void updateLivesUI()
+    // {
+    //     // Safety check to avoid errors if you forgot to assign hearts in Inspector
+    //     // if (heartImages == null) return;
+
+    //     for (int i = 0; i < heartImages.Length; i++)
+    //     {
+    //         if (i < currentLives) heartImages[i].sprite = fullHeartSprite;
+    //         else heartImages[i].sprite = emptyHeartSprite;
+    //     }
+    // }
+
+    public void correctGoal(sortingBox box)
+    {
+        playerScore += 100 + (int)(timeLimit / timeElapsed);
+        scoreText.text = "Score: " + playerScore.ToString();
+        timeElapsed += timeBonus;
+        disableBox(box);
+
+        boxesRemaining--;
+        // checkGameState();
+
+        if (boxesRemaining <= 0) minigameComplete(true);
+    }
+
+    public void wrongGoal(sortingBox box)
+    {
+
+        // currentLives--;
+        // updateLivesUI();
+
+        boxesRemaining--;
+        disableBox(box);
+
+        // checkGameState();
+        if (boxesRemaining <= 0) minigameComplete(true);
+
+    }
+
+    // private void checkGameState()
+    // {
+    //     if (timeElapsed < 0f)
+    //     {
+    //         minigameComplete(false);
+    //     }
+    //     else if (boxesRemaining <= 0)
+    //     {
+    //         minigameComplete(true);
+    //     }
+    // }
 }

@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: helpingHand
   m_EditorClassIdentifier: 
   <id>k__BackingField: helpingHand
-  displayName: Help out your classmates
-  lvlReq: 5
-  questPrerequisites:
-  - {fileID: 11400000, guid: 2cf62ba31d97936f5b09c04c0148929d, type: 2}
-  - {fileID: 11400000, guid: a3d894fa1716b3f429fddc55cf9058ac, type: 2}
-  questStepPrefabs: []
-  expReward: 0
+  displayName: Help by sorting the boxes
+  lvlReq: 0
+  questPrerequisites: []
+  questStepPrefabs:
+  - {fileID: 2127113102418146692, guid: b468c437aea216049a6237b944f2bb7d, type: 3}
+  expReward: 10

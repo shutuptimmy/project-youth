@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class sceneManager : MonoBehaviour, IDataPersistence
 {
-    private Vector2 newPlayerPos;
+    private Vector2 newPlayerPos; // for standard location transitions
     public Animator transition { get; private set; }
     public float transitionTime = 1f;
     private string currentBgScene = "";
     private bool isInitialSceneLoaded = false;
+
+    // for minigame variables
+    private Vector2 returnPlayerPosition;
+    private string returnSceneName;
 
     private void Awake()
     {
@@ -23,18 +27,32 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     {
         gameEventsManager.instance.sceneEvents.onChangeScene += changeScene;
         gameEventsManager.instance.sceneEvents.onPlayCrossFade += playCrossFade;
+        gameEventsManager.instance.sceneEvents.onStartMinigame += SwitchToMinigame;
+        gameEventsManager.instance.sceneEvents.onQuitMinigame += ReturnFromMinigame;
     }
 
     private void OnDisable()
     {
         gameEventsManager.instance.sceneEvents.onChangeScene -= changeScene;
         gameEventsManager.instance.sceneEvents.onPlayCrossFade -= playCrossFade;
+        gameEventsManager.instance.sceneEvents.onStartMinigame -= SwitchToMinigame;
+        gameEventsManager.instance.sceneEvents.onQuitMinigame -= ReturnFromMinigame;
     }
 
     private void OnDestroy()
     {
 
         SceneManager.sceneUnloaded -= onSceneUnloaded;
+    }
+    void onSceneUnloaded(Scene scene)
+    {
+        // Find the newly spawned player and set its position
+        GameObject newPlayer = GameObject.FindGameObjectWithTag("Player");
+        if (newPlayer != null)
+        {
+            newPlayer.transform.position = newPlayerPos;
+        }
+        Debug.Log("unloaded event triggered");
     }
 
     public void changeScene(SceneField scene, Vector2 playerPos)
@@ -94,15 +112,65 @@ public class sceneManager : MonoBehaviour, IDataPersistence
 
     }
 
-    void onSceneUnloaded(Scene scene)
+    void SwitchToMinigame()
     {
-        // Find the newly spawned player and set its position
-        GameObject newPlayer = GameObject.FindGameObjectWithTag("Player");
-        if (newPlayer != null)
+        StartCoroutine(UnloadSceneForMinigame());
+    }
+
+    void ReturnFromMinigame()
+    {
+        StartCoroutine(ReloadSceneAfterMinigame());
+    }
+
+    IEnumerator UnloadSceneForMinigame()
+    {
+        // 1. Fade Out
+        playCrossFade();
+        yield return new WaitForSeconds(transitionTime);
+
+        // 2. Save Player Position & Current Scene
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
         {
-            newPlayer.transform.position = newPlayerPos;
+            returnPlayerPosition = player.transform.position;
         }
-        Debug.Log("unloaded event triggered");
+        returnSceneName = currentBgScene;
+
+        // 3. Unload the Location Scene
+        if (!string.IsNullOrEmpty(currentBgScene))
+        {
+            Debug.Log($"SCENE MANAGER: Unloading {currentBgScene} for Minigame.");
+            yield return SceneManager.UnloadSceneAsync(currentBgScene);
+        }
+
+        gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.MINIGAME);
+    }
+
+    IEnumerator ReloadSceneAfterMinigame()
+    {
+        // 1. Fade Out (Minigame is ending)
+        playCrossFade();
+        yield return new WaitForSeconds(transitionTime);
+
+        // 2. Load the previous Location Scene
+        if (!string.IsNullOrEmpty(returnSceneName))
+        {
+            Debug.Log($"SCENE MANAGER: Restoring {returnSceneName}.");
+            yield return SceneManager.LoadSceneAsync(returnSceneName, LoadSceneMode.Additive);
+            currentBgScene = returnSceneName; // Restore tracker
+        }
+
+        // 3. Restore Player Position
+        // We wait a frame to ensure the scene is initialized and Player is spawned
+        yield return new WaitForEndOfFrame();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            player.transform.position = returnPlayerPosition;
+        }
+
+        gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.DEFAULT);
     }
 
     public void loadData(gameData data)

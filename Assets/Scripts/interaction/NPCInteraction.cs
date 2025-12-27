@@ -35,10 +35,10 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         if (questIcon != null) childVisuals = questIcon.transform;
 
         // If a reward ID is required, hide immediately to prevent flickering
-        if (!string.IsNullOrEmpty(npcId))
-        {
-            SetVisualsActive(false);
-        }
+        // if (!string.IsNullOrEmpty(npcId))
+        // {
+        //     SetVisualsActive(false);
+        // }
     }
     private void Reset()
     {

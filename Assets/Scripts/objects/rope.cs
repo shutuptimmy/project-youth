@@ -15,8 +15,8 @@ public class rope : MonoBehaviour
     private float maxRopeDistance;
 
     // Physical X position limits where the flag can move.
-    [SerializeField] private float minHorizontalX = -.7f;
-    [SerializeField] private float maxHorizontalX = .7f;
+    [SerializeField] private float minMaxHorizontalX = .7f;
+    // [SerializeField] private float maxHorizontalX = .7f;
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class rope : MonoBehaviour
 
         float normalizedValue = Mathf.InverseLerp(-maxRopeDistance, maxRopeDistance, currentRopeValue);
 
-        float targetX = Mathf.Lerp(minHorizontalX, maxHorizontalX, normalizedValue);
+        float targetX = Mathf.Lerp(-minMaxHorizontalX, minMaxHorizontalX, normalizedValue);
 
         Vector2 pos = transform.position;
         pos.x = Mathf.Lerp(pos.x, targetX, 0.1f);

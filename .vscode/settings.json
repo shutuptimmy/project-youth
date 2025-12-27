@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "project-youth-patched.sln"
+    "dotnet.defaultSolution": "project-youth-updated.sln"
 }

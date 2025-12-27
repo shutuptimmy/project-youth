@@ -90,7 +90,6 @@ public class PlayerController : MonoBehaviour, IDataPersistence
             animator.SetFloat(lastVertical, velocity.y);
         }
 
-        // animator.SetFloat("speed", (rb.velocity != Vector2.zero) ? 1 : 0);
         if (rb.velocity.x < 0)
         {
             sprite.flipX = true;
@@ -98,6 +97,27 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         else if (rb.velocity.x > 0)
         {
             sprite.flipX = false;
+        }
+    }
+
+    // for tug of war
+    public void setAnimation(int status)
+    {
+        string spriteGender = playerGender == 0 ? "Boy" : "Girl";
+
+        switch (status)
+        {
+            // Move
+            case 0:
+                animator.Play("player" + spriteGender + "SideWalk");
+                break;
+            // Idle
+            case 1:
+                animator.Play("player" + spriteGender + "SideIdle");
+                break;
+            default:
+                Debug.Log("setAnimation out of bounds: " + status);
+                break;
         }
     }
 

@@ -33,10 +33,10 @@ public class boxGoalTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider == specificBox.GetCollider2D())
+        if (collider.Equals(specificBox.GetCollider2D()))
         {
             visualSprite.SetActive(false);
-            this.gameObject.SetActive(false);
+            // this.gameObject.SetActive(false);
             specificBox.Release();
             puzzleManager.puzzleComplete();
         }

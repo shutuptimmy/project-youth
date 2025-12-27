@@ -46,7 +46,10 @@ public class playerManager : MonoBehaviour, IDataPersistence
             gameEventsManager.instance.playerEvents.PlayerLevelChange(currentLevel);
         }
         gameEventsManager.instance.playerEvents.PlayerExperienceChange(currentExperience);
+        dataPersistenceManager.instance.saveGame();
     }
+
+
 
     public void loadData(gameData data)
     {

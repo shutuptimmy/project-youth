@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class pushableBox : InteractableBase
+public class pushableBox : InteractableBase, IDraggable
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private BoxCollider2D mainCollider;
@@ -17,7 +17,6 @@ public class pushableBox : InteractableBase
     void Reset()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // rb = GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 

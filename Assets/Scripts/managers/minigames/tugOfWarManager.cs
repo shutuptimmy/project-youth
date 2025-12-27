@@ -8,16 +8,18 @@ using UnityEngine.UI;
 public class tugOfWarManager : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private rope rope;
-    [SerializeField] private GameObject gameplayGameObject;
-    public tugOfWarQuestStep tugOfWarQuestStep;
-    private bool isQuestStepPresent;
-
-    [Header("Main UI Panel")]
     [SerializeField] private GameObject mainContentParent;
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private TextMeshProUGUI timerText;
     public GameObject[] choiceButtons;
+    [SerializeField] private GameObject gameplayGameObject;
+    [SerializeField] private rope rope;
+    [SerializeField] private PlayerController playerObject;
+    [SerializeField] private GameObject npcObject;
+
+    [Header("Quest Step")]
+    [SerializeField] private tugOfWarQuestStep tugOfWarQuestStep;
+    private bool isQuestStepPresent;
 
 
     [Header("Menu Panel")]
@@ -29,30 +31,28 @@ public class tugOfWarManager : MonoBehaviour
     private List<Question> availableQuestions;
     private Question currentQuestion;
 
-
-    [Header("Game Manager")]
-    [SerializeField] private float questionHoldTime = 1.3f;
-    [SerializeField] private float pullValue = 0.1f;
-    [SerializeField] private float rivalPullStrength = 0.03f;
+    [Header("Game Config")]
+    [SerializeField] private float questionHoldTime = 0.7f;
+    [SerializeField] private float pullValue = 0.3f;
+    [SerializeField] private float rivalPullStrength = 0.05f;
     [SerializeField] private float maxRopeDistance = 1f;
-    private bool playerHasWon = false;
     private float timeElapsed;
     private bool isGameActive = false;
     private bool isQuestionActive = false;
+    private bool playerHasWon = false;
 
     // Hide the minigame before the crossfade
     IEnumerator Start()
     {
+        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
         mainContentParent.SetActive(false);
         gameplayGameObject.SetActive(false);
 
-        gameEventsManager.instance.sceneEvents.playCrossFade();
-        gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.MINIGAME);
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
+        gameEventsManager.instance.sceneEvents.startMinigame();
         yield return new WaitForSeconds(1f);
 
         isQuestStepPresent = tugOfWarQuestStep == null;
-        Debug.Log(tugOfWarQuestStep);
+        Debug.Log("Quest Step Status: " + tugOfWarQuestStep);
 
         showStartMenu();
     }
@@ -81,7 +81,7 @@ public class tugOfWarManager : MonoBehaviour
         minigameMenuPanelUI.activateMenu(
             title,
             status,
-            "Final Time: " + Mathf.FloorToInt(timeElapsed) + "s",
+            title == "VICTORY!" ? "Time Record: " + Mathf.FloorToInt(timeElapsed) + "s" : "",
             () => startMinigame(),
             "Retry",
             () => quitMinigameButton(),
@@ -98,11 +98,6 @@ public class tugOfWarManager : MonoBehaviour
         }
     }
 
-    public float getMaxRopeDistance()
-    {
-        return maxRopeDistance;
-    }
-
     public void startMinigame()
     {
         mainContentParent.SetActive(true);
@@ -115,6 +110,9 @@ public class tugOfWarManager : MonoBehaviour
 
         availableQuestions = questions.ToList();
 
+        // TODO: Make the player and npc walk to look like they're pulling the rope
+        playerObject.setAnimation(0);
+
         SetCurrentQuestion();
         StartCoroutine(AIAutoPull());
     }
@@ -122,19 +120,46 @@ public class tugOfWarManager : MonoBehaviour
     IEnumerator quitMinigame()
     {
         Debug.Log("suceess");
-        gameEventsManager.instance.sceneEvents.playCrossFade();
+        gameEventsManager.instance.sceneEvents.quitMinigame();
         yield return new WaitForSeconds(1f);
+
+        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
+
 
         tugOfWarQuestStep?.playerWon();
 
-        gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.DEFAULT);
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
         Destroy(gameObject);
     }
 
     public void quitMinigameButton()
     {
         StartCoroutine(quitMinigame());
+    }
+
+    void minigameComplete(bool playerWon)
+    {
+        playerObject.setAnimation(1);
+
+        isGameActive = false;
+        isQuestionActive = false;
+        StopCoroutine(AIAutoPull());
+        availableQuestions.Clear();
+
+        mainContentParent.SetActive(false);
+
+        // reset components
+        questionText.text = "";
+        for (int i = 0; i < choiceButtons.Length; i++)
+        {
+            choiceButtons[i].SetActive(false);
+        }
+
+        if (playerWon)
+        {
+            playerHasWon = true;
+            ShowResultMenu("VICTORY!", "You pulled the rope to your side!");
+        }
+        else ShowResultMenu("DEFEAT!", "Your rival overpowered you. Try again!");
     }
 
     void SetCurrentQuestion()
@@ -204,7 +229,7 @@ public class tugOfWarManager : MonoBehaviour
 
         // Clamp the new value so it doesn't exceed the win/lose bounds
         rope.currentRopeValue = Mathf.Clamp(rope.currentRopeValue + (pullValue * direction), -maxRopeDistance, maxRopeDistance);
-        CheckForVictory();
+        checkGameState();
     }
 
     IEnumerator AIAutoPull()
@@ -216,44 +241,21 @@ public class tugOfWarManager : MonoBehaviour
             if (isQuestionActive)
             {
                 rope.currentRopeValue = Mathf.Clamp(rope.currentRopeValue + rivalPullStrength, -maxRopeDistance, maxRopeDistance);
-                CheckForVictory();
+                checkGameState();
             }
         }
     }
 
-    private void CheckForVictory()
+    void checkGameState()
     {
         float value = rope.currentRopeValue;
 
         if (value <= -maxRopeDistance) minigameComplete(true);
         else if (value >= maxRopeDistance) minigameComplete(false);
-        else Debug.Log("huh? wots dis?");
+        else Debug.Log("still pullin...");
     }
 
-    void minigameComplete(bool playerWon)
-    {
-        isGameActive = false;
-        isQuestionActive = false;
-        StopCoroutine(AIAutoPull());
-        availableQuestions.Clear();
-        mainContentParent.SetActive(false);
 
-        // reset components
-        questionText.text = "";
-        for (int i = 0; i < choiceButtons.Length; i++)
-        {
-            choiceButtons[i].SetActive(false);
-        }
-
-        if (playerWon)
-        {
-            playerHasWon = true;
-            ShowResultMenu("VICTORY!", "You successfully pulled the rope to your side!");
-        }
-        else ShowResultMenu("DEFEAT!", "Your rival overpowered you. Try again!");
-
-
-    }
     IEnumerator WaitAndNextQuestion(bool playerWasCorrect)
     {
         isQuestionActive = false;
@@ -307,4 +309,8 @@ public class tugOfWarManager : MonoBehaviour
         }
     }
 
+    public float getMaxRopeDistance()
+    {
+        return maxRopeDistance;
+    }
 }

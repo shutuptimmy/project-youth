@@ -24,7 +24,6 @@ I heard you have learned something in the module. #name:ClassmateBeetle
 Mind helping me out?
     + [Yeah]
         ~ startQuest(helpingHandId)
-        -> inProgress
     + [Not now.]
         Not now. #name:You
 - -> END
