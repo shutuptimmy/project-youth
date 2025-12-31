@@ -34,14 +34,8 @@ public class sortingGoal : MonoBehaviour
         if (collider.Equals(box.GetCollider2D()))
         {
             // Verify if the type matches
-            if (box.data.type == goalType)
-            {
-                manager.correctGoal(box);
-            }
-            else
-            {
-                manager.wrongGoal(box);
-            }
+            if (box.data.type == goalType) manager.correctGoal(box);
+            else manager.wrongGoal(box);
         }
     }
 }

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea3d4114a9126d414a4f9a15beb29036, type: 3}
-  m_Name: helpingHand
+  m_Name: tugOfWar
   m_EditorClassIdentifier: 
-  <id>k__BackingField: helpingHand
-  displayName: Help by sorting the boxes
+  <id>k__BackingField: tugOfWar
+  displayName: Learning The Force
   lvlReq: 0
   questPrerequisites: []
   questStepPrefabs:
-  - {fileID: 2127113102418146692, guid: b468c437aea216049a6237b944f2bb7d, type: 3}
-  expReward: 125
+  - {fileID: 5219919465226866202, guid: 80c08ab32a753d609b256ae8748dca8a, type: 3}
+  expReward: 110

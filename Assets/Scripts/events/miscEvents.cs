@@ -26,4 +26,10 @@ public class miscEvents
     {
         onShowLessonPanel?.Invoke(lesson);
     }
+
+    public event Action onPlayerTookDamage;
+    public void playerTookDamage()
+    {
+        onPlayerTookDamage?.Invoke();
+    }
 }

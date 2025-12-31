@@ -6,6 +6,7 @@ INCLUDE chapter1/cutscenes/newDayInSchool.ink
 INCLUDE chapter1/quests/preTestQuest.ink
 INCLUDE chapter1/quests/moduleQuest.ink
 INCLUDE chapter1/quests/helpingHandQuest.ink
+INCLUDE chapter1/quests/gravitationalResearchQuest.ink
 INCLUDE chapter1/quests/aftermathQuest.ink
 
 

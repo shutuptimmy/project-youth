@@ -162,8 +162,97 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &108954348
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3882905895954330721, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_Name
+      value: sortingBoxesMinigame
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330722, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330723, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: timeLimit
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330723, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: totalBoxes
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905895954330723, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: helpingHandQuestStep
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3882905896698698461, guid: df70bf877af65f16b8d7e1195cb7c0ad,
+        type: 3}
+      propertyPath: m_Name
+      value: gameplayObjects
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: df70bf877af65f16b8d7e1195cb7c0ad, type: 3}
 --- !u!1 &321562845
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +331,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &868983708
 GameObject:
@@ -430,7 +519,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5731195176282217718
 PrefabInstance:
@@ -459,10 +548,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: helpingHandQuest
       objectReference: {fileID: 0}
+    - target: {fileID: 2127113102418146692, guid: b468c437aea216049a6237b944f2bb7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2960181804237115172, guid: b468c437aea216049a6237b944f2bb7d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2960181804237115172, guid: b468c437aea216049a6237b944f2bb7d,
         type: 3}

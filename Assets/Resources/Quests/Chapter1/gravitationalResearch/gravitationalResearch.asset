@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea3d4114a9126d414a4f9a15beb29036, type: 3}
-  m_Name: tugOfWar
+  m_Name: gravitationalResearch
   m_EditorClassIdentifier: 
-  <id>k__BackingField: tugOfWar
-  displayName: Learning The Force
+  <id>k__BackingField: gravitationalResearch
+  displayName: Do experiments with April
   lvlReq: 0
   questPrerequisites: []
   questStepPrefabs:
-  - {fileID: 5219919465226866202, guid: 80c08ab32a753d609b256ae8748dca8a, type: 3}
-  expReward: 10
+  - {fileID: 1979124687485870654, guid: 41cfe47f93ce4c8e5b54d6aa7cfa7545, type: 3}
+  expReward: 150

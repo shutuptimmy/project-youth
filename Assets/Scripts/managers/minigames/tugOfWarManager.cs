@@ -14,7 +14,7 @@ public class tugOfWarManager : MonoBehaviour
     public GameObject[] choiceButtons;
     [SerializeField] private GameObject gameplayGameObject;
     [SerializeField] private rope rope;
-    [SerializeField] private PlayerController playerObject;
+    [SerializeField] private PlayerController minigamePlayer;
     [SerializeField] private GameObject npcObject;
 
     [Header("Quest Step")]
@@ -44,11 +44,10 @@ public class tugOfWarManager : MonoBehaviour
     // Hide the minigame before the crossfade
     IEnumerator Start()
     {
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
         mainContentParent.SetActive(false);
         gameplayGameObject.SetActive(false);
-
         gameEventsManager.instance.sceneEvents.startMinigame();
+
         yield return new WaitForSeconds(1f);
 
         isQuestStepPresent = tugOfWarQuestStep == null;
@@ -71,6 +70,8 @@ public class tugOfWarManager : MonoBehaviour
             () => quitMinigameButton(),
             isQuestStepPresent
         );
+        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
+        minigamePlayer.transform.position = new Vector2(-2f, 0.4866666f);
     }
 
     void ShowResultMenu(string title, string status)
@@ -111,7 +112,7 @@ public class tugOfWarManager : MonoBehaviour
         availableQuestions = questions.ToList();
 
         // TODO: Make the player and npc walk to look like they're pulling the rope
-        playerObject.setAnimation(0);
+        minigamePlayer.setAnimation(0);
 
         SetCurrentQuestion();
         StartCoroutine(AIAutoPull());
@@ -138,7 +139,7 @@ public class tugOfWarManager : MonoBehaviour
 
     void minigameComplete(bool playerWon)
     {
-        playerObject.setAnimation(1);
+        minigamePlayer.setAnimation(1);
 
         isGameActive = false;
         isQuestionActive = false;
