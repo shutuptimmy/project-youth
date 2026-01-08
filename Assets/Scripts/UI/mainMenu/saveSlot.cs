@@ -56,10 +56,10 @@ public class saveSlot : MonoBehaviour
             switch (data.playerGender)
             {
                 case 0:
-                    playerPortrait.Play("playerBoyNormal");
+                    playerPortrait.Play("mcBoy");
                     break;
                 case 1:
-                    playerPortrait.Play("playerGirlNormal");
+                    playerPortrait.Play("mcGirl");
                     break;
                 default:
                     playerPortrait.Play(null);

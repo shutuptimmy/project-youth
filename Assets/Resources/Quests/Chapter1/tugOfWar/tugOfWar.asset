@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: tugOfWar
   displayName: Learning The Force
-  lvlReq: 0
+  lvlReq: 2
   questPrerequisites: []
   questStepPrefabs:
   - {fileID: 5219919465226866202, guid: 80c08ab32a753d609b256ae8748dca8a, type: 3}
-  expReward: 110
+  expReward: 80

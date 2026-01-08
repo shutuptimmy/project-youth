@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 4452185016506266856, guid: cd9341a42692275d7b22a92f337e541c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -145,6 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c1fd937a1c4570283488fa6a8bfcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallingApplesManager: {fileID: 0}
+  dashTrail: {fileID: 0}
+  dashSpeed: 0
+  dashDuration: 0
+  dashCooldown: 0
 --- !u!95 &109465528
 Animator:
   serializedVersion: 3

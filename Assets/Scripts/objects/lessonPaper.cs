@@ -5,8 +5,8 @@
 public class lessonPaper : InteractableBase, IDataPersistence
 {
     [Header("Components")]
-    [SerializeField] private string paperId;
     [SerializeField] private lessonInfoSO lessonInfo;
+    private string paperId;
     private SpriteRenderer sprite;
     private BoxCollider2D boxCollider;
     private bool isCollectible = false;
@@ -21,6 +21,7 @@ public class lessonPaper : InteractableBase, IDataPersistence
 
     private void Start()
     {
+        paperId = lessonInfo.lessonId;
         if (!string.IsNullOrEmpty(paperId))
         {
             SetVisualsActive(false);
@@ -75,6 +76,8 @@ public class lessonPaper : InteractableBase, IDataPersistence
 
     public void loadData(gameData data)
     {
+        paperId = lessonInfo.lessonId;
+
         if (!string.IsNullOrEmpty(paperId))
         {
             bool isRead = data.unlockedRewardIds.Contains(paperId + "_READ");

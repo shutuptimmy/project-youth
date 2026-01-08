@@ -63,15 +63,13 @@ public class tugOfWarManager : MonoBehaviour
 
         minigameMenuPanelUI.activateMenu(
             "Tug of War",
-            "Answer questions correctly and quickly to pull the rope to your side!",
+            "Choose answers that are related to contact force to pull the rope to your side!",
             "Best Time: ", // + GetHighScore()
             () => startMinigame(),
             "Start",
             () => quitMinigameButton(),
             isQuestStepPresent
         );
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
-        minigamePlayer.transform.position = new Vector2(-2f, 0.4866666f);
     }
 
     void ShowResultMenu(string title, string status)
@@ -113,6 +111,8 @@ public class tugOfWarManager : MonoBehaviour
 
         // TODO: Make the player and npc walk to look like they're pulling the rope
         minigamePlayer.setAnimation(0);
+        // npcObject
+        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
 
         SetCurrentQuestion();
         StartCoroutine(AIAutoPull());

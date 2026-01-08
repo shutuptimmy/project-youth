@@ -1,13 +1,13 @@
 ﻿=== aftermathQuest ===
 // quest ids (questId + "Id" for var name)
 VAR aftermathId = "aftermath"
-VAR newguy = true
+// VAR newguy = true
 
 // quest states (questId + "State" for var name)
 VAR aftermathState = "REQ_NOT_MET"
 
 { aftermathState :
-	- "REQ_NOT_MET": -> reqNotMet
+//	- "REQ_NOT_MET": -> reqNotMet
 	- "CAN_START": -> canStart
 	- "IN_PROGRESS": -> inProgress
 	- "CAN_FINISH": -> canFinish
@@ -15,6 +15,7 @@ VAR aftermathState = "REQ_NOT_MET"
 	- else: -> END
 	}
 
+/*
 = reqNotMet
 {newguy == false: -> familiar | -> new }
 
@@ -28,19 +29,18 @@ Welcome to your new school. Just head over to that door, which is your classroom
 Need something? I'll keep an eye out on here. #name:Student
 He's late. I don't know where he went.
 -> END
-
+*/
 
 = canStart
-Seems everything's settled. Wanna skip to dismissal? #name:Student
+Want to finish the day and reflect all your studies?
     + [Yes]
         ~ startQuest(aftermathId)
-        -> END
     + [Not yet]
-        Okay. Let me know.
-        -> END
+
+- -> END
 
 = inProgress
-School's out. Go home and get some rest. #name:Student
+Time to head back home.
 -> END
 
 = canFinish

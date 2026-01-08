@@ -5,7 +5,7 @@ VAR gravitationalResearchId = "gravitationalResearch"
 // quest states (questId + "State" for var name)
 VAR gravitationalResearchState = "REQ_NOT_MET"
 
-{ tugOfWarState :
+{ gravitationalResearchState :
 	- "REQ_NOT_MET": -> reqNotMet
 	- "CAN_START": -> canStart
 	- "IN_PROGRESS": -> inProgress
@@ -15,17 +15,32 @@ VAR gravitationalResearchState = "REQ_NOT_MET"
 	}
 
 = reqNotMet
-sumthin aint right. fix it via scripts
--> END
+{preTestTimeState:
+	- "FINISHED":
+		Hey, April. I was hoping if I can copy your notes that I've missed yesterday. #name:You #char:you
+		... #name:April #char:april
+		..April? *Pokes her* #name:You #char:you
+		Wha- huh? Oh, {playerName}. I'm currently reading my notes. Come back later. #name:April #char:april
+		-> END
+	- else:
+		Hey, April. #name:You #char:you
+		... #name:April #char:april
+		(She seems too focused on her book.) #name:You #char:you
+		Hey, {playerName}. #name:April #char:april
+		-> END
+}
 
 = canStart
-well welll well. #name:Croak #char:npcGood 
-rise n shine ya lazy bum.
-start packin up.
-+ [Fine fine]
-	~ startQuest(gravitationalResearchId)
-+ [No.]
-	no. #name:You #char:default
+	Hey, April. Can you help me with something? #name:You #char:you
+	I heard everything. #name:April #char:april
+	You do? #name:You #char:you
+	Mhm. However, I would also need help with my studies. #name:April #char:april
+	Exchanging each other's favor is a fair deal. Agree?
+	+ [Sounds fair]
+		Great. Come with me at the rooftops.
+		~ startQuest(gravitationalResearchId)
+	+ [Let me think of it.]
+		If you made up your mind, come talk to me.
 - -> END
 
 = inProgress
@@ -33,10 +48,15 @@ Sumthin else's missin's before I go. #name:You
 -> END
 
 = canFinish
-Mew, good job. You're ready to go #name:Cat
-~ finishQuest(gravitationalResearchId)
+	Ugh, my head. #name:You #char:mcBoy
+	Thanks for being my experi- uh, helping with my studies. #name:April #char:april
+	Here's the note you've ask for.
+	~itemReward("forceTypeNonContact")
+	Oh, and would you like an apple?
+	Uh, No. My head is spinning. #name:You #char:you
+	~finishQuest(gravitationalResearchId)
 -> END
 
 = finished
-meow. #name:Cat
+	Thanks again. Now, I have plenty of ideas to work with. #name:April #char:april
 -> END

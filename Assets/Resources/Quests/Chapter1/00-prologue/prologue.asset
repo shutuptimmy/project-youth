@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: prologue
   displayName: Prologue
-  lvlReq: 1
+  lvlReq: 0
   questPrerequisites: []
   questStepPrefabs:
   - {fileID: 7440851333161115151, guid: 1ad5e93f8cc1593709dd0f9d41aca375, type: 3}
-  expReward: 100
+  expReward: 20

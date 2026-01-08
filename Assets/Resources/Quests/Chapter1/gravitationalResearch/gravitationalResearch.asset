@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: gravitationalResearch
   displayName: Do experiments with April
-  lvlReq: 0
+  lvlReq: 3
   questPrerequisites: []
   questStepPrefabs:
   - {fileID: 1979124687485870654, guid: 41cfe47f93ce4c8e5b54d6aa7cfa7545, type: 3}

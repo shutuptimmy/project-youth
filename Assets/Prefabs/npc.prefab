@@ -189,8 +189,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8445423815514303524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.667, y: -0.511, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 9124751979224153080}
   - {fileID: 8445423815609345202}
@@ -307,8 +307,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8445423815609345213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.189, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.23, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 8445423814027791747}
   - {fileID: 8445423813945044639}
@@ -427,22 +427,22 @@ PrefabInstance:
     - target: {fileID: 834729033738279196, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 834729033738279196, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 834729033738279196, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.12
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 834729033738279196, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.115
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 834729033738279196, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}
@@ -491,8 +491,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 834729033738279199, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 834729033738279199, guid: aa38c2c3643fe4292ad90ad136a13b41,
+        type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493949414498634367, guid: aa38c2c3643fe4292ad90ad136a13b41,
+        type: 3}
+      propertyPath: isNpc
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5493949414498634367, guid: aa38c2c3643fe4292ad90ad136a13b41,
         type: 3}

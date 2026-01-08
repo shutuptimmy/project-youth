@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class visualCue : MonoBehaviour
 {
-    [SerializeField] private int cueNumber;
+    [SerializeField] private bool isNpc;
     [SerializeField] private Animator animator;
 
     void Update()
     {
         if (this.gameObject.activeInHierarchy)
         {
-            animator.SetInteger("cue", cueNumber);
+            animator.SetBool("isNpc", isNpc);
         }
     }
+
+
 }

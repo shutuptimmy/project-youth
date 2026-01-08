@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd24cc548d23ba6aa1975c4f1100615, type: 3}
   m_Name: 01-ForcesIntroduction
   m_EditorClassIdentifier: 
+  lessonId: introForce
   lessonTitle: Introduction to Forces
+  lessonImage: {fileID: 0}
   lessonDesc: A Force is a push and pull that can cause object to change its speed,
     direction, and shape.
-  vocabularyWordId: VOCAB_TERM_01

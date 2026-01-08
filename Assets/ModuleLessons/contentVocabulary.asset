@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd24cc548d23ba6aa1975c4f1100615, type: 3}
+  m_Name: contentVocabulary
+  m_EditorClassIdentifier: 
+  lessonId: contentVocab
+  lessonTitle: Content Vocabulary
+  lessonImage: {fileID: 0}
+  lessonDesc: 'Force - A push and pull that can cause an object to change its speed,
+    direction, and shape.
+
+    Contact Force - Forces that are equal in strength
+    and opposite in direction, resulting in no net force on an object.
+
+    Non-Contact
+    Force - Forces that act on an object without physical contact, such as gravity
+    or magnetism.
+
+    Balanced Force - Forces that act on an object through direct
+    physical contact, such as friction or normal force.'

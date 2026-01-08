@@ -54,7 +54,7 @@ PrefabInstance:
     - target: {fileID: 2093017874647372109, guid: 392093757180c70f28f24fa9a0941d2d,
         type: 3}
       propertyPath: m_Name
-      value: dodgeFallingApplesMinigame
+      value: fallingApplesMinigame
       objectReference: {fileID: 0}
     - target: {fileID: 2093017874647372110, guid: 392093757180c70f28f24fa9a0941d2d,
         type: 3}

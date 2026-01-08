@@ -1,7 +1,7 @@
 ﻿using Ink.Runtime;
 using UnityEngine;
 
-public class dialogueManager : MonoBehaviour
+public class dialogueManager : MonoBehaviour, IDataPersistence
 {
     [Header("Ink Story")]
     [SerializeField] private TextAsset inkJSON;
@@ -10,6 +10,9 @@ public class dialogueManager : MonoBehaviour
     private int currentChoiceIndex = -1;
     private inkExternalFunctions inkExternalFunctions;
     private inkDialogueVariables inkDialogueVariables;
+
+    // for ink variables
+    private string playerName;
 
     // this instance is only required for cutscene's cross-script ref
     public static dialogueManager instance { get; private set; }
@@ -124,8 +127,6 @@ public class dialogueManager : MonoBehaviour
         {
             string dialogueLine = story.Continue();
 
-            // handleTags(story.currentTags);
-
             while (isLineBlank(dialogueLine) && story.canContinue)
             {
                 dialogueLine = story.Continue();
@@ -169,4 +170,12 @@ public class dialogueManager : MonoBehaviour
     {
         return dialogueLine.Trim().Equals("") || dialogueLine.Trim().Equals("\n");
     }
+
+    public void loadData(gameData data)
+    {
+        this.playerName = data.playerName;
+        inkDialogueVariables.updateVarsState("playerName", new StringValue(this.playerName));
+    }
+
+    public void saveData(gameData data) { }
 }

@@ -5,7 +5,6 @@ public class apple : MonoBehaviour
     private Rigidbody2D rb;
     private float moveSpeed;
     private float rotateSpeed;
-    // private float timeLimit = 3f;
 
     private void Awake()
     {
@@ -16,6 +15,9 @@ public class apple : MonoBehaviour
     {
         moveSpeed = speed;
         rotateSpeed = Random.Range(-100f, 100f);
+
+        // Reset rotation to zero when reused from pool
+        transform.rotation = Quaternion.identity;
     }
 
     private void Update()

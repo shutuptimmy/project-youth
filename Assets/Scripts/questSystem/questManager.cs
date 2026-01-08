@@ -115,13 +115,20 @@ public class questManager : MonoBehaviour, IDataPersistence
             changeQuestState(quest.info.id, questState.CAN_FINISH);
         }
     }
+
     private void finishQuest(string id)
     {
         Debug.Log("finish quest: " + id);
         quest quest = getQuestById(id);
         claimRewards(quest);
         changeQuestState(quest.info.id, questState.FINISHED);
+    }
 
+    private void revertQuest(string id)
+    {
+        Debug.Log("revert quest: " + id);
+        quest quest = getQuestById(id);
+        changeQuestState(quest.info.id, questState.CAN_START);
     }
 
     private void claimRewards(quest quest)

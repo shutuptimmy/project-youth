@@ -29,8 +29,8 @@ time to move boxes
 -> END
 
 = canFinish
-Mew. Great job. You can now leave the apartment.
-Thanks.. err.
+Mew. Great job. You can now leave the apartment. #name:Cat #char:bluecar
+Thanks.. err. #name:You #char:you
 ~finishQuest(prologueId)
 -> END
 
@@ -43,14 +43,14 @@ hey.
 -> END
 
 === prologueBox ===
-Huh. I forgot about that box.
+Huh. I forgot about that box. #name:You #char:you
 Gotta move that aside before opening it..
 ~startQuest(prologueId)
 -> END
 
 === prologueBoxCar ===
-Hm- oh, what the!? #name:You
-Mew. Kept ya waitin, huh? #name:BlueCar
+Hm- oh, what the!? #name:You #char:you
+Mew. Kept ya waitin, huh? #name:Cat #char:bluecar
 ~itemReward("introForce")
 Here's a piece of paper as a thank you.
 ~advanceQuest(prologueId)

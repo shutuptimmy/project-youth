@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public void setAnimation(int status)
     {
         string spriteGender = playerGender == 0 ? "Boy" : "Girl";
+        Debug.Log("SpriteGender: " + spriteGender + ". PlayerGender: " + playerGender);
 
         switch (status)
         {

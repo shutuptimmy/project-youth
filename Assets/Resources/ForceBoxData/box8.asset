@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: box8
   m_EditorClassIdentifier: 
   boxName: Pulling
-  picture: {fileID: 21300000, guid: bca2758dba6d44e748a651fbc8c31fd0, type: 3}
+  picture: {fileID: 21300000, guid: faecb8bc540d4a9b8894027d31bd2804, type: 3}
   type: 0

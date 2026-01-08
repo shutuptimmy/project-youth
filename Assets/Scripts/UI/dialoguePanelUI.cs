@@ -4,7 +4,7 @@ using Ink.Runtime;
 using TMPro;
 using UnityEngine;
 
-public class dialoguePanelUI : MonoBehaviour
+public class dialoguePanelUI : MonoBehaviour, IDataPersistence
 {
     [Header("Components")]
     [SerializeField] private GameObject contentParent;
@@ -12,6 +12,8 @@ public class dialoguePanelUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private dialogueChoiceButton[] choiceButtons;
     [SerializeField] private Animator portraitAnimator;
+
+    private string playerGender;
 
     private const string CHAR_NAME = "name";
     private const string CHAR_PORTRAIT = "char";
@@ -76,7 +78,8 @@ public class dialoguePanelUI : MonoBehaviour
                     break;
 
                 case CHAR_PORTRAIT:
-                    portraitAnimator.Play(tagValue);
+                    if (tagValue == "you") portraitAnimator.Play(playerGender);
+                    else portraitAnimator.Play(tagValue);
                     break;
 
                 default:
@@ -124,7 +127,24 @@ public class dialoguePanelUI : MonoBehaviour
     {
         dialogueText.text = "";
         dialogueName.text = "";
-        portraitAnimator = null;
+        // portraitAnimator = null;
     }
 
+    public void loadData(gameData data)
+    {
+        switch (data.playerGender)
+        {
+            case 0:
+                playerGender = "mcBoy";
+                break;
+            case 1:
+                playerGender = "mcGirl";
+                break;
+            default:
+                Debug.LogWarning("This gender value doesn't exist: " + data.playerGender);
+                break;
+        }
+    }
+
+    public void saveData(gameData data) { }
 }

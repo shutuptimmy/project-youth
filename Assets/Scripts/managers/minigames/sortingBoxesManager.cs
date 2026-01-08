@@ -20,11 +20,6 @@ public class sortingBoxesManager : MonoBehaviour
     [Header("Menu Panel")]
     [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
-    // [Header("Lives UI")]
-    // [SerializeField] private Image[] heartImages; // 3 Heart Image gameobjects
-    // [SerializeField] private Sprite fullHeartSprite;
-    // [SerializeField] private Sprite emptyHeartSprite;
-
     [Header("Boxes Config")]
     [SerializeField] private Transform boxesParent;
     private List<BoxInitialState> originalBoxStates = new List<BoxInitialState>();
@@ -41,11 +36,9 @@ public class sortingBoxesManager : MonoBehaviour
     [SerializeField] private Image boxImageDisplay;
 
     [Header("Game Config")]
-    // [SerializeField] private int maxLives = 3;
     [SerializeField] private float timeLimit = 61f;
     [SerializeField] private float timeBonus = 5f;
     [SerializeField] private int totalBoxes = 10;
-    // private int currentLives;
 
     private float timeElapsed;
     private int playerScore;
@@ -77,6 +70,7 @@ public class sortingBoxesManager : MonoBehaviour
     IEnumerator Start()
     {
         gameplayGameObject.SetActive(false);
+        mainContentParent.SetActive(false);
 
         gameEventsManager.instance.sceneEvents.startMinigame();
         yield return new WaitForSeconds(1f);
@@ -90,7 +84,6 @@ public class sortingBoxesManager : MonoBehaviour
     void showStartMenu()
     {
         gameplayGameObject.SetActive(true);
-        mainContentParent.SetActive(false);
 
         minigameMenuPanelUI.activateMenu(
             "Sorting the Boxes",
@@ -106,7 +99,6 @@ public class sortingBoxesManager : MonoBehaviour
     void ShowResultMenu(string title, string status)
     {
         bool showQuit = isQuestStepPresent || playerHasWon;
-        // mainContentParent.SetActive(false);
 
         minigameMenuPanelUI.activateMenu(
             title,
@@ -135,14 +127,12 @@ public class sortingBoxesManager : MonoBehaviour
 
         // reset game state when retry
         boxesRemaining = totalBoxes;
-        // currentLives = maxLives;
         playerScore = 0;
         scoreText.text = "Score: " + 0;
         timeElapsed = timeLimit;
         minigamePlayer.transform.position = new Vector2(0, 0);
         isGameActive = true;
         resetBoxes();
-        // updateLivesUI();
 
         gameEventsManager.instance.playerEvents.EnablePlayerMovement();
     }
@@ -227,18 +217,6 @@ public class sortingBoxesManager : MonoBehaviour
         hideBoxDetails();
     }
 
-    // void updateLivesUI()
-    // {
-    //     // Safety check to avoid errors if you forgot to assign hearts in Inspector
-    //     // if (heartImages == null) return;
-
-    //     for (int i = 0; i < heartImages.Length; i++)
-    //     {
-    //         if (i < currentLives) heartImages[i].sprite = fullHeartSprite;
-    //         else heartImages[i].sprite = emptyHeartSprite;
-    //     }
-    // }
-
     public void correctGoal(sortingBox box)
     {
         playerScore += 100 + (int)(timeLimit / timeElapsed);
@@ -247,34 +225,14 @@ public class sortingBoxesManager : MonoBehaviour
         disableBox(box);
 
         boxesRemaining--;
-        // checkGameState();
-
         if (boxesRemaining <= 0) minigameComplete(true);
     }
 
     public void wrongGoal(sortingBox box)
     {
-
-        // currentLives--;
-        // updateLivesUI();
-
         boxesRemaining--;
         disableBox(box);
-
-        // checkGameState();
         if (boxesRemaining <= 0) minigameComplete(true);
 
     }
-
-    // private void checkGameState()
-    // {
-    //     if (timeElapsed < 0f)
-    //     {
-    //         minigameComplete(false);
-    //     }
-    //     else if (boxesRemaining <= 0)
-    //     {
-    //         minigameComplete(true);
-    //     }
-    // }
 }

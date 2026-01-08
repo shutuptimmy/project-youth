@@ -3,13 +3,12 @@
 [CreateAssetMenu(fileName = "New Lesson", menuName = "ScriptableObjects/Lesson Data")]
 public class lessonInfoSO : ScriptableObject
 {
+    public string lessonId;
+
     [Header("Lesson Display")]
     public string lessonTitle;
+    public Sprite lessonImage;
 
-    [TextArea(3, 10)]
+    [TextArea(10, 20)]
     public string lessonDesc;
-
-    [Header("Vocabulary Unlock")]
-    [Tooltip("The unique ID of the vocabulary word unlocked by this lesson.")]
-    public string vocabularyWordId = "VOCAB_TERM_01";
 }

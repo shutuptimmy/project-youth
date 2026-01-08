@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dd24cc548d23ba6aa1975c4f1100615, type: 3}
+  m_Name: 05-ForcesChar
+  m_EditorClassIdentifier: 
+  lessonId: forceChar
+  lessonTitle: Forces Characteristics
+  lessonImage: {fileID: 0}
+  lessonDesc: "Direction - Forces have a specific direction in which they act, either
+    pushing or pulling an object. The direction of a force can change the object\u2019s
+    motion.\nMagnitude - Refers to its strength or size. The greater the magnitude
+    of a force, the greater its effect on an object.\nObjects Involved - Forces always
+    involve at least two objects - the object exerting the force and the object experiencing
+    the force. The properties of these objects, such as their mass, surface area,
+    and texture, can affect the force."

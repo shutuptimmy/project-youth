@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class sortingGoal : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private sortingBoxesManager manager;
     [SerializeField] private IBoxType goalType;
+    [SerializeField] private TextMeshProUGUI goalText;
     [SerializeField] private GameObject visualSprite;
 
 
@@ -13,6 +15,8 @@ public class sortingGoal : MonoBehaviour
     {
         gameEventsManager.instance.miscEvents.onBoxDraggingStateChanged += OnBoxDraggingStateChanged;
         visualSprite.SetActive(false);
+        goalText.gameObject.SetActive(false);
+
     }
 
     private void OnDestroy()
@@ -24,6 +28,7 @@ public class sortingGoal : MonoBehaviour
     {
         // Only show the outline if the correct box is being dragged
         visualSprite.SetActive(isDragging);
+        goalText.gameObject.SetActive(isDragging);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

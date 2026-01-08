@@ -52,7 +52,7 @@ public class newProfileMenu : menu
 
         placeholderName.text = "Jane";
         playerGender = 1;
-        playerPortrait.Play("playerGirlNormal");
+        playerPortrait.Play("mcGirl");
         playerCharacter.Play("playerGirlIdle");
 
     }
@@ -61,7 +61,7 @@ public class newProfileMenu : menu
     {
         placeholderName.text = "John";
         playerGender = 0;
-        playerPortrait.Play("playerBoyNormal");
+        playerPortrait.Play("mcBoy");
         playerCharacter.Play("playerBoyIdle");
     }
 

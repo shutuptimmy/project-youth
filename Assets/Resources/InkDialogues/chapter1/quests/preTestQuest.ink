@@ -1,11 +1,11 @@
 ﻿=== preTestQuest ===
 // quest ids (questId + "Id" for var name)
-VAR preTestId = "preTest"
+VAR preTestTimeId = "preTestTime"
 
 // quest states (questId + "State" for var name)
-VAR preTestState = "REQ_NOT_MET"
+VAR preTestTimeState = "REQ_NOT_MET"
 
-{ preTestState :
+{ preTestTimeState :
 	- "REQ_NOT_MET": -> reqNotMet
 	- "CAN_START": -> canStart
 	- "IN_PROGRESS": -> inProgress
@@ -19,12 +19,18 @@ sumthin aint right. fix it via scripts #name:You
 -> END
 
 = canStart
-You ready to take the preTest? #name:Teacher
-+ [Bring It]
-	~ startQuest(preTestId)
-+ [No.]
-	No. Not Yet. #name:You
-    Very well. Time only moves when you finish this test. #name:Teacher
+	Good morning, {playerName}. You seem to have missed our important lessons yesterday. #name:Teacher #char:default
+	I.. had a fever. And what do you mean by "important lessons"? #name:You #char:you
+	Oh? For tomorrow's exam, of course. Haven't you forgot? #name:Teacher #char:default
+	Ah. Oh.. #name:You #char:you
+	I've told all of you not to absent yesterday, have I not? #name:Teacher #char:default
+	Y-yes, yes you did, Teacher. #name:You #char:you
+	(I shouldn't have stayed up all night binge-watching Two Piece)
+	Since I can't help you with your missed lectures, how about a friendly test? #name:Teacher #char:default
+	I would like to see how much you know about the lessons I have discussed yesterday.
+	+ [I'm ready]
+		~ startQuest(preTestTimeId)
+	+ [Wait a moment]
 - -> END
 
 = inProgress
@@ -32,13 +38,22 @@ I'm supposed to be in a minigame #name:You
 -> END
 
 = canFinish
-	~ finishQuest(preTestId)
-Good job. Ain't that hard, was it? #name:Teacher
-	~ startQuest(moduleId)
-Go read the module I made. It's on your desk.
--> END
+	~ finishQuest(preTestTimeId)
+	Not bad. Now, you know what's going to come out tomorrow. #name:Teacher #char:default
+	Thank you, Teacher. #name:You #char:you
+	Don't thank me, yet. Pray that you will pass during the exam. #name:Teacher #char:default
+	...However, as a teacher, no student should be left uneducated. I'm giving you this note as a chance to redeem yourself.
+	~itemReward("introForce2") 
+	In a meantime, try asking your classmates if they're willing to share notes with you.
+	~itemReward("callADay")
+	-> END
 
 = finished
+And don't even think about skipping class next time, hm? #name:Teacher #char:default
+Eheheh. #name:You #char:you
+-> END
+
+/*
 {moduleState:
 	- "IN_PROGRESS": -> moduleTime
 	- "CAN_FINISH": -> moduleDone
@@ -57,3 +72,4 @@ Try to ask one of the students if they need any help for the lesson.
 = donnydone
 That purple one wants to ask something. #name:Teacher
 -> END
+*/

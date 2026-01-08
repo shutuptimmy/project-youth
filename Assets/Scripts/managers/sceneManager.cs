@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class sceneManager : MonoBehaviour, IDataPersistence
 {
-    private Vector2 newPlayerPos; // for standard location transitions
+    private Vector2 targetedPlayerPos; // for standard location transitions
     public Animator transition { get; private set; }
     public float transitionTime = 1f;
     private string currentBgScene = "";
@@ -17,10 +17,8 @@ public class sceneManager : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
-
         transition = GetComponentInChildren<Animator>();
-
-        SceneManager.sceneUnloaded += onSceneUnloaded;
+        // SceneManager.sceneUnloaded += onSceneUnloaded;
     }
 
     private void OnEnable()
@@ -39,76 +37,70 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.sceneEvents.onQuitMinigame -= ReturnFromMinigame;
     }
 
-    private void OnDestroy()
-    {
+    // private void OnDestroy()
+    // {
+    //     SceneManager.sceneUnloaded -= onSceneUnloaded;
+    // }
 
-        SceneManager.sceneUnloaded -= onSceneUnloaded;
-    }
-    void onSceneUnloaded(Scene scene)
-    {
-        // Find the newly spawned player and set its position
-        GameObject newPlayer = GameObject.FindGameObjectWithTag("Player");
-        if (newPlayer != null)
-        {
-            newPlayer.transform.position = newPlayerPos;
-        }
-        Debug.Log("unloaded event triggered");
-    }
+    // void onSceneUnloaded(Scene scene)
+    // {
+    //     // Find the newly spawned player and set its position
+    //     GameObject newPlayer = GameObject.FindGameObjectWithTag("Player");
+    //     if (newPlayer != null)
+    //     {
+    //         newPlayer.transform.position = targetedPlayerPos;
+    //     }
+    //     Debug.Log("unloaded event triggered");
+    // }
 
     public void changeScene(SceneField scene, Vector2 playerPos)
     {
+        targetedPlayerPos = playerPos;
         StartCoroutine(loadNewScene(scene.SceneName));
-        newPlayerPos = playerPos;
     }
 
-    public void playCrossFade()
+    void playCrossFade()
     {
         transition.Play("FadeIn");
     }
 
+    // load a scene and pos from saved gamedata
     IEnumerator InitializeSceneLoad(string sceneName)
     {
-        // Wait for the end of the frame to ensure all Awake/Start methods have run
-        // after persistentObjects was loaded.
         yield return new WaitForEndOfFrame();
 
-        if (!string.IsNullOrEmpty(sceneName))
-        {
-            Debug.Log($"SCENE MANAGER: Triggering initial load of scene: {sceneName}");
-            // Load the first scene additively, no transition needed yet.
-            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        currentBgScene = sceneName;
 
-            // Set the current tracked scene name.
-            currentBgScene = sceneName;
-            // Set the flag to true to prevent future re-triggers
-            isInitialSceneLoaded = true;
-        }
+        // Set the flag to true to prevent future re-triggers
+        isInitialSceneLoaded = true;
+        dataPersistenceManager.instance.OnSceneLoaded(SceneManager.GetSceneByName(sceneName), LoadSceneMode.Additive);
     }
 
     IEnumerator loadNewScene(string sceneName)
     {
         // play fade
-        playCrossFade();
+        transition.Play("FadeIn");
 
         // wait
         yield return new WaitForSeconds(transitionTime);
 
-        if (!string.IsNullOrEmpty(currentBgScene))
-        {
-            Debug.Log($"SCENE MANAGER: Unloading scene: {currentBgScene}");
-            yield return SceneManager.UnloadSceneAsync(currentBgScene);
-        }
-        // SceneManager.UnloadSceneAsync(currentBgScene);
+        // unload the current scene
+        yield return SceneManager.UnloadSceneAsync(currentBgScene);
 
-        // load scene and set the currentBgScene
-        Debug.Log($"SCENE MANAGER: Loading new scene: {sceneName}");
+        // load and set the current scene
         yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        // update the tracker
         currentBgScene = sceneName;
-        // currentBgScene = scene.SceneName;
-        Debug.Log("updated scene: " + currentBgScene);
+
+        // CRITICAL: Wait for the end of the frame so the Player object is spawned and ready
+        yield return new WaitForEndOfFrame();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            player.transform.position = targetedPlayerPos;
+            Debug.Log($"SCENE MANAGER: Player moved to {targetedPlayerPos} in {sceneName}");
+        }
 
     }
 
@@ -125,7 +117,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     IEnumerator UnloadSceneForMinigame()
     {
         // 1. Fade Out
-        playCrossFade();
+        transition.Play("FadeIn");
         yield return new WaitForSeconds(transitionTime);
 
         // 2. Save Player Position & Current Scene
@@ -149,7 +141,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     IEnumerator ReloadSceneAfterMinigame()
     {
         // 1. Fade Out (Minigame is ending)
-        playCrossFade();
+        transition.Play("FadeIn");
         yield return new WaitForSeconds(transitionTime);
 
         // 2. Load the previous Location Scene
@@ -177,17 +169,12 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     {
         currentBgScene = data.playerLocation;
 
-        if (!isInitialSceneLoaded)
-        {
-            StartCoroutine(InitializeSceneLoad(currentBgScene));
-        }
+        // load the scene once
+        if (!isInitialSceneLoaded) StartCoroutine(InitializeSceneLoad(currentBgScene));
     }
 
     public void saveData(gameData data)
     {
-        if (!string.IsNullOrEmpty(currentBgScene))
-        {
-            data.playerLocation = currentBgScene;
-        }
+        data.playerLocation = currentBgScene;
     }
 }
