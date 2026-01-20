@@ -160,7 +160,7 @@ public class questManager : MonoBehaviour, IDataPersistence
         return idToQuestMap;
     }
 
-    private quest getQuestById(string id)
+    public quest getQuestById(string id)
     {
         quest quest = questMap[id];
         if (quest == null)

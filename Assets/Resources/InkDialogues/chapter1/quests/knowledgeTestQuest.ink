@@ -46,9 +46,9 @@ Sumthin else's missin's before I go. #name:You
 -> END
 
 = canFinish
-Good effort you made. You're learning quicker than I expected. #name:You #char:you
+Good effort you made. You're learning quicker than I expected. #name:Christopher #char:chris
 Does that make me one of Newton's descendant? #name:You #char:you
-Pfft. You got me. #name:You #char:you
+Pfft. You got me. #name:Christopher #char:chris
 ~ finishQuest(knowledgeTestId)
 -> END
 

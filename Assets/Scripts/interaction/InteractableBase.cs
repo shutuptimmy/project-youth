@@ -14,7 +14,7 @@ public abstract class InteractableBase : MonoBehaviour
     protected GameObject player;
     private bool isGlobalDragging = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         // required a defense check in case the global player transitions to minigame player or reverse
         if (player == null)

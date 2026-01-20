@@ -6,6 +6,9 @@ TagManager:
   tags:
   - CrossFade
   - Ground
+  - Planet
+  - RopeFlag
+  - Earth
   layers:
   - Default
   - TransparentFX

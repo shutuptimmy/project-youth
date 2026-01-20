@@ -21,7 +21,8 @@ public class imageQuizManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private GameObject mainContentParent;
-    [SerializeField] private GameObject gameplayGameObject;
+    [SerializeField] private GameObject cameraGameObject;
+    [SerializeField] private GameObject backgroundGameObject;
     [SerializeField] private TextMeshProUGUI descriptionText;
     public Button[] choiceButtons = new Button[4]; // up to 4 buttons
     public Image[] choiceImages = new Image[4]; // up to 4 picture
@@ -56,7 +57,8 @@ public class imageQuizManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        gameplayGameObject.SetActive(false);
+        cameraGameObject.SetActive(false);
+        backgroundGameObject.SetActive(false);
         mainContentParent.SetActive(false);
 
         gameEventsManager.instance.sceneEvents.startMinigame();
@@ -76,7 +78,8 @@ public class imageQuizManager : MonoBehaviour
 
     private void showStartMenu()
     {
-        gameplayGameObject.SetActive(true);
+        cameraGameObject.SetActive(true);
+        backgroundGameObject.SetActive(true);
 
         resultImage.color = Color.clear;
         minigameMenuPanelUI.activateMenu(

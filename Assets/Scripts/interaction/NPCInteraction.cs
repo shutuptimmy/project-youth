@@ -16,6 +16,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
 
     [Header("Quest")]
     [SerializeField] private questInfoSO questInfoForPoint;
+    [SerializeField] private questIcon questIcon;
 
     [Header("Config")]
     [SerializeField] private bool startPoint = true;
@@ -23,22 +24,37 @@ public class NPCInteraction : InteractableBase, IDataPersistence
 
     private string questId;
     private questState currentQuestState;
-    private questIcon questIcon;
-    private Transform childVisuals;
+    // private Transform childVisuals;
 
+    protected override void Awake()
+    {
+        base.Awake();
 
+        sprite = GetComponent<SpriteRenderer>();
+        circleCollider = GetComponent<CircleCollider2D>();
+
+        // FIX 1: Safety Check. Not all NPCs have quests.
+        if (questInfoForPoint != null)
+        {
+            questId = questInfoForPoint.id;
+        }
+    }
     private void Start()
     {
-        questId = questInfoForPoint.id;
-        questIcon = GetComponentInChildren<questIcon>();
+        if (!string.IsNullOrEmpty(questId) && questManager.instance != null)
+        {
+            quest quest = questManager.instance.getQuestById(questId);
 
-        if (questIcon != null) childVisuals = questIcon.transform;
-
-        // If a reward ID is required, hide immediately to prevent flickering
-        // if (!string.IsNullOrEmpty(npcId))
-        // {
-        //     SetVisualsActive(false);
-        // }
+            if (quest != null)
+            {
+                currentQuestState = quest.state;
+                // Force the icon to update right now
+                if (questIcon != null)
+                {
+                    questIcon.setState(currentQuestState, startPoint, finishPoint);
+                }
+            }
+        }
     }
     private void Reset()
     {
@@ -73,7 +89,12 @@ public class NPCInteraction : InteractableBase, IDataPersistence
 
         sprite.enabled = isActive;
         circleCollider.enabled = isActive;
-        childVisuals.gameObject.SetActive(isActive);
+
+        // If the NPC is invisible, the Quest Icon must also be invisible.
+        if (questIcon != null)
+        {
+            questIcon.gameObject.SetActive(isActive);
+        }
     }
 
     void OnEnable()
@@ -98,7 +119,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         if (quest.info.id.Equals(questId))
         {
             currentQuestState = quest.state;
-            questIcon.setState(currentQuestState, startPoint, finishPoint);
+            questIcon?.setState(currentQuestState, startPoint, finishPoint);
             Debug.Log("quest id: " + questId + " updated to state: " + currentQuestState);
         }
     }
@@ -118,6 +139,11 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         {
             bool isUnlocked = data.unlockedRewardIds.Contains(npcId);
             SetVisualsActive(isUnlocked);
+        }
+        else
+        {
+            // Standard NPC: Always visible
+            SetVisualsActive(true);
         }
     }
 

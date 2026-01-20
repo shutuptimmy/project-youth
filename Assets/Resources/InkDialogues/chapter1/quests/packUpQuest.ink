@@ -53,8 +53,3 @@ dead battery.
 you suit up for school nicely and neatly. #name:
 (This will be your save point after school.)
 -> END
-
-=== computer ===
-you picked up your keys laying beside your system unit. #name:
-(You will able to play unlocked minigames here after school)
--> END

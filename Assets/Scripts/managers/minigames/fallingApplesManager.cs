@@ -60,12 +60,12 @@ public class fallingApplesManager : MonoBehaviour
 
     private void OnEnable()
     {
-        gameEventsManager.instance.miscEvents.onPlayerTookDamage += playerHit;
+        gameEventsManager.instance.playerEvents.onPlayerTookDamage += playerHit;
     }
 
     private void OnDisable()
     {
-        gameEventsManager.instance.miscEvents.onPlayerTookDamage -= playerHit;
+        gameEventsManager.instance.playerEvents.onPlayerTookDamage -= playerHit;
     }
 
     void showStartMenu()

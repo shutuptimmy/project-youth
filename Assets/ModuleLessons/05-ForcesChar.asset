@@ -15,10 +15,10 @@ MonoBehaviour:
   lessonId: forceChar
   lessonTitle: Forces Characteristics
   lessonImage: {fileID: 0}
-  lessonDesc: "Direction - Forces have a specific direction in which they act, either
-    pushing or pulling an object. The direction of a force can change the object\u2019s
-    motion.\nMagnitude - Refers to its strength or size. The greater the magnitude
-    of a force, the greater its effect on an object.\nObjects Involved - Forces always
-    involve at least two objects - the object exerting the force and the object experiencing
-    the force. The properties of these objects, such as their mass, surface area,
-    and texture, can affect the force."
+  lessonDesc: "      Direction - Forces have a specific direction in which they act,
+    either pushing or pulling an object. The direction of a force can change the
+    object\u2019s motion.\n      Magnitude - Refers to its strength or size. The
+    greater the magnitude of a force, the greater its effect on an object.\n     
+    Objects Involved - Forces always involve at least two objects - the object exerting
+    the force and the object experiencing the force. The properties of these objects,
+    such as their mass, surface area, and texture, can affect the force."

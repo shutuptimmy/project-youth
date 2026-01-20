@@ -27,6 +27,13 @@ public class inputEvents
         onSubmitPressed?.Invoke(this.inputEventContext);
     }
 
+    public event Action<inputEventContext> onSubmitReleased;
+    public void SubmitReleased()
+    {
+        onSubmitReleased?.Invoke(this.inputEventContext);
+    }
+
+
     public event Action<inputEventContext> onInteractPressed;
     public void InteractPressed()
     {

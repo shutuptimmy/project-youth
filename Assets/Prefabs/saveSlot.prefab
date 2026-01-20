@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3811520026201397968}
   - component: {fileID: 3811520026201397969}
   m_Layer: 5
-  m_Name: chapterText
+  m_Name: nameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,10 +64,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chapter ?
+  m_text: Namae wa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 22ac66dab95cf5b9691da863bfe9efcc, type: 2}
+  m_sharedMaterial: {fileID: 5918848955133644502, guid: 22ac66dab95cf5b9691da863bfe9efcc,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -91,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -553,9 +554,9 @@ MonoBehaviour:
   profileId: 0
   noDataContent: {fileID: 3811520026539101537}
   hasDataContent: {fileID: 3811520027852360972}
-  statusText: {fileID: 3811520027849511122}
+  nameText: {fileID: 3811520026201397969}
+  levelText: {fileID: 3811520027849511122}
   locationText: {fileID: 3811520027513952018}
-  chapterText: {fileID: 3811520026201397969}
   playTimeText: {fileID: 3811520027085275511}
   playerPortrait: {fileID: 8867213417335189256}
   clearButton: {fileID: 3811520027161854193}
@@ -571,7 +572,7 @@ GameObject:
   - component: {fileID: 3811520026886285122}
   - component: {fileID: 3811520026886285123}
   m_Layer: 5
-  m_Name: ProfileName
+  m_Name: emptyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,8 +626,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Empty
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 22ac66dab95cf5b9691da863bfe9efcc, type: 2}
+  m_sharedMaterial: {fileID: 5918848955133644502, guid: 22ac66dab95cf5b9691da863bfe9efcc,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -650,8 +652,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -758,8 +760,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Play time: 00:00'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 408118ed83599952a8f6714be0d5d56b, type: 2}
+  m_sharedMaterial: {fileID: 3300424220395698911, guid: 408118ed83599952a8f6714be0d5d56b,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1021,8 +1024,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Location
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 408118ed83599952a8f6714be0d5d56b, type: 2}
+  m_sharedMaterial: {fileID: 3300424220395698911, guid: 408118ed83599952a8f6714be0d5d56b,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1100,7 +1104,7 @@ GameObject:
   - component: {fileID: 3811520027849511133}
   - component: {fileID: 3811520027849511122}
   m_Layer: 5
-  m_Name: statusText
+  m_Name: levelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1152,10 +1156,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Name | Level ??
+  m_text: Level ??
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 408118ed83599952a8f6714be0d5d56b, type: 2}
+  m_sharedMaterial: {fileID: 3300424220395698911, guid: 408118ed83599952a8f6714be0d5d56b,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

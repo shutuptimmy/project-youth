@@ -16,7 +16,8 @@ public class quizManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private GameObject mainContentParent;
-    [SerializeField] private GameObject gameplayGameObject;
+    [SerializeField] private GameObject cameraGameObject;
+    [SerializeField] private GameObject backgroundGameObject;
     [SerializeField] private TextMeshProUGUI questionText;
     public Button[] choiceButtons = new Button[4];
     [SerializeField] private TextMeshProUGUI pagesList;
@@ -41,7 +42,8 @@ public class quizManager : MonoBehaviour
 
     IEnumerator Start()
     {
-        gameplayGameObject.SetActive(false);
+        cameraGameObject.SetActive(false);
+        backgroundGameObject.SetActive(false);
         mainContentParent.SetActive(false);
 
         gameEventsManager.instance.sceneEvents.startMinigame();
@@ -57,7 +59,8 @@ public class quizManager : MonoBehaviour
 
     private void showStartMenu()
     {
-        gameplayGameObject.SetActive(true);
+        cameraGameObject.SetActive(true);
+        backgroundGameObject.SetActive(true);
 
         minigameMenuPanelUI.activateMenu(
             "Pretest Time!",

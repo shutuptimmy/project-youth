@@ -9,14 +9,18 @@ public class mainMenu : menu
     [Header("Menu Buttons")]
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button loadGameButton;
+    [SerializeField] private Button optionsButton;
 
     [Header("Menu Navigations")]
     [SerializeField] private saveSlotsMenu saveSlotsMenu;
+    [SerializeField] private soundsMenuUI soundsMenuUI;
 
     private void Start()
     {
         newGameButton.onClick.RemoveAllListeners();
         loadGameButton.onClick.RemoveAllListeners();
+        optionsButton.onClick.RemoveAllListeners();
+
         if (dataPersistenceManager.instance.isDataATest())
         {
             newGameButton.onClick.AddListener(() =>
@@ -33,6 +37,8 @@ public class mainMenu : menu
             loadGameButton.onClick.AddListener(() => onLoadGameClicked());
         }
         disableButtonsDependingOnData();
+
+        optionsButton.onClick.AddListener(() => soundsMenuUI.activateMenu());
     }
 
     void startGame()

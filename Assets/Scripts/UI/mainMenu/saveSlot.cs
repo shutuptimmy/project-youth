@@ -13,9 +13,9 @@ public class saveSlot : MonoBehaviour
     [SerializeField] private GameObject noDataContent;
     [SerializeField] private GameObject hasDataContent;
 
-    [SerializeField] private TextMeshProUGUI statusText; // player name & level
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI locationText;
-    [SerializeField] private TextMeshProUGUI chapterText;
     [SerializeField] private TextMeshProUGUI playTimeText;
     [SerializeField] private Animator playerPortrait;
 
@@ -49,9 +49,9 @@ public class saveSlot : MonoBehaviour
             hasDataContent.SetActive(true);
             clearButton.gameObject.SetActive(true);
 
-            statusText.text = data.playerName + " | Level " + data.playerLvl.ToString();
+            nameText.text = data.playerName.ToString();
+            levelText.text = "Level " + data.playerLvl.ToString();
             locationText.text = data.playerLocation;
-            chapterText.text = "Chapter " + data.playerChapter.ToString();
 
             switch (data.playerGender)
             {

@@ -1,23 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Ink.Parsed;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class pauseUI : MonoBehaviour, IDataPersistence
+public class pauseUI : MonoBehaviour //, IDataPersistence
 {
     [Header("Pause Menus")]
     [SerializeField] private GameObject contentParent;
     [SerializeField] private GameObject normalPauseMenu;
     [SerializeField] private GameObject inProgressPauseMenu;
 
-    [Header("Status Panel")]
-    [SerializeField] private TextMeshProUGUI chapterText;
-    [SerializeField] private TextMeshProUGUI expLevel;
-    [SerializeField] private Slider expBar;
-    [SerializeField] private TextMeshProUGUI expRequiredToLevelUp;
+    // [Header("Status Panel")]
+    // [SerializeField] private TextMeshProUGUI chapterText;
+    // [SerializeField] private TextMeshProUGUI expLevel;
+    // [SerializeField] private Slider expBar;
+    // [SerializeField] private TextMeshProUGUI expRequiredToLevelUp;
 
     [Header("Navigation Menu Buttons")]
     [SerializeField] private GameObject continueButton;
@@ -71,17 +68,17 @@ public class pauseUI : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void loadData(gameData data)
-    {
-        chapterText.text = data.playerChapter.ToString();
-        expLevel.text = data.playerExp.ToString();
-        expRequiredToLevelUp.text = globalConstants.experienceToLevelUp - data.playerExp + " left to level up";
-    }
+    // public void loadData(gameData data)
+    // {
+    //     chapterText.text = data.playerChapter.ToString();
+    //     expLevel.text = data.playerExp.ToString();
+    //     expRequiredToLevelUp.text = globalConstants.experienceToLevelUp - data.playerExp + " left to level up";
+    // }
 
-    public void saveData(gameData data)
-    {
+    // public void saveData(gameData data)
+    // {
 
-    }
+    // }
 
     public void quitAndSavePressed()
     {

@@ -18,6 +18,10 @@ public class inputManager : MonoBehaviour
         {
             gameEventsManager.instance.inputEvents.SubmitPressed();
         }
+        else if (context.canceled)
+        {
+            gameEventsManager.instance.inputEvents.SubmitReleased();
+        }
     }
 
     public void InteractPressed(InputAction.CallbackContext context)

@@ -40,4 +40,10 @@ public class playerEvents
             onPlayerExperienceChange(experience);
         }
     }
+
+    public event Action onPlayerTookDamage;
+    public void playerTookDamage()
+    {
+        onPlayerTookDamage?.Invoke();
+    }
 }
