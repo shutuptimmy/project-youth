@@ -52,6 +52,7 @@ public class saveSlot : MonoBehaviour
             nameText.text = data.playerName.ToString();
             levelText.text = "Level " + data.playerLvl.ToString();
             locationText.text = data.playerLocation;
+            playTimeText.text = playTimeFormat(data.playTime);
 
             switch (data.playerGender)
             {
@@ -84,5 +85,13 @@ public class saveSlot : MonoBehaviour
     public string getPlayerLocationText()
     {
         return locationText.text;
+    }
+
+    private string playTimeFormat(float totalSeconds)
+    {
+        int hours = Mathf.FloorToInt(totalSeconds / 3600);
+        int minutes = Mathf.FloorToInt((totalSeconds % 3600) / 60);
+
+        return string.Format("Play Time: {0:00}:{1:00}", hours, minutes);
     }
 }

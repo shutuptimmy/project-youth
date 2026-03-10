@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class glossaryLogUI : MonoBehaviour, IDataPersistence
 {
     [Header("Data")]
-    // Drag ALL your lessonInfoSO files here in the inspector
     [SerializeField] private lessonInfoSO[] allGameLessons;
 
     [Header("Components")]

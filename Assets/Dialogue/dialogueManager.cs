@@ -43,6 +43,7 @@ public class dialogueManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.dialogueEvents.onEnterDialogue += enterDialogue;
         gameEventsManager.instance.inputEvents.onSubmitPressed += submitPressed;
         gameEventsManager.instance.dialogueEvents.onUpdateChoiceIndex += updateChoiceIndex;
+        gameEventsManager.instance.dialogueEvents.onMakeChoice += onChoiceBtnClicked;
         // gameEventsManager.instance.dialogueEvents.onUpdateInkDialogueVariable += updateInkDialogueVar;
         gameEventsManager.instance.questEvents.onQuestStateChange += questStateChange;
     }
@@ -52,6 +53,7 @@ public class dialogueManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.dialogueEvents.onEnterDialogue -= enterDialogue;
         gameEventsManager.instance.inputEvents.onSubmitPressed -= submitPressed;
         gameEventsManager.instance.dialogueEvents.onUpdateChoiceIndex -= updateChoiceIndex;
+        gameEventsManager.instance.dialogueEvents.onMakeChoice -= onChoiceBtnClicked;
         // gameEventsManager.instance.dialogueEvents.onUpdateInkDialogueVariable -= updateInkDialogueVar;
         gameEventsManager.instance.questEvents.onQuestStateChange -= questStateChange;
     }
@@ -110,6 +112,15 @@ public class dialogueManager : MonoBehaviour, IDataPersistence
         // start listening for variables
         inkDialogueVariables.syncVarsAndStartListening(story);
 
+        continueOrExitStory();
+    }
+
+    private void onChoiceBtnClicked(int choiceIndex)
+    {
+        // Set the index to whatever the mouse just clicked
+        this.currentChoiceIndex = choiceIndex;
+        
+        // Advance the story, just like submitPressed() does!
         continueOrExitStory();
     }
 

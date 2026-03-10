@@ -37,6 +37,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Drag"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b56f2cd-f1c1-4fd0-bdbd-692f409c84b0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""2c00b1cd-af0b-415f-a076-7e6b38a7d317"",
@@ -269,6 +278,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b1ac6d4-bca8-4439-b003-1bb43ef9a7b5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a33b698-1312-438b-a695-e0eca3b0f2e4"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -429,6 +460,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // game
         m_game = asset.FindActionMap("game", throwIfNotFound: true);
         m_game_Move = m_game.FindAction("Move", throwIfNotFound: true);
+        m_game_Drag = m_game.FindAction("Drag", throwIfNotFound: true);
         m_game_Interact = m_game.FindAction("Interact", throwIfNotFound: true);
         m_game_Submit = m_game.FindAction("Submit", throwIfNotFound: true);
         m_game_lvlUp = m_game.FindAction("lvlUp", throwIfNotFound: true);
@@ -499,6 +531,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_game;
     private IGameActions m_GameActionsCallbackInterface;
     private readonly InputAction m_game_Move;
+    private readonly InputAction m_game_Drag;
     private readonly InputAction m_game_Interact;
     private readonly InputAction m_game_Submit;
     private readonly InputAction m_game_lvlUp;
@@ -509,6 +542,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public GameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_game_Move;
+        public InputAction @Drag => m_Wrapper.m_game_Drag;
         public InputAction @Interact => m_Wrapper.m_game_Interact;
         public InputAction @Submit => m_Wrapper.m_game_Submit;
         public InputAction @lvlUp => m_Wrapper.m_game_lvlUp;
@@ -526,6 +560,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnMove;
+                @Drag.started -= m_Wrapper.m_GameActionsCallbackInterface.OnDrag;
+                @Drag.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnDrag;
+                @Drag.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnDrag;
                 @Interact.started -= m_Wrapper.m_GameActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnInteract;
@@ -548,6 +585,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Drag.started += instance.OnDrag;
+                @Drag.performed += instance.OnDrag;
+                @Drag.canceled += instance.OnDrag;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -664,6 +704,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public interface IGameActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnDrag(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnLvlUp(InputAction.CallbackContext context);

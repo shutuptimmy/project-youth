@@ -5,8 +5,6 @@ using UnityEngine;
 public class soundPersistenceManagers : MonoBehaviour
 {
     public static soundPersistenceManagers instance { get; private set; }
-    [SerializeField] private GameObject[] soundManagers;
-
     private void Awake()
     {
         if (instance != null)
@@ -17,10 +15,5 @@ public class soundPersistenceManagers : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-
-        foreach (GameObject obj in soundManagers)
-        {
-            DontDestroyOnLoad(obj);
-        }
     }
 }

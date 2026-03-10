@@ -54,4 +54,16 @@ public class inputEvents
     {
         onPausePressed?.Invoke();
     }
+
+    public event Action OnDragPressed;
+    public void DragPressed()
+    {
+        OnDragPressed?.Invoke();
+    }
+
+    public event Action OnDragReleased;
+    public void DragReleased()
+    {
+        OnDragReleased?.Invoke();
+    }
 }

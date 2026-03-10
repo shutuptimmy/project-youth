@@ -50,12 +50,18 @@ public class gameData
     public int playerChapter;
     public int playerLvl;
     public int playerExp;
+    public int playTime;
 
     public Vector3 playerPosition;
-
     public SerializableQuestDataMap questDataMap;
-
     public List<string> unlockedRewardIds;
+
+    public float tugOfWarScore;
+    public float sortingBoxesScore;
+    public float fragileDeskScore;
+    public float fallingApplesScore;
+    public float backToEarthScore;
+
 
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
@@ -66,6 +72,7 @@ public class gameData
         this.playerChapter = 1;
         this.playerLvl = 1;
         this.playerExp = 0;
+        this.playTime = 0;
         this.playerPosition = new Vector3(-0.9f, -0.1f, 0);
         this.playerLocation = "bedroom";
 

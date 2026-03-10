@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class dialogueChoiceButton : MonoBehaviour, ISelectHandler
+public class dialogueChoiceButton : MonoBehaviour, ISelectHandler, IPointerEnterHandler, IPointerClickHandler
 {
     [Header("Components")]
     [SerializeField] private Button button;
@@ -24,13 +22,27 @@ public class dialogueChoiceButton : MonoBehaviour, ISelectHandler
         this.choiceIndex = choiceIndex;
     }
 
+    // for keyboard hover
     public void selectButton()
     {
         button.Select();
     }
 
+    // for keyboard submit key
     public void OnSelect(BaseEventData eventData)
     {
         gameEventsManager.instance.dialogueEvents.UpdateChoiceIndex(choiceIndex);
+    }
+
+    // for mouse hover
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        button.Select();
+    }
+
+    // for mouse click
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        gameEventsManager.instance.dialogueEvents.MakeChoice(choiceIndex);
     }
 }

@@ -9,36 +9,46 @@ public class tugOfWarManager : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private GameObject mainContentParent;
-    [SerializeField] private TextMeshProUGUI questionText;
-    [SerializeField] private TextMeshProUGUI timerText;
-    public GameObject[] choiceButtons;
     [SerializeField] private GameObject gameplayGameObject;
+    // [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private Button[] choiceButtons;
     [SerializeField] private rope rope;
     [SerializeField] private PlayerController minigamePlayer;
     [SerializeField] private GameObject npcObject;
+    [SerializeField] private Slider gaugeBar;
 
     [Header("Quest Step")]
     [SerializeField] private tugOfWarQuestStep tugOfWarQuestStep;
     private bool isQuestStepPresent;
 
-
     [Header("Menu Panel")]
     // The UI must be disabled in the inspector to blend in with the crossfade
     [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
-    [Header("Question Manager")]
-    public Question[] questions;
-    private List<Question> availableQuestions;
-    private Question currentQuestion;
+    [Header("Choices Btns")]
+    // public Question[] questions;
+    // private List<Question> availableQuestions;
+    // private Question currentQuestion;
+
+    [SerializeField] private string[] rightAnswerPool;
+    [SerializeField] private string[] wrongAnswerPool;
+    private List<string> availableAnswers;
+    private string currentAnswer;
 
     [Header("Game Config")]
-    [SerializeField] private float questionHoldTime = 0.7f;
-    [SerializeField] private float pullValue = 0.3f;
-    [SerializeField] private float rivalPullStrength = 0.05f;
-    [SerializeField] private float maxRopeDistance = 1f;
+    [SerializeField] private float questionHoldTime;
+    [SerializeField] private float timeStopLength;
+    [SerializeField] private float pullValue;
+    [SerializeField] private float pullPowerBonus;
+    [SerializeField] private float maxRopeDistance;
+
+
+    private float correctStreak;
     private float timeElapsed;
     private bool isGameActive = false;
     private bool isQuestionActive = false;
+    private bool isPowerUpActivated = false;
     private bool playerHasWon = false;
 
     // Hide the minigame before the crossfade
@@ -94,6 +104,7 @@ public class tugOfWarManager : MonoBehaviour
         {
             timeElapsed += Time.deltaTime;
             timerText.text = Mathf.FloorToInt(timeElapsed).ToString() + "s";
+            gaugeBarUpdate();
         }
     }
 
@@ -104,17 +115,16 @@ public class tugOfWarManager : MonoBehaviour
         // reset game state when retry
         timeElapsed = 0f;
         rope.currentRopeValue = 0f;
+        correctStreak = 0f;
         isGameActive = true;
         isQuestionActive = true;
 
-        availableQuestions = questions.ToList();
-
         // TODO: Make the player and npc walk to look like they're pulling the rope
         minigamePlayer.setAnimation(0);
-        // npcObject
+        // npcObject.setAnimation(0);
         gameEventsManager.instance.playerEvents.DisablePlayerMovement();
 
-        SetCurrentQuestion();
+        setAnswerBoxes();
         StartCoroutine(AIAutoPull());
     }
 
@@ -144,16 +154,9 @@ public class tugOfWarManager : MonoBehaviour
         isGameActive = false;
         isQuestionActive = false;
         StopCoroutine(AIAutoPull());
-        availableQuestions.Clear();
+        availableAnswers.Clear();
 
         mainContentParent.SetActive(false);
-
-        // reset components
-        questionText.text = "";
-        for (int i = 0; i < choiceButtons.Length; i++)
-        {
-            choiceButtons[i].SetActive(false);
-        }
 
         if (playerWon)
         {
@@ -163,73 +166,129 @@ public class tugOfWarManager : MonoBehaviour
         else ShowResultMenu("DEFEAT!", "Your rival overpowered you. Try again!");
     }
 
-    void SetCurrentQuestion()
+    void setAnswerBoxes()
     {
         isQuestionActive = true;
 
-        if (availableQuestions == null || availableQuestions.Count == 0) availableQuestions = questions.ToList();
+        // storing all answers to availableAnswers
+        if (availableAnswers == null || availableAnswers.Count == 0) availableAnswers = rightAnswerPool.ToList();
 
-        int randomQuestionIndex = Random.Range(0, availableQuestions.Count);
-        currentQuestion = availableQuestions[randomQuestionIndex];
+        // pick random right answer for this round
+        int randAnswer = Random.Range(0, availableAnswers.Count);
+        currentAnswer = availableAnswers[randAnswer];
 
-        questionText.text = currentQuestion.description;
+        // prepare answer List (Correct + Wrong)
+        List<string> answerPool = new List<string>{currentAnswer};
 
-        // deactivate all choice buttons
-        for (int i = 0; i < choiceButtons.Length; i++) choiceButtons[i].SetActive(false);
+        List<string> filteredWrongPool = wrongAnswerPool.Where(ans => !rightAnswerPool.Contains(ans)).ToList();
 
-        // Then, set up and activate only the buttons for the current question's answers
-        for (int i = 0; i < currentQuestion.answers.Length; i++)
+        // fill remaining buttons with unique wrong answers
+        int safetyCounter = 0;
+        while (answerPool.Count < choiceButtons.Length && safetyCounter < 100)
         {
-            if (i < choiceButtons.Length) // safety check to prevent array out of bounds
+            string randWrong = filteredWrongPool[Random.Range(0, filteredWrongPool.Count)];
+
+            if (!answerPool.Contains(randWrong))
             {
-                choiceButtons[i].SetActive(true);
-                TextMeshProUGUI choiceText = choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                choiceText.text = currentQuestion.answers[i];
-                Button button = choiceButtons[i].GetComponent<Button>();
-
-                // Reset button color and interactivity
-                button.interactable = true;
-                ColorBlock cb = button.colors;
-                cb.normalColor = Color.white; // Set to your default color
-                button.colors = cb;
-
-                button.onClick.RemoveAllListeners();
-
-                if (choiceText.text == currentQuestion.trueAnswer) button.onClick.AddListener(userSelectTrue);
-                else button.onClick.AddListener(userSelectFalse);
+                answerPool.Add(randWrong);
             }
+            safetyCounter++;
         }
-    }
 
-    public void transitionToNextQuestion()
-    {
-        // Remove the current question from the list
-        availableQuestions.Remove(currentQuestion);
+        // Fill the rest with random answers from the global pool
+        // Loop until we have enough answers for all buttons
+        // int safetyCounter = 0;
+        // while (answerPool.Count < choiceButtons.Length && safetyCounter < 100)
+        // {
+        //     // pick random wrong answers for current choices
+        //     string randWrongAnswers = wrongAnswerPool[Random.Range(0, wrongAnswerPool.Length)];
 
-        SetCurrentQuestion();
+        //     // Only add if it's NOT already in the list (no duplicates)
+        //     if (!answerPool.Contains(randWrongAnswers))
+        //     {
+        //         answerPool.Add(randWrongAnswers);
+        //     }
+        //     safetyCounter++;
+        // }
 
-        // Re-enable all buttons and reset their colors
+        // Shuffle the Answer Pool so the correct answer isn't always #1
+        answerPool = shuffleList(answerPool);
+
         for (int i = 0; i < choiceButtons.Length; i++)
         {
-            choiceButtons[i].GetComponent<Button>().interactable = true;
-            TextMeshProUGUI choiceText = choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            choiceText.color = Color.black; // Or your default text color
+            Button btnIndex = choiceButtons[i];
 
-            Button button = choiceButtons[i].GetComponent<Button>();
-            ColorBlock cb = button.colors;
-            cb.normalColor = Color.white;
-            cb.selectedColor = Color.white;
-            cb.disabledColor = Color.white;
-            button.colors = cb;
+            // setup or reset btns color and interactivity
+            btnIndex.interactable = true;
+            btnIndex.onClick.RemoveAllListeners();
+
+            ColorBlock cb = btnIndex.colors;
+            cb.disabledColor = new Color(0.7f, 0.7f, 0.7f, 1f);
+            btnIndex.colors = cb;
+            btnIndex.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+
+            // set answers in boxes' texts
+            if (i < answerPool.Count)
+            {
+                choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answerPool[i];
+            }
+
+            // Capture variables for lambda
+            string assignedStr = answerPool[i];
+            int selectedBtn = i;
+
+            choiceButtons[i].onClick.AddListener(() => onAnswerSelected(assignedStr, selectedBtn));
         }
+
+    }
+
+    void onAnswerSelected(string assignedStr, int selectedBtn)
+    {
+        if (!isQuestionActive) return; // Prevent double clicking
+
+        bool isCorrect = assignedStr == currentAnswer;
+
+        StartCoroutine(showFeedbackAndNext(isCorrect, selectedBtn));
+    }
+
+
+    IEnumerator showFeedbackAndNext(bool isCorrect, int selectedBtn)
+    {
+        isQuestionActive = false; // pause the gameplay
+        ropePull(isCorrect);
+
+        // Loop using index to access both Arrays easily
+        for (int i = 0; i < choiceButtons.Length; i++)
+        {
+            Button btn = choiceButtons[i];
+            TextMeshProUGUI btnAnswer = btn.GetComponentInChildren<TextMeshProUGUI>();
+            btn.interactable = false;
+
+            if (i == selectedBtn)
+            {
+                ColorBlock cb = btn.colors;
+                cb.disabledColor = isCorrect ? Color.blue : Color.red;
+                btnAnswer.color = Color.white;
+                btn.colors = cb;
+            }
+        }
+
+        yield return new WaitForSeconds(questionHoldTime);
+
+        availableAnswers.Remove(currentAnswer);
+        setAnswerBoxes();
     }
 
     void ropePull(bool playerCorrect)
     {
-        int direction = playerCorrect ? -1 : 1;
+        int direction = playerCorrect ? -1 : 0;
+        if (playerCorrect) correctStreak++;
+        else correctStreak = 0f;
+
+        float totalPullForce = isPowerUpActivated ? pullValue + pullPowerBonus : pullValue;
 
         // Clamp the new value so it doesn't exceed the win/lose bounds
-        rope.currentRopeValue = Mathf.Clamp(rope.currentRopeValue + (pullValue * direction), -maxRopeDistance, maxRopeDistance);
+        rope.currentRopeValue = Mathf.Clamp(rope.currentRopeValue + (totalPullForce * direction), -maxRopeDistance, maxRopeDistance);
         checkGameState();
     }
 
@@ -237,14 +296,44 @@ public class tugOfWarManager : MonoBehaviour
     {
         while (isGameActive)
         {
-            float AIPullSeconds = Random.Range(.5f, 1.0f);
+            float AIPullSeconds = Random.Range(.5f, 1f);
             yield return new WaitForSeconds(AIPullSeconds);
-            if (isQuestionActive)
+            if (isQuestionActive && !isPowerUpActivated)
             {
-                rope.currentRopeValue = Mathf.Clamp(rope.currentRopeValue + rivalPullStrength, -maxRopeDistance, maxRopeDistance);
+                rope.currentRopeValue = Mathf.Clamp(rope.currentRopeValue + pullValue, -maxRopeDistance, maxRopeDistance);
                 checkGameState();
             }
         }
+    }
+
+    void gaugeBarUpdate()
+    {
+        if (isPowerUpActivated) return;
+
+        float requiredNumStreak = 10f;
+        // 10 correct answers in a row will trigger stop time
+        gaugeBar.value = Mathf.Clamp01(correctStreak / requiredNumStreak);
+
+        if (correctStreak >= requiredNumStreak) StartCoroutine(stopTimePowerUp());
+
+    }
+
+    IEnumerator stopTimePowerUp()
+    {
+        isPowerUpActivated = true;
+        float timeStopRemaining = timeStopLength;
+        Debug.Log("Power Up Activated");
+
+        while (timeStopRemaining >= 0f)
+        {
+            timeStopRemaining -= Time.deltaTime;
+            gaugeBar.value = Mathf.Clamp01(timeStopRemaining / timeStopLength);
+            Debug.Log(timeStopRemaining);
+            yield return null;
+        }
+
+        correctStreak = 0f;
+        isPowerUpActivated = false;
     }
 
     void checkGameState()
@@ -256,58 +345,20 @@ public class tugOfWarManager : MonoBehaviour
         else Debug.Log("still pullin...");
     }
 
-
-    IEnumerator WaitAndNextQuestion(bool playerWasCorrect)
+    // Helper to shuffle the list of sprites
+    private List<string> shuffleList(List<string> inputList)
     {
-        isQuestionActive = false;
-        yield return new WaitForSeconds(questionHoldTime);
-        availableQuestions.Remove(currentQuestion);
-        transitionToNextQuestion();
-        isQuestionActive = true;
-    }
-
-    public void userSelectTrue()
-    {
-        Debug.Log("eyy it works!");
-        DisableButtons(false);
-        ropePull(true); // Player pulls towards their side
-        StartCoroutine(WaitAndNextQuestion(true));
-    }
-
-    public void userSelectFalse()
-    {
-        Debug.Log("EEE Wong!");
-        DisableButtons(false);
-        ropePull(false); // Player pulls towards the rival side
-        StartCoroutine(WaitAndNextQuestion(false));
-    }
-
-    void DisableButtons(bool playerSelectedCorrect)
-    {
-        for (int i = 0; i < currentQuestion.answers.Length; i++)
+        List<string> shuffled = new List<string>(inputList);
+        int n = shuffled.Count;
+        while (n > 1)
         {
-            TextMeshProUGUI choiceText = choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            Button button = choiceButtons[i].GetComponent<Button>();
-            button.interactable = false; // Disable all buttons
-
-            ColorBlock cb = button.colors;
-
-            if (choiceText.text == currentQuestion.trueAnswer)
-            {
-                // Correct answer is always GREEN
-                cb.disabledColor = Color.green;
-            }
-            else
-            {
-                // Incorrect answers turn RED if the player selected it
-                if (!playerSelectedCorrect)
-                {
-                    cb.disabledColor = Color.red;
-                    choiceText.color = Color.white;
-                }
-            }
-            button.colors = cb;
+            n--;
+            int k = Random.Range(0, n + 1);
+            string value = shuffled[k];
+            shuffled[k] = shuffled[n];
+            shuffled[n] = value;
         }
+        return shuffled;
     }
 
     public float getMaxRopeDistance()

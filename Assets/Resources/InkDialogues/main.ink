@@ -6,6 +6,7 @@ INCLUDE chapter1/quests/helpingHandQuest.ink
 INCLUDE chapter1/quests/tugOfWarQuest.ink
 INCLUDE chapter1/quests/gravitationalResearchQuest.ink
 INCLUDE chapter1/quests/spaceQuest.ink
+INCLUDE chapter1/quests/avoidAccountabilityQuest.ink
 INCLUDE chapter1/quests/aftermathQuest.ink
 
 

@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private bool isInvincible = false;
 
     // main components
-    private Vector2 velocity = Vector2.right;
+    private Vector2 velocity = Vector2.zero;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator animator;
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private void OnDestroy()
     {
         gameEventsManager.instance.inputEvents.onMovePressed -= MovePressed;
+        gameEventsManager.instance.inputEvents.onSubmitPressed -= performDash;
         gameEventsManager.instance.playerEvents.onDisablePlayerMovement -= DisablePlayerMovement;
         gameEventsManager.instance.playerEvents.onEnablePlayerMovement -= EnablePlayerMovement;
     }
@@ -215,6 +216,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void saveData(gameData data)
     {
+        if (this == null) return; // fixes on pretest minigame
         data.playerPosition = this.transform.position;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +15,7 @@ public class dataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> dataPersistenceObjects;
     private fileDataHandler dataHandler;
     private string selectedProfileId = "";
+    private float playerPlayTime;
 
     public static dataPersistenceManager instance { get; private set; }
 
@@ -51,6 +51,20 @@ public class dataPersistenceManager : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void Update()
+    {
+        if (gameData != null && Time.timeScale > 0)
+        {
+            playerPlayTime += Time.deltaTime;
+
+            if (playerPlayTime >= 1f)
+            {
+                gameData.playTime += 1;
+                playerPlayTime -= 1f;
+            }
+        }
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -137,14 +151,6 @@ public class dataPersistenceManager : MonoBehaviour
         // save that data to a file using data handler
         dataHandler.save(gameData, selectedProfileId);
     }
-
-    // private void OnApplicationQuit()
-    // {
-    //     if (overrideSelectedProfileId)
-    //     {
-    //         saveGame();
-    //     }
-    // }
 
     // get all gameobjects that have IDataPersistence
     private List<IDataPersistence> findAllDataPersistenceObjects()

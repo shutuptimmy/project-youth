@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class glossaryLogButton : MonoBehaviour
+public class glossaryLogButton : MonoBehaviour, ISelectHandler
 {
     public Button button { get; private set; }
     private TextMeshProUGUI buttonText;

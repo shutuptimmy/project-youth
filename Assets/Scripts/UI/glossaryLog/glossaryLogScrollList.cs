@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +11,7 @@ public class glossaryLogScrollList : MonoBehaviour
     [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private RectTransform contentRectTransform;
 
-    [Header("Prefabs")]
+    [Header("Quest Log Button")]
     [SerializeField] private GameObject glossaryButtonPrefab;
 
     private Dictionary<string, glossaryLogButton> idToButtonMap = new Dictionary<string, glossaryLogButton>();

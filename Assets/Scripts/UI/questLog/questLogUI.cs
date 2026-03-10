@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class questLogUI : MonoBehaviour
 {
     [Header("Components")]
-
     [SerializeField] private GameObject contentParent;
     [SerializeField] private questLogScrollList scrollList;
     [SerializeField] private TextMeshProUGUI questDisplayNameText;

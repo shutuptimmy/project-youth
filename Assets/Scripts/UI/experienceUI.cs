@@ -8,8 +8,8 @@ public class experienceUI : MonoBehaviour, IDataPersistence
 {
     [Header("Components")]
     [SerializeField] private Slider expSlider;
-    [SerializeField] private TextMeshProUGUI expText;
-    [SerializeField] private TextMeshProUGUI currentLevelText;
+    [SerializeField] private TextMeshProUGUI levelText;
+    // [SerializeField] private TextMeshProUGUI currentLevelText;
 
 
     private void OnEnable()
@@ -17,15 +17,22 @@ public class experienceUI : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.playerEvents.onPlayerExperienceChange += experienceGained;
         gameEventsManager.instance.playerEvents.onPlayerLevelChange += playerLevelUp;
     }
+
+    void OnDisable()
+    {
+        gameEventsManager.instance.playerEvents.onPlayerExperienceChange -= experienceGained;
+        gameEventsManager.instance.playerEvents.onPlayerLevelChange -= playerLevelUp;
+    }
+
     void experienceGained(int exp)
     {
         expSlider.value = (float)exp / (float)100;
-        expText.text = exp + " / " + 100;
+        // expText.text = exp + " / " + 100;
     }
 
-    void playerLevelUp(int lvl)
+    void playerLevelUp(int level)
     {
-        currentLevelText.text = "Level " + lvl;
+        levelText.text = "Level " + level;
     }
 
     public void loadData(gameData data)

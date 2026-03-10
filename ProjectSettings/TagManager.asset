@@ -9,6 +9,7 @@ TagManager:
   - Planet
   - RopeFlag
   - Earth
+  - MassObj
   layers:
   - Default
   - TransparentFX

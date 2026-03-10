@@ -33,13 +33,16 @@ public class dialogueEvents
         }
     }
 
+    public event Action<int> onMakeChoice;
+    public void MakeChoice(int choiceIndex)
+    {
+        onMakeChoice?.Invoke(choiceIndex);
+    }
+
     public event Action<int> onUpdateChoiceIndex;
     public void UpdateChoiceIndex(int choiceIndex)
     {
-        if (onUpdateChoiceIndex != null)
-        {
-            onUpdateChoiceIndex(choiceIndex);
-        }
+        onUpdateChoiceIndex?.Invoke(choiceIndex);
     }
 
     public event Action<string, Ink.Runtime.Object> onUpdateInkDialogueVariable;

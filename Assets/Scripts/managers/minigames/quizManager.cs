@@ -40,7 +40,7 @@ public class quizManager : MonoBehaviour
     private bool isGameActive = false;
     private bool isQuestionActive = false; // Essential for pausing timer during feedback
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         cameraGameObject.SetActive(false);
         backgroundGameObject.SetActive(false);
@@ -75,7 +75,7 @@ public class quizManager : MonoBehaviour
 
     private void ShowResultMenu(string title, string status, int xpGained)
     {
-        // bool showQuit = isQuestStepPresent || playerHasWon;
+        bool showQuit = isQuestStepPresent;
         mainContentParent.SetActive(false);
 
         minigameMenuPanelUI.activateMenu(
@@ -85,7 +85,7 @@ public class quizManager : MonoBehaviour
             () => quitMinigameButton(), // one time quiz
             "Finish",
             () => quitMinigameButton(),
-            false // !showQuit
+            showQuit
         );
     }
 
@@ -137,9 +137,8 @@ public class quizManager : MonoBehaviour
         isQuestionActive = false;
         unansweredQuestions.Clear();
 
-        // 2. Calculate and Award XP
         int totalXPGained = playerScore * xpPerCorrectAnswer;
-        // if (totalXPGained > 0) gameEventsManager.instance.playerEvents.ExperienceGained(totalXPGained);
+        if (totalXPGained > 0) gameEventsManager.instance.playerEvents.ExperienceGained(totalXPGained);
 
         string feedbackMsg = playerScore == questions.Length ? "Perfect Score!" : "Good effort!";
         ShowResultMenu("PreTest Complete!", feedbackMsg, totalXPGained);
