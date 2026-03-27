@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
 
@@ -97,7 +95,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         }
     }
 
-    void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
 
@@ -105,7 +103,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         gameEventsManager.instance.miscEvents.onQuestReward += rewardUnlocked;
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
         base.OnDisable();
         gameEventsManager.instance.questEvents.onQuestStateChange -= questStateChange;

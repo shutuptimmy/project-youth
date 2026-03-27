@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class soundFXManager : MonoBehaviour
 {
@@ -23,6 +21,6 @@ public class soundFXManager : MonoBehaviour
         audioSource.volume = volume;
         audioSource.Play();
         float clipLength = audioSource.clip.length;
-        Destroy(audioSource.gameObject, audioSource.clip.length);
+        Destroy(audioSource.gameObject, clipLength);
     }
 }

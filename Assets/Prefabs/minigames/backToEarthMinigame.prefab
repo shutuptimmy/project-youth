@@ -885,8 +885,9 @@ MonoBehaviour:
   mainContentParent: {fileID: 6096327841412852553}
   gameplayGameObject: {fileID: 6096327840469258123}
   timerText: {fileID: 6096327840749403897}
-  rocket: {fileID: 6096327841622482265}
   minigameMenuPanelUI: {fileID: 3053410473852765779}
+  rocketPlayer: {fileID: 6096327841622482265}
+  spaceQuestStep: {fileID: 0}
 --- !u!1 &6096327841303315166
 GameObject:
   m_ObjectHideFlags: 0

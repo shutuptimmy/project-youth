@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class mainMenu : menu
@@ -15,8 +12,13 @@ public class mainMenu : menu
     [SerializeField] private saveSlotsMenu saveSlotsMenu;
     [SerializeField] private soundsMenuUI soundsMenuUI;
 
+    [Header("Music Background")]
+    [SerializeField] private AudioClip musicBG;
+
     private void Start()
     {
+        musicManager.instance.playMusicBG(musicBG, transform, 1f);
+
         newGameButton.onClick.RemoveAllListeners();
         loadGameButton.onClick.RemoveAllListeners();
         optionsButton.onClick.RemoveAllListeners();

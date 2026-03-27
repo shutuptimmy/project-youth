@@ -24,14 +24,14 @@ public class book : InteractableBase, IDataPersistence
         questId = questInfoForPoint.id;
     }
 
-    void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         gameEventsManager.instance.questEvents.onQuestStateChange += questStateChange;
         gameEventsManager.instance.miscEvents.onQuestReward += rewardUnlocked;
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
         base.OnDisable();
         gameEventsManager.instance.questEvents.onQuestStateChange -= questStateChange;

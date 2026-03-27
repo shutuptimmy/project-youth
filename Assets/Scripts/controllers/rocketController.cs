@@ -160,7 +160,7 @@ public class rocketController : MonoBehaviour
             if (collision.otherCollider == landCollider)
             {
                 Debug.Log("Landed safely with Exhaust!");
-                manager.minigameComplete(true);
+                manager.MinigameComplete(true);
                 DisablePlayerMovement();
                 rb.constraints = RigidbodyConstraints2D.FreezeAll;
             }

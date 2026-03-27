@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class sceneManager : MonoBehaviour, IDataPersistence
 {
+    [Header("Main Configuration")]
     private Vector2 targetedPlayerPos; // for standard location transitions
     public Animator transition { get; private set; }
     public float transitionTime = 1f;
@@ -15,10 +15,19 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     private Vector2 returnPlayerPosition;
     private string returnSceneName;
 
+    [Header("Audio Manager")]
+    [SerializeField] private AudioClip mainAudio;
+    [SerializeField] private AudioClip minigameAudio;
+
     private void Awake()
     {
         transition = GetComponentInChildren<Animator>();
         // SceneManager.sceneUnloaded += onSceneUnloaded;
+    }
+
+    void Start()
+    {
+        musicManager.instance.playMusicBG(mainAudio, transform, 1f);
     }
 
     private void OnEnable()
@@ -56,15 +65,16 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     public void changeScene(SceneField scene, Vector2 playerPos)
     {
         targetedPlayerPos = playerPos;
-        StartCoroutine(loadNewScene(scene.SceneName));
+        StartCoroutine(loadNewScenery(scene.SceneName));
     }
 
     void playCrossFade()
     {
         transition.Play("FadeIn");
+        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
     }
 
-    // load a scene and pos from saved gamedata
+    // load a scene and position from saved gamedata
     IEnumerator InitializeSceneLoad(string sceneName)
     {
         yield return new WaitForEndOfFrame();
@@ -77,10 +87,10 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         dataPersistenceManager.instance.OnSceneLoaded(SceneManager.GetSceneByName(sceneName), LoadSceneMode.Additive);
     }
 
-    IEnumerator loadNewScene(string sceneName)
+    IEnumerator loadNewScenery(string sceneName)
     {
         // play fade
-        transition.Play("FadeIn");
+        playCrossFade();
 
         // wait
         yield return new WaitForSeconds(transitionTime);
@@ -93,7 +103,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         currentBgScene = sceneName;
 
         // CRITICAL: Wait for the end of the frame so the Player object is spawned and ready
-        yield return new WaitForEndOfFrame();
+        // yield return new WaitForEndOfFrame();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -106,18 +116,18 @@ public class sceneManager : MonoBehaviour, IDataPersistence
 
     void SwitchToMinigame()
     {
-        StartCoroutine(UnloadSceneForMinigame());
+        StartCoroutine(InitializeMinigameScene());
     }
 
     void ReturnFromMinigame()
     {
-        StartCoroutine(ReloadSceneAfterMinigame());
+        StartCoroutine(FinishMinigameScene());
     }
 
-    IEnumerator UnloadSceneForMinigame()
+    IEnumerator InitializeMinigameScene()
     {
         // 1. Fade Out
-        transition.Play("FadeIn");
+        playCrossFade();
         yield return new WaitForSeconds(transitionTime);
 
         // 2. Save Player Position & Current Scene
@@ -136,12 +146,13 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         }
 
         gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.MINIGAME);
+        musicManager.instance.playMusicBG(minigameAudio, transform, 1f);
     }
 
-    IEnumerator ReloadSceneAfterMinigame()
+    IEnumerator FinishMinigameScene()
     {
         // 1. Fade Out (Minigame is ending)
-        transition.Play("FadeIn");
+        playCrossFade();
         yield return new WaitForSeconds(transitionTime);
 
         // 2. Load the previous Location Scene
@@ -154,7 +165,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
 
         // 3. Restore Player Position
         // We wait a frame to ensure the scene is initialized and Player is spawned
-        yield return new WaitForEndOfFrame();
+        // yield return new WaitForEndOfFrame();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -163,6 +174,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         }
 
         gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.DEFAULT);
+        musicManager.instance.playMusicBG(mainAudio, transform, 1f);
     }
 
     public void loadData(gameData data)

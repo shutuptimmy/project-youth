@@ -1,22 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class globalConstants : MonoBehaviour
 {
     public const int experienceToLevelUp = 100;
+    public const int maxLevel = 5;
 
-    [Header("Rapport Status")]
-    // Christopher
-    public int npc1Level;
-    public int npc1Exp;
+    // [Header("Rapport Status")]
+    // // Christopher
+    // public int npc1Level;
+    // public int npc1Exp;
 
-    // April
-    public int npc2Level;
-    public int npc2Exp;
+    // // April
+    // public int npc2Level;
+    // public int npc2Exp;
 
-    // Harris
-    public int npc3Level;
-    public int npc3Exp;
+    // // Harry
+    // public int npc3Level;
+    // public int npc3Exp;
 
+    // // Wallace
+    //     public int npc4Level;
+    // public int npc4Exp;
 }

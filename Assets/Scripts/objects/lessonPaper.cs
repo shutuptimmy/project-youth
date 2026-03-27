@@ -28,13 +28,13 @@ public class lessonPaper : InteractableBase, IDataPersistence
         }
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         gameEventsManager.instance.miscEvents.onQuestReward += rewardUnlocked;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         base.OnDisable();
         gameEventsManager.instance.miscEvents.onQuestReward -= rewardUnlocked;
