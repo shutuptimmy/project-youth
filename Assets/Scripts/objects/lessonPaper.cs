@@ -50,7 +50,6 @@ public class lessonPaper : InteractableBase, IDataPersistence
 
         sprite.enabled = isActive;
         boxCollider.enabled = isActive;
-        interactableVisualCue.SetActive(isActive);
         isCollectible = isActive;
     }
 
@@ -80,19 +79,20 @@ public class lessonPaper : InteractableBase, IDataPersistence
 
         if (!string.IsNullOrEmpty(paperId))
         {
-            bool isRead = data.unlockedRewardIds.Contains(paperId + "_READ");
             bool isUnlocked = data.unlockedRewardIds.Contains(paperId);
+            bool isRead = data.unlockedRewardIds.Contains(paperId + "_READ");
 
-            Debug.LogWarning("has been read? " + isRead);
             Debug.LogWarning("is unlocked?" + isUnlocked);
+            Debug.LogWarning("has been read? " + isRead);
 
             if (isRead)
             {
+                Debug.LogWarning("paper destroyed");
                 Destroy(this.gameObject);
             }
             else if (isUnlocked)
             {
-                isCollectible = true;
+                Debug.LogWarning("paper seen");
                 SetVisualsActive(true);
             }
             else

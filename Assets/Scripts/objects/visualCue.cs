@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class visualCue : MonoBehaviour
 {
@@ -14,6 +12,5 @@ public class visualCue : MonoBehaviour
             animator.SetBool("isNpc", isNpc);
         }
     }
-
 
 }

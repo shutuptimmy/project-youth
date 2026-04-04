@@ -24,7 +24,7 @@ public abstract class MinigameManagerBase : MonoBehaviour
 
         gameEventsManager.instance.sceneEvents.startMinigame();
         yield return new WaitForSeconds(1f);
-        StartQuestStatus(); // only for quest debugging
+        StartQuestStatus();
         StartMenuBase();
     }
 
@@ -37,7 +37,7 @@ public abstract class MinigameManagerBase : MonoBehaviour
 
     protected void ResultMenuBase(string title, string status)
     {
-        bool showQuit = isQuestStepPresent || playerHasWon;
+        bool showQuit = isQuestStepPresent || playerHasWon; // 
         mainContentParent.SetActive(false);
         ShowResultMenu(title, status, showQuit);
     }
@@ -64,7 +64,7 @@ public abstract class MinigameManagerBase : MonoBehaviour
         StartCoroutine(QuitMinigameBase());
     }
 
-    protected void MinigameCompleteBase(bool playerWon)
+    public void MinigameCompleteBase(bool playerWon)
     {
         isGameActive = false;
         playerHasWon = playerWon;
@@ -76,7 +76,7 @@ public abstract class MinigameManagerBase : MonoBehaviour
     public abstract void StartQuestStatus();
     public abstract void ShowStartMenu();
     public abstract void StartMinigame();
-    public abstract void MinigameComplete(bool playerWon);
+    public abstract void MinigameComplete(bool resultCheck);
     public abstract void QuitMinigame();
     public abstract void ShowResultMenu(string title, string status, bool showQuit);
 }

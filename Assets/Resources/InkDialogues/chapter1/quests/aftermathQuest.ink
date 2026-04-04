@@ -32,7 +32,7 @@ He's late. I don't know where he went.
 */
 
 = canStart
-Want to finish the day and reflect all your studies?
+Finish the day and reflect all your studies?
     + [Yes]
         ~ startQuest(aftermathId)
     + [Not yet]

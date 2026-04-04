@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3d4114a9126d414a4f9a15beb29036, type: 3}
+  m_Name: tugOfWar
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: tugOfWar
+  displayName: Peace through strength
+  displayDescription: Wallace would like to have a word with you.
+  lvlReq: 3
+  questPrerequisites:
+  - {fileID: 11400000, guid: 2cf62ba31d97936f5b09c04c0148929d, type: 2}
+  - {fileID: 11400000, guid: 3426d87a30220a3459d3d30cd7da4817, type: 2}
+  questStepPrefabs:
+  - {fileID: 5219919465226866202, guid: 80c08ab32a753d609b256ae8748dca8a, type: 3}
+  expReward: 65

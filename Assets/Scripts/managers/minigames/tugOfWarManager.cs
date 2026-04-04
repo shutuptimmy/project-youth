@@ -132,7 +132,7 @@ public class tugOfWarManager : MonoBehaviour
     {
         Debug.Log("suceess");
         gameEventsManager.instance.sceneEvents.quitMinigame();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.1f);
 
         gameEventsManager.instance.playerEvents.EnablePlayerMovement();
 

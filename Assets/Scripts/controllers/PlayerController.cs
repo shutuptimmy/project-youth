@@ -212,11 +212,13 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         this.transform.position = data.playerPosition;
         this.playerGender = data.playerGender;
+        Debug.Log("Player Data Loaded");
     }
 
     public void saveData(gameData data)
     {
         if (this == null) return; // fixes on pretest minigame
         data.playerPosition = this.transform.position;
+        Debug.Log("Player Data Saved");
     }
 }

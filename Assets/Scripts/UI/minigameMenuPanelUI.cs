@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -14,7 +12,7 @@ public class minigameMenuPanelUI : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
 
-    public void activateMenu(string titleText, string displayText, string playerHighscoreText, UnityAction startAction, string startText, UnityAction quitAction, bool showQuit)
+    public void activateMenu(string titleText, string displayText, string playerHighscoreText, UnityAction StartAction, string startText, UnityAction QuitAction, bool showQuit)
     {
         this.gameObject.SetActive(true);
 
@@ -32,12 +30,12 @@ public class minigameMenuPanelUI : MonoBehaviour
         startButton.onClick.AddListener(() =>
         {
             deactivateMenu();
-            startAction();
+            StartAction();
         });
         quitButton.onClick.AddListener(() =>
         {
             deactivateMenu();
-            quitAction();
+            QuitAction();
         });
     }
 

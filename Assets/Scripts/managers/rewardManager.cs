@@ -1,11 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class rewardManager : MonoBehaviour, IDataPersistence
 {
     private List<string> unlockedRewardIds = new List<string>();
 
+    public static rewardManager instance { get; private set; }
+
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.Log("Found more than one Reward Manager in the scene. Removing duplicate..");
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
 
     private void OnEnable()
     {

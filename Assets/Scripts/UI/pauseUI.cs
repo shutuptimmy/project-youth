@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class pauseUI : MonoBehaviour //, IDataPersistence
 {
-    [Header("Pause Menus")]
+    [Header("Components")]
     [SerializeField] private GameObject contentParent;
+    [SerializeField] private soundsMenuUI soundsMenuUI;
+
+    [Header("Pause Menus")]
     [SerializeField] private GameObject normalPauseMenu;
     [SerializeField] private GameObject inProgressPauseMenu;
 
@@ -19,6 +22,7 @@ public class pauseUI : MonoBehaviour //, IDataPersistence
     [Header("Navigation Menu Buttons")]
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject resumeButton;
+    [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject quitAndSaveButton;
 
     private void OnEnable()
@@ -68,17 +72,10 @@ public class pauseUI : MonoBehaviour //, IDataPersistence
         }
     }
 
-    // public void loadData(gameData data)
-    // {
-    //     chapterText.text = data.playerChapter.ToString();
-    //     expLevel.text = data.playerExp.ToString();
-    //     expRequiredToLevelUp.text = globalConstants.experienceToLevelUp - data.playerExp + " left to level up";
-    // }
-
-    // public void saveData(gameData data)
-    // {
-
-    // }
+    public void SettingsToggle()
+    {
+        soundsMenuUI.activateMenu();
+    }
 
     public void quitAndSavePressed()
     {

@@ -15,7 +15,7 @@ public class backToEarthManager : MinigameManagerBase
     public override void StartQuestStatus()
     {
         isQuestStepPresent = spaceQuestStep == null;
-        Debug.Log("Quest Step Status: " + spaceQuestStep);
+        Debug.Log($"Quest Step Present: {isQuestStepPresent} > {spaceQuestStep}");
     }
 
     void OnEnable()
@@ -46,12 +46,13 @@ public class backToEarthManager : MinigameManagerBase
             () => StartMinigameBase(),
             "Start",
             () => QuitMinigameBtn(),
-            isQuestStepPresent
+            isQuestStepPresent // if minigame is part of a quest, don't show quit button unless player have won
         );
     }
 
     public override void ShowResultMenu(string title, string status, bool showQuit)
     {
+        Debug.Log(showQuit);
         minigameMenuPanelUI.activateMenu(
             title,
             status,
@@ -76,12 +77,9 @@ public class backToEarthManager : MinigameManagerBase
         spaceQuestStep?.playerWon();
     }
 
-    public override void MinigameComplete(bool playerWon)
+    public override void MinigameComplete(bool resultCheck)
     {
-        if (playerWon)
-        {
-            ResultMenuBase("Mission Accomplished!", "You have returned home safely.");
-        }
+        if (resultCheck) ResultMenuBase("Mission Accomplished!", "You have returned home safely.");
         else ResultMenuBase("You Crashed!", "Try again and git gud.");
     }
 

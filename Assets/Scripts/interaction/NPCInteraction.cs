@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
-
 public class NPCInteraction : InteractableBase, IDataPersistence
 {
     [Header("Components")]
@@ -21,8 +21,8 @@ public class NPCInteraction : InteractableBase, IDataPersistence
     [SerializeField] private bool finishPoint = true;
 
     private string questId;
+    private bool isHidden;
     private questState currentQuestState;
-    // private Transform childVisuals;
 
     protected override void Awake()
     {
@@ -31,7 +31,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         sprite = GetComponent<SpriteRenderer>();
         circleCollider = GetComponent<CircleCollider2D>();
 
-        // FIX 1: Safety Check. Not all NPCs have quests.
+        // Safety Check. Not all NPCs have quests.
         if (questInfoForPoint != null)
         {
             questId = questInfoForPoint.id;
@@ -39,21 +39,24 @@ public class NPCInteraction : InteractableBase, IDataPersistence
     }
     private void Start()
     {
-        if (!string.IsNullOrEmpty(questId) && questManager.instance != null)
+        if (!string.IsNullOrEmpty(questId))
         {
             quest quest = questManager.instance.getQuestById(questId);
 
+            // skip if quest not present
             if (quest != null)
             {
                 currentQuestState = quest.state;
-                // Force the icon to update right now
+
                 if (questIcon != null)
                 {
+                    // Force the icon to update right now
                     questIcon.setState(currentQuestState, startPoint, finishPoint);
                 }
             }
         }
     }
+
     private void Reset()
     {
         circleCollider = GetComponent<CircleCollider2D>();
@@ -66,17 +69,6 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         {
             gameEventsManager.instance.dialogueEvents.enterDialogue(dialogueKnotName);
         }
-        // else
-        // {
-        //     if (currentQuestState.Equals(questState.CAN_START) && startPoint)
-        //     {
-        //         gameEventsManager.instance.questEvents.startQuest(questId);
-        //     }
-        //     else if (currentQuestState.Equals(questState.CAN_FINISH) && finishPoint)
-        //     {
-        //         gameEventsManager.instance.questEvents.finishQuest(questId);
-        //     }
-        // }
     }
 
     void SetVisualsActive(bool isActive)
@@ -117,7 +109,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         if (quest.info.id.Equals(questId))
         {
             currentQuestState = quest.state;
-            questIcon?.setState(currentQuestState, startPoint, finishPoint);
+            if (questIcon != null) questIcon.setState(currentQuestState, startPoint, finishPoint);
             Debug.Log("quest id: " + questId + " updated to state: " + currentQuestState);
         }
     }
@@ -127,6 +119,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         // show if id is present during gameplay
         if (id == npcId)
         {
+            Debug.Log($"Activatin {npcId}");
             SetVisualsActive(true);
         }
     }

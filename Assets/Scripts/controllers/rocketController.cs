@@ -10,7 +10,7 @@ public class rocketController : MonoBehaviour
     [SerializeField] private float initialKickForce;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float turnSpeed;
-    [SerializeField] private BoxCollider2D landCollider;
+    // [SerializeField] private BoxCollider2D landCollider;
 
     [Header("Fuel Config")]
     [SerializeField] private float maxFuel;
@@ -157,19 +157,18 @@ public class rocketController : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Earth"))
         {
-            if (collision.otherCollider == landCollider)
-            {
-                Debug.Log("Landed safely with Exhaust!");
-                manager.MinigameComplete(true);
-                DisablePlayerMovement();
-                rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            }
-            else
-            {
-                // We hit Earth with the nose/body -> Crash!
-                Debug.Log("Crashed nose-first into Earth!");
-                rocketCrashed();
-            }
+            // if (collision.otherCollider == landCollider)
+            // {
+            manager.MinigameCompleteBase(true);
+            DisablePlayerMovement();
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            // }
+            // else
+            // {
+            //     // We hit Earth with the nose/body -> Crash!
+            //     Debug.Log("Crashed nose-first into Earth!");
+            //     rocketCrashed();
+            // }
         }
         else rocketCrashed();
     }

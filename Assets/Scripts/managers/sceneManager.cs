@@ -163,10 +163,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
             currentBgScene = returnSceneName; // Restore tracker
         }
 
-        // 3. Restore Player Position
-        // We wait a frame to ensure the scene is initialized and Player is spawned
-        // yield return new WaitForEndOfFrame();
-
+        // Restore Player Position
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {

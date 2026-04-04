@@ -1,31 +1,34 @@
 fileFormatVersion: 2
-guid: cd9341a42692275d7b22a92f337e541c
+guid: 9f55a568b5df4eb708cff51ec3f99e63
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 4452185016506266856
-    second: playerBoyFrontIdle
+    second: boyFrontIdle0
   - first:
       213: -5062146728693150902
-    second: playerBoyFrontWalk0
-  - first:
-      213: 6996156036745707692
-    second: playerBoyFrontWalk1
+    second: boyFrontWalk0
   - first:
       213: -9127855591251991363
-    second: playerBoySideWalk
+    second: boyFrontWalk1
   - first:
       213: -2995952958785137997
-    second: playerBoyBackWalk1
-  - first:
-      213: -8940373477665507674
-    second: playerBoySideIdle
+    second: boySideIdle
   - first:
       213: 3387560153259001581
-    second: playerBoyBackIdle
+    second: boySideWalk
   - first:
-      213: 7201994516254116731
-    second: playerBoyBackWalk0
+      213: 8445672323776234075
+    second: boyBackIdle
+  - first:
+      213: 5345827186447736864
+    second: boyBackWalk0
+  - first:
+      213: 1042980538080675438
+    second: boyBackWalk1
+  - first:
+      213: -376566469394843919
+    second: boyFrontIdle1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -88,7 +91,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +103,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -111,11 +114,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: playerBoyFrontIdle
+      name: boyFrontIdle0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 64
+        x: 3
+        y: 117
         width: 15
         height: 32
       alignment: 0
@@ -132,11 +135,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerBoyFrontWalk0
+      name: boyFrontWalk0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 64
+        x: 20
+        y: 117
         width: 15
         height: 32
       alignment: 0
@@ -153,34 +156,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerBoyFrontWalk1
+      name: boyFrontWalk1
       rect:
         serializedVersion: 2
-        x: 72
-        y: 64
+        x: 54
+        y: 117
         width: 15
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca0ce6329d6571160800000000000000
-      internalID: 6996156036745707692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerBoySideWalk
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 32
-        width: 15
-        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,12 +177,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerBoyBackWalk1
+      name: boySideIdle
       rect:
         serializedVersion: 2
-        x: 72
-        y: 0
-        width: 15
+        x: 3
+        y: 84
+        width: 14
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -216,34 +198,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerBoySideIdle
+      name: boySideWalk
       rect:
         serializedVersion: 2
-        x: 9
-        y: 32
-        width: 14
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6a67c60b0b96de380800000000000000
-      internalID: -8940373477665507674
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerBoyBackIdle
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 0
+        x: 38
+        y: 84
         width: 15
-        height: 32
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,11 +219,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerBoyBackWalk0
+      name: boyBackIdle
       rect:
         serializedVersion: 2
-        x: 40
-        y: 0
+        x: 4
+        y: 18
         width: 15
         height: 32
       alignment: 0
@@ -272,8 +233,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7b43afcadf92f360800000000000000
-      internalID: 7201994516254116731
+      spriteID: b52c70c3b3e053570800000000000000
+      internalID: 8445672323776234075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boyBackWalk0
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 18
+        width: 15
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 020e7dea081303a40800000000000000
+      internalID: 5345827186447736864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boyBackWalk1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 18
+        width: 15
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e66c1fff549697e00800000000000000
+      internalID: 1042980538080675438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boyFrontIdle1
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 6
+        width: 15
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6b56d8aca26caf0800000000000000
+      internalID: -376566469394843919
       vertices: []
       indices: 
       edges: []

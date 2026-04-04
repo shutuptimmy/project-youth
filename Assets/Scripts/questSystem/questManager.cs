@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class questManager : MonoBehaviour, IDataPersistence
@@ -20,6 +19,7 @@ public class questManager : MonoBehaviour, IDataPersistence
             Destroy(gameObject);
             return;
         }
+        instance = this;
 
         questMap = createQuestMap();
     }
@@ -162,12 +162,19 @@ public class questManager : MonoBehaviour, IDataPersistence
 
     public quest getQuestById(string id)
     {
-        quest quest = questMap[id];
-        if (quest == null)
+        if (questMap.TryGetValue(id, out quest quest))
         {
-            Debug.LogError("ID not found in quest map tho:" + id);
+            return quest;
         }
-        return quest;
+        
+        Debug.LogError("ID not found in quest map tho: " + id);
+        return null;
+        // quest quest = questMap[id];
+        // if (quest == null)
+        // {
+        //     Debug.LogError("ID not found in quest map tho:" + id);
+        // }
+        // return quest;
     }
 
     // private void OnApplicationQuit()

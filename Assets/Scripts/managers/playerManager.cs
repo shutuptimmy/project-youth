@@ -37,7 +37,9 @@ public class playerManager : MonoBehaviour, IDataPersistence
 
     private void ExperienceGained(int experience)
     {
+        if (currentLevel >= globalConstants.maxLevel) return; // skip exp gain if maxed level
         currentExperience += experience;
+
         // check if we're ready to level up
         while (currentExperience >= globalConstants.experienceToLevelUp)
         {

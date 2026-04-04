@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3d4114a9126d414a4f9a15beb29036, type: 3}
+  m_Name: knowledgeTest
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: knowledgeTest
+  displayName: Knowledge Test
+  displayDescription: Ask Chris for help
+  lvlReq: 1
+  questPrerequisites:
+  - {fileID: 11400000, guid: 2cf62ba31d97936f5b09c04c0148929d, type: 2}
+  questStepPrefabs:
+  - {fileID: 8370895231120007029, guid: 436568ef3494afe34b2f25e11e877226, type: 3}
+  expReward: 30

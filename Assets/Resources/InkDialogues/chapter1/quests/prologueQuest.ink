@@ -35,7 +35,7 @@ Thanks.. err. #name:You #char:you
 -> END
 
 = finished
-Mew.
+Mew. #name:Cat #char:bluecar
 -> END
 
 === prologue ===
@@ -49,6 +49,7 @@ Gotta move that aside before opening it..
 -> END
 
 === prologueBoxCar ===
+~itemReward("blueCar")
 Hm- oh, what the!? #name:You #char:you
 Mew. Kept ya waitin, huh? #name:Cat #char:bluecar
 ~itemReward("introForce")

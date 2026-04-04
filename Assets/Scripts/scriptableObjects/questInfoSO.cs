@@ -9,6 +9,9 @@ public class questInfoSO : ScriptableObject
 
     [Header("General")]
     public string displayName;
+    
+    [TextArea (1,5)]
+    public string displayDescription;
 
     [Header("Requirements")]
     public int lvlReq;
@@ -24,11 +27,11 @@ public class questInfoSO : ScriptableObject
 
 
     // ensures the id is always the name of the Scriptable Object asset
-    private void OnValidate()
-    {
-#if UNITY_EDITOR
-        id = this.name;
-        UnityEditor.EditorUtility.SetDirty(this);
-#endif
-    }
+//     private void OnValidate()
+//     {
+// #if UNITY_EDITOR
+//         id = this.name;
+//         UnityEditor.EditorUtility.SetDirty(this);
+// #endif
+//     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +7,8 @@ public class experienceUI : MonoBehaviour, IDataPersistence
     [Header("Components")]
     [SerializeField] private Slider expSlider;
     [SerializeField] private TextMeshProUGUI levelText;
+
+    private bool isMaxLevel = false;
     // [SerializeField] private TextMeshProUGUI currentLevelText;
 
 
@@ -26,19 +26,29 @@ public class experienceUI : MonoBehaviour, IDataPersistence
 
     void experienceGained(int exp)
     {
-        expSlider.value = (float)exp / (float)100;
-        // expText.text = exp + " / " + 100;
+        if (isMaxLevel == true)
+        {
+            expSlider.value = 100;
+            return;
+        }
+        else expSlider.value = (float)exp / (float)100;
     }
 
     void playerLevelUp(int level)
     {
-        levelText.text = "Level " + level;
+        if (level >= globalConstants.maxLevel)
+        {
+            isMaxLevel = true;
+            levelText.text = "MAX Level";
+            return;
+        }
+        else levelText.text = "Level " + level;
     }
 
     public void loadData(gameData data)
     {
-        experienceGained(data.playerExp);
         playerLevelUp(data.playerLvl);
+        experienceGained(data.playerExp);
 
     }
 

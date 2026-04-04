@@ -6,21 +6,13 @@ public class questIcon : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer sprite;
-    // [SerializeField] private GameObject canStartIcon;
-    // [SerializeField] private GameObject reqNotMetToFinishIcon;
-    // [SerializeField] private GameObject canFinishIcon;
 
     public void setState(questState newState, bool startPoint, bool finishPoint)
     {
-
-        // set all inactive
-        // canStartIcon.SetActive(false);
-        // reqNotMetToFinishIcon.SetActive(false);
-        // canFinishIcon.SetActive(false);
-
         // set appropriate one to active based on the new state
         switch (newState)
         {
+            case questState.REQ_NOT_MET: break;
 
             case questState.CAN_START:
                 if (startPoint)

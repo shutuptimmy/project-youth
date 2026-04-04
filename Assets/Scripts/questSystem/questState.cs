@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum questState
+﻿public enum questState
 {
     REQ_NOT_MET,
     CAN_START,

@@ -321,6 +321,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 93756cac-3afe-47b9-a69c-6e8c4410dc0f
     m_ActionName: game/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b56f2cd-f1c1-4fd0-bdbd-692f409c84b0
+    m_ActionName: game/Drag[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: game

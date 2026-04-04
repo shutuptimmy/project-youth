@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: prologue
   displayName: Prologue
+  displayDescription: Move the box away from your door
   lvlReq: 0
   questPrerequisites: []
   questStepPrefabs:
