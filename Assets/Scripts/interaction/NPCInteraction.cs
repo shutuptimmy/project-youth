@@ -109,7 +109,7 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         if (quest.info.id.Equals(questId))
         {
             currentQuestState = quest.state;
-            if (questIcon != null) questIcon.setState(currentQuestState, startPoint, finishPoint);
+            questIcon.setState(currentQuestState, startPoint, finishPoint);
             Debug.Log("quest id: " + questId + " updated to state: " + currentQuestState);
         }
     }

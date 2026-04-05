@@ -1,11 +1,11 @@
 ﻿=== avoidAccountabilityQuest ===
 // quest ids (questId + "Id" for var name)
-VAR AvoidAccountabilityId = "AvoidAccountability"
+VAR avoidAccountabilityId = "AvoidAccountability"
 
 // quest states (questId + "State" for var name)
-VAR AvoidAccountabilityState = "REQ_NOT_MET"
+VAR avoidAccountabilityState = "REQ_NOT_MET"
 
-{ AvoidAccountabilityState :
+{ avoidAccountabilityState :
 	- "REQ_NOT_MET": -> reqNotMet
 	- "CAN_START": -> canStart
 	- "IN_PROGRESS": -> inProgress
@@ -30,7 +30,7 @@ While I was doing a schizo drum thing, I hit it too hard and the sound..... #nam
 It may look fine, but it's about to break. Can you help me place her things back carefully?
 + [I can help, but you have to do it on your own.]
 	Eh!? Uh.. alright.
-	~ startQuest(AvoidAccountabilityId)
+	~ startQuest(avoidAccountabilityId)
 + [I think my hands are full]
 	Oh man..
 - -> END
@@ -42,7 +42,8 @@ I'm supposed to be in a minigame #name:You
 = canFinish
 Phew. I can't thank you enough, {playerName}. #name:Classmate #char:default
 Don't mention it. (I'd still going to talk to the teacher regardless.) #name:You #char:you
-~ finishQuest(AvoidAccountabilityId)
+~itemReward("deskBooks")
+~ finishQuest(avoidAccountabilityId)
 -> END
 
 = finished

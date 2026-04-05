@@ -116,7 +116,7 @@ public class sortingBoxesManager : MonoBehaviour
         if (isGameActive)
         {
             timeElapsed -= Time.deltaTime;
-            timerText.text = Mathf.FloorToInt(timeElapsed).ToString() + "s";
+            timerText.text = $"Time: {Mathf.FloorToInt(timeElapsed)}s";
             if (timeElapsed < 0f) minigameComplete(false);
         }
     }

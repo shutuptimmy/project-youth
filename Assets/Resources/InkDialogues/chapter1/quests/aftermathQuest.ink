@@ -35,6 +35,7 @@ He's late. I don't know where he went.
 Finish the day and reflect all your studies?
     + [Yes]
         ~ startQuest(aftermathId)
+	~ itemReward("gameFinish")
     + [Not yet]
 
 - -> END

@@ -15,13 +15,13 @@ VAR spaceState = "REQ_NOT_MET"
 	}
 
 = reqNotMet
-Hello, {playerName} #name:Cassie #char:default
+Hello, {playerName}. #name:Cassie #char:default
 -> END
 
 = canStart
 Hi, {playerName}. Do you know much about gravity? #name:Cassie #char:default
 Well.. maybe? #name:You #char:you
-What about space? I know April is busy at the moment. Why not we solve this together? #name:Cassie #char:default
+What about space? I know you talked to April so why not we find out together? #name:Cassie #char:default
 	+ [I accept]
 		~ startQuest(spaceId)
 	+ [Hang on]
@@ -37,4 +37,5 @@ I'm supposed to be in a minigame #name:You
 
 = finished
 Thanks for the help, {playerName}. Hehe. #name:Cassie #char:default
+~itemReward("rocketSpace")
 -> END

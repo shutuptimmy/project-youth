@@ -16,8 +16,9 @@ public class computer : InteractableBase
 
     public override void Interact()
     {
-        if (currentQuestState != questState.FINISHED) gameEventsManager.instance.dialogueEvents.enterDialogue(dialogueKnotName);
-        else ActivateMenu();
+        // if (currentQuestState != questState.FINISHED) gameEventsManager.instance.dialogueEvents.enterDialogue(dialogueKnotName);
+        // else ActivateMenu();
+        ActivateMenu();
     }
 
     void Start()

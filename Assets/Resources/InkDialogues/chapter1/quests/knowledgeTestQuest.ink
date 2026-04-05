@@ -56,7 +56,6 @@ Pfft. You got me. #name:Christopher #char:chris
 Go talk to anyone to know more about the lessons before settling today. #name:Christopher #char:chris
 -> END
 
-
 = guideNoteDialogue
 I.. screw it up. #name:You #char:you
 Don't be. It's better to look after your health rather than forcing yourself to go. #name:Christopher #char:chris
