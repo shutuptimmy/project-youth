@@ -1,6 +1,6 @@
 ﻿=== avoidAccountabilityQuest ===
 // quest ids (questId + "Id" for var name)
-VAR avoidAccountabilityId = "AvoidAccountability"
+VAR avoidAccountabilityId = "avoidAccountability"
 
 // quest states (questId + "State" for var name)
 VAR avoidAccountabilityState = "REQ_NOT_MET"
@@ -16,17 +16,17 @@ VAR avoidAccountabilityState = "REQ_NOT_MET"
 
 = reqNotMet
 Hey. #name:You #char:you
-(Swings his hand uncontrollably) #name:Classmate #char:default
+(Swings his hand uncontrollably) #name:Michael #char:default
 (His music can hear all the way here.) #name:You #char:you
 -> END
 
 = canStart
-Hey. Uh, do you have a minute? #name:Classmate #char:default
+Hey. Uh, do you have a minute? #name:Michael #char:default
 What's up? #name:You #char:you
-It's.. erm.. #name:Classmate #char:default
+It's.. erm.. #name:Michael #char:default
 I made a grave mistake to the teacher's desk.
 What happened? #name:You #char:you
-While I was doing a schizo drum thing, I hit it too hard and the sound..... #name:Classmate #char:default
+While I was doing a schizo drum thing, I hit it too hard and the sound..... #name:Michael #char:default
 It may look fine, but it's about to break. Can you help me place her things back carefully?
 + [I can help, but you have to do it on your own.]
 	Eh!? Uh.. alright.
@@ -40,13 +40,13 @@ I'm supposed to be in a minigame #name:You
 -> END
 
 = canFinish
-Phew. I can't thank you enough, {playerName}. #name:Classmate #char:default
+Phew. I can't thank you enough, {playerName}. #name:Michael #char:default
 Don't mention it. (I'd still going to talk to the teacher regardless.) #name:You #char:you
-~itemReward("deskBooks")
+~ itemReward("deskBooks")
 ~ finishQuest(avoidAccountabilityId)
 -> END
 
 = finished
-(Swings his hand uncontrollably again) #name:Classmate #char:default
+(Swings his hand uncontrollably again) #name:Michael #char:default
 This guy... #name:You #char:you
 -> END

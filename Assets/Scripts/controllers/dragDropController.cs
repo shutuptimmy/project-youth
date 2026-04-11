@@ -5,6 +5,8 @@ public class dragDropController : MonoBehaviour
 {
     [Header("Manager Script")]
     [SerializeField] private fragileDeskManager manager;
+    [SerializeField] private Camera mainCam;
+
     [Header("Controller Config")]
     [SerializeField] private float springFrequency; // Higher = Stiffer (Sticks closer to mouse)
     [SerializeField] private float springDamping; // Oscillation (bouncing effect while holding)
@@ -24,11 +26,9 @@ public class dragDropController : MonoBehaviour
 
     private SpringJoint2D sj;
     private Rigidbody2D rb;
-    private Camera mainCam;
 
     void Awake()
     {
-        mainCam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
 
         sj = GetComponent<SpringJoint2D>();

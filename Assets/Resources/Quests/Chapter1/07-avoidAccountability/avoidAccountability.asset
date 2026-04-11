@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: avoidAccountability
   displayName: Avoiding Accountability
-  displayDescription: 
+  displayDescription: Michael doesnt sound okay. Go talk to him.
   lvlReq: 5
   questPrerequisites:
   - {fileID: 11400000, guid: 2cf62ba31d97936f5b09c04c0148929d, type: 2}

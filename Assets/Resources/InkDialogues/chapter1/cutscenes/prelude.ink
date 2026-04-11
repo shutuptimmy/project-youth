@@ -16,5 +16,4 @@ Oh no! I'm late!
 
 === prelude3 ===
 I have to get things ready. #name:You
-~ startQuest(PackUpId)
 -> END

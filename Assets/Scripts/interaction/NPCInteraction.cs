@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class NPCInteraction : InteractableBase, IDataPersistence
@@ -15,13 +14,13 @@ public class NPCInteraction : InteractableBase, IDataPersistence
     [Header("Quest")]
     [SerializeField] private questInfoSO questInfoForPoint;
     [SerializeField] private questIcon questIcon;
+    [SerializeField] private bool isShowOnAftermath;
 
     [Header("Config")]
     [SerializeField] private bool startPoint = true;
     [SerializeField] private bool finishPoint = true;
 
     private string questId;
-    private bool isHidden;
     private questState currentQuestState;
 
     protected override void Awake()

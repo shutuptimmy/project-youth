@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private bool isPartOfMinigame;
+
     [Header("Apple Minigame Manager")]
     [SerializeField] fallingApplesManager fallingApplesManager;
     [SerializeField] private TrailRenderer dashTrail;
@@ -17,6 +19,9 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     private bool isDashing = false;
     private bool canDash = true;
     private bool isInvincible = false;
+
+    [Header("Tug of War Minigame")]
+    [SerializeField] private Animator rivalAnimator;
 
     // main components
     private Vector2 velocity = Vector2.zero;
@@ -107,17 +112,22 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     public void setAnimation(int status)
     {
         string spriteGender = playerGender == 0 ? "Boy" : "Girl";
-        Debug.Log("SpriteGender: " + spriteGender + ". PlayerGender: " + playerGender);
+        string rivalSprite = playerGender == 0 ? "Girl" : "Boy";
+
+        Debug.Log($"PlayerGender: {spriteGender}. Rival: {rivalSprite}");
+
 
         switch (status)
         {
             // Move
             case 0:
                 animator.Play("player" + spriteGender + "SideWalk");
+                rivalAnimator.Play("player" + rivalSprite + "SideWalk");
                 break;
             // Idle
             case 1:
                 animator.Play("player" + spriteGender + "SideIdle");
+                rivalAnimator.Play("player" + rivalSprite + "SideIdle");
                 break;
             default:
                 Debug.Log("setAnimation out of bounds: " + status);
@@ -210,7 +220,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     public void loadData(gameData data)
     {
-        this.transform.position = data.playerPosition;
+        if (!isPartOfMinigame) this.transform.position = data.playerPosition;
         this.playerGender = data.playerGender;
         Debug.Log("Player Data Loaded");
     }

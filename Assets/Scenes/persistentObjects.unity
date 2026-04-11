@@ -15736,12 +15736,12 @@ MonoBehaviour:
     m_ActionName: Player/Submit[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 2053468969767113031}
+        m_MethodName: DragPressed
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15803,7 +15803,18 @@ MonoBehaviour:
     m_ActionId: 93756cac-3afe-47b9-a69c-6e8c4410dc0f
     m_ActionName: game/Pause[/Keyboard/escape]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2053468969767113031}
+        m_MethodName: DragPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6b56f2cd-f1c1-4fd0-bdbd-692f409c84b0
     m_ActionName: game/Drag[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0

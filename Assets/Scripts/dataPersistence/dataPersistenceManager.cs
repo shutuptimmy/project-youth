@@ -72,7 +72,13 @@ public class dataPersistenceManager : MonoBehaviour
         Debug.Log("Onsceneloaded");
         this.dataPersistenceObjects = findAllDataPersistenceObjects();
         loadGame();
+    }
 
+    public void MinigameLoadData()
+    {
+        Debug.Log("Minigame Data loaded");
+        this.dataPersistenceObjects = findAllDataPersistenceObjects();
+        loadGame();        
     }
 
     public void changeSelectedProfileId(string newProfileId)

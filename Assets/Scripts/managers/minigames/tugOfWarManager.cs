@@ -10,12 +10,10 @@ public class tugOfWarManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private GameObject mainContentParent;
     [SerializeField] private GameObject gameplayGameObject;
-    // [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Button[] choiceButtons;
     [SerializeField] private rope rope;
     [SerializeField] private PlayerController minigamePlayer;
-    [SerializeField] private GameObject npcObject;
     [SerializeField] private Slider gaugeBar;
 
     [Header("Quest Step")]
@@ -132,7 +130,7 @@ public class tugOfWarManager : MonoBehaviour
     {
         Debug.Log("suceess");
         gameEventsManager.instance.sceneEvents.quitMinigame();
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(1f);
 
         gameEventsManager.instance.playerEvents.EnablePlayerMovement();
 
@@ -342,7 +340,6 @@ public class tugOfWarManager : MonoBehaviour
 
         if (value <= -maxRopeDistance) minigameComplete(true);
         else if (value >= maxRopeDistance) minigameComplete(false);
-        else Debug.Log("still pullin...");
     }
 
     // Helper to shuffle the list of sprites

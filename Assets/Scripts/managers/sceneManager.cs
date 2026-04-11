@@ -145,6 +145,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
             yield return SceneManager.UnloadSceneAsync(currentBgScene);
         }
 
+        dataPersistenceManager.instance.MinigameLoadData();
         gameEventsManager.instance.inputEvents.ChangeInputEventContext(inputEventContext.MINIGAME);
         musicManager.instance.playMusicBG(minigameAudio, transform, 1f);
     }

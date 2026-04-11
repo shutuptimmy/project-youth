@@ -1014,8 +1014,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 22ac66dab95cf5b9691da863bfe9efcc, type: 2}
+  m_sharedMaterial: {fileID: 5918848955133644502, guid: 22ac66dab95cf5b9691da863bfe9efcc,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1039,8 +1040,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1235,6 +1236,11 @@ PrefabInstance:
       propertyPath: applesManager
       value: 
       objectReference: {fileID: 2093017874647372111}
+    - target: {fileID: 5534983038983430648, guid: d266ba09dd3cea911994937947c80b11,
+        type: 3}
+      propertyPath: isPartOfMinigame
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5534983038983430648, guid: d266ba09dd3cea911994937947c80b11,
         type: 3}
       propertyPath: fallingApplesManager

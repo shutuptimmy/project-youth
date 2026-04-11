@@ -308,12 +308,12 @@ PrefabInstance:
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
@@ -1207,12 +1207,12 @@ PrefabInstance:
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
@@ -1382,6 +1382,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6096327841026587699, guid: 9d3a4fdeeab59338eb7d54b807cb5175,
         type: 3}
+    - target: {fileID: 1356129720207932590, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ef638678be471ac9185e5aaa26de39ad,
+        type: 3}
     - target: {fileID: 1599419903021725199, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1505,12 +1511,12 @@ PrefabInstance:
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
@@ -1669,6 +1675,7 @@ MonoBehaviour:
   contentParent: {fileID: 237543033}
   continueBtn: {fileID: 1655397857}
   rewardID: gameFinish
+  carCollider: {fileID: 8445423815535006700}
 --- !u!1 &340237414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,12 +2458,12 @@ PrefabInstance:
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
@@ -3996,6 +4003,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7656976965600249762, guid: dd723941eb43910e6b87d0643e9db65d,
         type: 3}
+    - target: {fileID: 1356129720207932590, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d27d0232a2d6b9d86865979f08166d5a,
+        type: 3}
     - target: {fileID: 1599419903021725199, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4109,12 +4122,12 @@ PrefabInstance:
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9126211009081945396, guid: a9d32d8954479cb93b15d7b0fd99fd0e,
         type: 3}
@@ -4395,7 +4408,7 @@ PrefabInstance:
     - target: {fileID: 5068889840010167351, guid: 7b2ffe37ff6c3bab0916473e55ae3533,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.000000059604645
       objectReference: {fileID: 0}
     - target: {fileID: 5068889840010167351, guid: 7b2ffe37ff6c3bab0916473e55ae3533,
         type: 3}
@@ -4410,7 +4423,7 @@ PrefabInstance:
     - target: {fileID: 5068889841291650609, guid: 7b2ffe37ff6c3bab0916473e55ae3533,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.000000059604645
       objectReference: {fileID: 0}
     - target: {fileID: 5068889841291650609, guid: 7b2ffe37ff6c3bab0916473e55ae3533,
         type: 3}
@@ -4510,7 +4523,7 @@ PrefabInstance:
     - target: {fileID: 6641192381822940291, guid: f9c477ae2b740ad29849d614cefcc764,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6641192381822940319, guid: f9c477ae2b740ad29849d614cefcc764,
         type: 3}
@@ -4586,6 +4599,7 @@ MonoBehaviour:
   dialogueKnotName: tugOfWarQuest
   questInfoForPoint: {fileID: 11400000, guid: dd05eaddb5350343a8ce950742cff104, type: 2}
   questIcon: {fileID: 0}
+  isShowOnAftermath: 0
   startPoint: 0
   finishPoint: 0
 --- !u!1 &8445423813822671881
@@ -4913,6 +4927,7 @@ MonoBehaviour:
   dialogueKnotName: knowledgeTestQuest
   questInfoForPoint: {fileID: 11400000, guid: ac7c0d1c632b73158a406dfaef3748ef, type: 2}
   questIcon: {fileID: 0}
+  isShowOnAftermath: 0
   startPoint: 0
   finishPoint: 0
 --- !u!1001 &8445423814488893543
@@ -5260,6 +5275,7 @@ MonoBehaviour:
   dialogueKnotName: helpingHandQuest
   questInfoForPoint: {fileID: 11400000, guid: 3426d87a30220a3459d3d30cd7da4817, type: 2}
   questIcon: {fileID: 0}
+  isShowOnAftermath: 0
   startPoint: 0
   finishPoint: 0
 --- !u!1 &8445423815417680227
@@ -5485,6 +5501,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8445423815535006698}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &8445423815535006700 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8445423815514303546, guid: dcbfeb6983c3184759a677ee85981bf0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8445423815535006698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8445423815960880806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5502,6 +5524,7 @@ MonoBehaviour:
   dialogueKnotName: gravitationalResearchQuest
   questInfoForPoint: {fileID: 11400000, guid: 29fd0ca7251e56ae69e39424951e6035, type: 2}
   questIcon: {fileID: 0}
+  isShowOnAftermath: 0
   startPoint: 0
   finishPoint: 0
 --- !u!1 &8445423815960880807
