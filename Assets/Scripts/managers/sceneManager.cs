@@ -15,6 +15,10 @@ public class sceneManager : MonoBehaviour, IDataPersistence
     private Vector2 returnPlayerPosition;
     private string returnSceneName;
 
+    [Header("Home Scene")]
+    [SerializeField] private SceneField homeScene;
+    [SerializeField] private Vector2 playerPosSpawn;
+
     [Header("Audio Manager")]
     [SerializeField] private AudioClip mainAudio;
     [SerializeField] private AudioClip minigameAudio;
@@ -36,6 +40,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.sceneEvents.onPlayCrossFade += playCrossFade;
         gameEventsManager.instance.sceneEvents.onStartMinigame += SwitchToMinigame;
         gameEventsManager.instance.sceneEvents.onQuitMinigame += ReturnFromMinigame;
+        gameEventsManager.instance.sceneEvents.onFinishDay += finishDayQuest;
     }
 
     private void OnDisable()
@@ -44,6 +49,7 @@ public class sceneManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.sceneEvents.onPlayCrossFade -= playCrossFade;
         gameEventsManager.instance.sceneEvents.onStartMinigame -= SwitchToMinigame;
         gameEventsManager.instance.sceneEvents.onQuitMinigame -= ReturnFromMinigame;
+        gameEventsManager.instance.sceneEvents.onFinishDay -= finishDayQuest;
     }
 
     // private void OnDestroy()
@@ -112,6 +118,11 @@ public class sceneManager : MonoBehaviour, IDataPersistence
             Debug.Log($"SCENE MANAGER: Player moved to {targetedPlayerPos} in {sceneName}");
         }
 
+    }
+
+    void finishDayQuest(string id)
+    {
+        changeScene(homeScene, playerPosSpawn);
     }
 
     void SwitchToMinigame()

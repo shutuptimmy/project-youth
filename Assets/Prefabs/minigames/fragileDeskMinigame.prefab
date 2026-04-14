@@ -266,9 +266,12 @@ MonoBehaviour:
   maxHP: 150
   crackingPercentage: 32
   breakingPercentage: 64
-  weightSensitivityFactor: 1.05
+  weightSensitivityFactor: 0.8
   surfaceCollider: {fileID: 6828466831584792576}
   meterBarFill: {fileID: 6828466832423038094}
+  thudSFX: {fileID: 8300000, guid: 0255989e7be8a6dc596e343ad8859a21, type: 3}
+  crackSFX: {fileID: 8300000, guid: 72c689427a93a0579bef2b9f189f79e0, type: 3}
+  destroyedSFX: {fileID: 8300000, guid: 372095cb2490a4fe8a39f81e9dc2e096, type: 3}
 --- !u!70 &6828466831584792580
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -493,13 +496,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainContentParent: {fileID: 6828466831358187231}
   gameplayGameObject: {fileID: 6828466832515433493}
+  timerText: {fileID: 6828466832319622637}
+  minigameMenuPanelUI: {fileID: 2307799165155531314}
+  winSFX: {fileID: 8300000, guid: 9a11312e1ca373b42a6338aab01b87d0, type: 3}
+  loseSFX: {fileID: 8300000, guid: 59b2984804ec76417bf2f51cb0adc532, type: 3}
   desk: {fileID: 6828466831584792583}
   objPlacedText: {fileID: 6828466831911335472}
-  timerText: {fileID: 6828466832319622637}
   stabilizeUI: {fileID: 6828466832961322095}
   stabilizeTimerText: {fileID: 6828466832663241750}
   avoidAccountabilityQuestStep: {fileID: 0}
-  minigameMenuPanelUI: {fileID: 2307799165155531314}
   timeLimit: 120
   stableTimeRequired: 2
   objsParent: {fileID: 6828466832501964971}
@@ -1322,7 +1327,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.85, y: 0.1}
+  m_Size: {x: 3.85, y: 0.2}
   m_EdgeRadius: 0
 --- !u!61 &6828466832759950499
 BoxCollider2D:
@@ -1348,7 +1353,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.85, y: 0.1}
+  m_Size: {x: 3.85, y: 0.2}
   m_EdgeRadius: 0
 --- !u!61 &6828466832759950496
 BoxCollider2D:
@@ -1374,7 +1379,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 2.05}
+  m_Size: {x: 0.2, y: 2.05}
   m_EdgeRadius: 0
 --- !u!61 &6828466832759950497
 BoxCollider2D:
@@ -1400,7 +1405,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 2.05}
+  m_Size: {x: 0.2, y: 2.05}
   m_EdgeRadius: 0
 --- !u!1 &6828466832863484205
 GameObject:
@@ -1562,8 +1567,8 @@ MonoBehaviour:
   mainCam: {fileID: 6828466833135681126}
   springFrequency: 5
   springDamping: 1
-  shakeIntensity: 0.1
-  shakeSpeed: 10
+  shakeIntensity: 0.06
+  shakeSpeed: 7.5
   holdDrag: 5
   uprightForce: 10
 --- !u!50 &6828466833068930459

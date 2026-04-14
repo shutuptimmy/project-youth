@@ -986,6 +986,10 @@ MonoBehaviour:
   - {fileID: 1190186574917786636}
   - {fileID: 1190186574388172810}
   - {fileID: 1190186573639807846}
+  correctSFX: {fileID: 8300000, guid: 2ad4045c90e7acbaeb80cf762f798c8a, type: 3}
+  wrongSFX: {fileID: 8300000, guid: 4577c97745aaf8581acac063283b43ef, type: 3}
+  winSFX: {fileID: 8300000, guid: 9a11312e1ca373b42a6338aab01b87d0, type: 3}
+  loseSFX: {fileID: 8300000, guid: 59b2984804ec76417bf2f51cb0adc532, type: 3}
   minigameMenuPanelUI: {fileID: 7944632424358095212}
   pagesList: {fileID: 2156691719587565343}
   resultImage: {fileID: 1190186573825285510}

@@ -510,7 +510,7 @@ MonoBehaviour:
     - The path the object will take
     - The way the force is pushing or pulling
     - The objects involved in the force
-  - description: 'The magnitude of a force is a measue of its:'
+  - description: 'The magnitude of a force is a measure of its:'
     trueAnswer: Strength
     answers:
     - Direction
@@ -564,6 +564,9 @@ MonoBehaviour:
   timer: 60
   questionHoldTime: 2
   xpPerCorrectAnswer: 20
+  correctSFX: {fileID: 8300000, guid: 2ad4045c90e7acbaeb80cf762f798c8a, type: 3}
+  wrongSFX: {fileID: 8300000, guid: 4577c97745aaf8581acac063283b43ef, type: 3}
+  winSFX: {fileID: 8300000, guid: 9a11312e1ca373b42a6338aab01b87d0, type: 3}
 --- !u!1 &5217061741191856011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,6 +2039,16 @@ PrefabInstance:
     - target: {fileID: 3255557495658800923, guid: e6f0d65035e63224ca0c95c868a83b85,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255557496410205158, guid: e6f0d65035e63224ca0c95c868a83b85,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255557496470883547, guid: e6f0d65035e63224ca0c95c868a83b85,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

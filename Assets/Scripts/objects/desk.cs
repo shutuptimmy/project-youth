@@ -12,8 +12,14 @@ public class desk : MonoBehaviour
     [SerializeField] private Collider2D surfaceCollider;
     [SerializeField] private Image meterBarFill;
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip thudSFX;
+    [SerializeField] private AudioClip crackSFX;
+    [SerializeField] private AudioClip destroyedSFX;
+
     public List<Rigidbody2D> objInZone { get; private set; } = new List<Rigidbody2D>();
     private float currentDamage = 0f;
+    private int lastStressLevel = 0;
     private Animator animator;
 
     public bool isBroken { get; private set; } = false;
@@ -38,7 +44,7 @@ public class desk : MonoBehaviour
         if (collision.gameObject.CompareTag("MassObj") && collision.otherCollider == surfaceCollider)
         {
             float impactForce = collision.relativeVelocity.magnitude * collision.rigidbody.mass;
-            if (impactForce > 1f) applyImpactDamage(impactForce);
+            if (impactForce > 1.5f) applyImpactDamage(impactForce);
         }
     }
 
@@ -66,7 +72,7 @@ public class desk : MonoBehaviour
         float damageTaken = rawForce * multiplier;
 
         currentDamage += damageTaken;
-
+        soundFXManager.instance.playSoundClip(thudSFX, this.transform, 1f);
         Debug.Log($"IMPACT! Raw: {rawForce:F1} | Damage: {damageTaken:F1}");
     }
 
@@ -75,9 +81,17 @@ public class desk : MonoBehaviour
         meterBarFill.fillAmount = Mathf.Clamp01(currentDamage / maxHP);
         float percentage = (currentDamage / maxHP) * 100f;
 
-        if (percentage >= breakingPercentage) animator.SetInteger("stress", 2);
-        else if (percentage >= crackingPercentage) animator.SetInteger("stress", 1);
-        else animator.SetInteger("stress", 0);
+        int currentStress;
+        if (percentage >= breakingPercentage) currentStress = 2;
+        else if (percentage >= crackingPercentage) currentStress = 1;
+        else currentStress = 0;
+
+        // Only trigger if the stress level has changed (increased)
+        if (currentStress > lastStressLevel) soundFXManager.instance.playSoundClip(crackSFX, this.transform, 1f);
+
+        animator.SetInteger("stress", currentStress);
+        
+        lastStressLevel = currentStress;
     }
 
     float sensitivityMultiplier()
@@ -85,7 +99,7 @@ public class desk : MonoBehaviour
         float healthMultiplier = 1f;
         float damagePercentage = (currentDamage / maxHP) * 100f;
 
-        if (damagePercentage >= breakingPercentage) healthMultiplier = 2f;
+        if (damagePercentage >= breakingPercentage) healthMultiplier = 1.4f;
         else if (damagePercentage >= crackingPercentage) healthMultiplier = 1.2f;
 
         float currentMass = getTotalPlacedMass();
@@ -158,6 +172,7 @@ public class desk : MonoBehaviour
     {
         isBroken = true;
         animator.SetBool("break", true);
+        soundFXManager.instance.playSoundClip(destroyedSFX, this.transform, 1f);
 
         // Add force to books to make them fly
         foreach (Rigidbody2D rb in objInZone)
@@ -174,6 +189,7 @@ public class desk : MonoBehaviour
     {
         isBroken = false;
         currentDamage = 0f;
+        lastStressLevel = 0;
         objInZone.Clear();
 
         animator.SetBool("break", false);

@@ -1,7 +1,6 @@
 ﻿=== aftermathQuest ===
 // quest ids (questId + "Id" for var name)
 VAR aftermathId = "aftermath"
-// VAR newguy = true
 
 // quest states (questId + "State" for var name)
 VAR aftermathState = "REQ_NOT_MET"
@@ -15,22 +14,6 @@ VAR aftermathState = "REQ_NOT_MET"
 	- else: -> END
 	}
 
-/*
-= reqNotMet
-{newguy == false: -> familiar | -> new }
-
-= new
-hello there. Never seen you around on these parts. #name:Student
-Welcome to your new school. Just head over to that door, which is your classroom, and ask the teacher.
-~ newguy = false
--> END
-
-= familiar
-Need something? I'll keep an eye out on here. #name:Student
-He's late. I don't know where he went.
--> END
-*/
-
 = canStart
 Finish the day and reflect all your studies?
     + [Yes]
@@ -41,7 +24,7 @@ Finish the day and reflect all your studies?
 - -> END
 
 = inProgress
-Time to head back home.
+I should ask Chris so we can head home. #name:You #char:you
 -> END
 
 = canFinish
@@ -50,4 +33,9 @@ texto heru.
 
 = finished
 texto heru.
+-> END
+
+== OnAftermath ==
+Everything's settled for today. I've also talked to my friends during class if they're willing to hangover at my place. #name:You #char:you
+I wonder who will come later.
 -> END

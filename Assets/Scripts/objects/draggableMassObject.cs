@@ -40,7 +40,7 @@ public class draggableMassObject : MonoBehaviour
                 if (deskScript != null && deskScript.isObjectResting(this.rb))
                 {
                     float impactForce = collision.relativeVelocity.magnitude * collision.rigidbody.mass;
-                    deskScript.applyImpactDamage(impactForce);
+                    if (impactForce > 1f) deskScript.applyImpactDamage(impactForce);
                 }
             }
         }

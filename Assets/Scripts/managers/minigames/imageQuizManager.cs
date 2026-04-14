@@ -27,6 +27,12 @@ public class imageQuizManager : MonoBehaviour
     public Button[] choiceButtons = new Button[4]; // up to 4 buttons
     public Image[] choiceImages = new Image[4]; // up to 4 picture
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip correctSFX;
+    [SerializeField] private AudioClip wrongSFX;
+    [SerializeField] private AudioClip winSFX;
+    [SerializeField] private AudioClip loseSFX;
+
     [Header("Menu Panel")]
     [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
@@ -70,8 +76,7 @@ public class imageQuizManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        isQuestStepPresent = knowledgeTestQuestStep == null;
-        Debug.Log("Quest Step Status: " + knowledgeTestQuestStep);
+        isQuestStepPresent = knowledgeTestQuestStep != null;
 
         showStartMenu();
     }
@@ -89,13 +94,12 @@ public class imageQuizManager : MonoBehaviour
             () => startMinigame(),
             "Start",
             () => quitMinigameButton(),
-            isQuestStepPresent
+            "Exit Minigame"
         );
     }
 
     private void ShowResultMenu(string title, string status)
     {
-        bool showQuit = isQuestStepPresent || playerHasWon;
         mainContentParent.SetActive(false);
 
         minigameMenuPanelUI.activateMenu(
@@ -105,7 +109,7 @@ public class imageQuizManager : MonoBehaviour
             () => startMinigame(),
             "Retry",
             () => quitMinigameButton(),
-            showQuit
+            (playerHasWon && isQuestStepPresent)? "Complete Quest" : "Exit Minigame"
         );
     }
 
@@ -144,7 +148,7 @@ public class imageQuizManager : MonoBehaviour
         gameEventsManager.instance.sceneEvents.quitMinigame();
         yield return new WaitForSeconds(1f);
 
-        knowledgeTestQuestStep?.playerWon();
+        knowledgeTestQuestStep?.playerWon(playerHasWon);
 
         Destroy(gameObject);
     }
@@ -159,6 +163,7 @@ public class imageQuizManager : MonoBehaviour
 
         isGameActive = false;
         isQuestionActive = false;
+        playerHasWon = playerWon;
         availableQuestions.Clear();
 
         mainContentParent.SetActive(false);
@@ -168,11 +173,12 @@ public class imageQuizManager : MonoBehaviour
 
         if (playerWon)
         {
-            playerHasWon = true;
+            soundFXManager.instance.playSoundClip(winSFX, this.transform, 1f);
             ShowResultMenu("You have Passed!", "You aced the test!");
         }
         else
         {
+            soundFXManager.instance.playSoundClip(loseSFX, this.transform, 1f);
             ShowResultMenu("Nice Try!", "Try again with by trusting your gut.");
         }
     }
@@ -263,7 +269,7 @@ public class imageQuizManager : MonoBehaviour
     {
         if (!isQuestionActive) return; // Prevent double clicking
 
-        bool isCorrect = (selectedSprite == currentQuestion.trueAnswer);
+        bool isCorrect = selectedSprite == currentQuestion.trueAnswer;
         answeredQuestions++;
 
         if (isCorrect) playerScore++;
@@ -303,6 +309,9 @@ public class imageQuizManager : MonoBehaviour
         // show result
         timerText.text = isCorrect ? "Correct!" : "Wrong!";
         resultImage.sprite = isCorrect ? correctSprite : wrongSprite;
+
+        if (isCorrect) soundFXManager.instance.playSoundClip(correctSFX, this.transform, 1f);
+        else soundFXManager.instance.playSoundClip(wrongSFX, this.transform, 1f);
 
         // If player clicked WRONG, turn THAT child image red
         if (!isCorrect && clickedBtnIndex != -1)

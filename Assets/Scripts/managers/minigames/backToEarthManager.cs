@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class backToEarthManager : MinigameManagerBase
 {
-    [Header("Components")]
+    [Header("Player Script")]
     [SerializeField] private rocketController rocketPlayer;
 
     [Header("Quest Step")]
@@ -14,8 +14,7 @@ public class backToEarthManager : MinigameManagerBase
 
     public override void StartQuestStatus()
     {
-        isQuestStepPresent = spaceQuestStep == null;
-        Debug.Log($"Quest Step Present: {isQuestStepPresent} > {spaceQuestStep}");
+        isQuestStepPresent = spaceQuestStep != null;
     }
 
     void OnEnable()
@@ -46,21 +45,20 @@ public class backToEarthManager : MinigameManagerBase
             () => StartMinigameBase(),
             "Start",
             () => QuitMinigameBtn(),
-            isQuestStepPresent // if minigame is part of a quest, don't show quit button unless player have won
+            "Exit Minigame"
         );
     }
 
-    public override void ShowResultMenu(string title, string status, bool showQuit)
+    public override void ShowResultMenu(string title, string status)
     {
-        Debug.Log(showQuit);
         minigameMenuPanelUI.activateMenu(
             title,
             status,
             "Time survived: " + timeElapsed,
-            () => StartMinigameBase(),
+            () => StartMenuBase(),
             "Retry",
             () => QuitMinigameBtn(),
-            showQuit
+            (playerHasWon && isQuestStepPresent)? "Complete Quest" : "Exit Minigame"
         );
     }
 
@@ -74,13 +72,13 @@ public class backToEarthManager : MinigameManagerBase
 
     public override void QuitMinigame()
     {
-        spaceQuestStep?.playerWon();
+        spaceQuestStep?.playerWon(playerHasWon);
     }
 
     public override void MinigameComplete(bool resultCheck)
     {
         if (resultCheck) ResultMenuBase("Mission Accomplished!", "You have returned home safely.");
-        else ResultMenuBase("You Crashed!", "Try again and git gud.");
+        else ResultMenuBase("You Crashed!", "Try again.");
     }
 
     void playerTookDamage()

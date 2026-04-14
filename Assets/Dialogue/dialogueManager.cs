@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class dialogueManager : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private dialoguePanelUI dialoguePanel;
+
     [Header("Ink Story")]
     [SerializeField] private TextAsset inkJSON;
     private Story story;
@@ -83,7 +85,7 @@ public class dialogueManager : MonoBehaviour, IDataPersistence
             return;
         }
 
-        continueOrExitStory();
+        if (dialoguePanel.canContinueToNextLine) continueOrExitStory();
     }
 
     public void enterDialogue(string knotName)

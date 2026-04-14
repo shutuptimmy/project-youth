@@ -20,6 +20,7 @@ public class questIcon : MonoBehaviour
                     // canStartIcon.SetActive(true);
                     animator.Play("exclamation");
                     sprite.color = Color.yellow;
+                    sprite.enabled = true;
                 }
                 break;
 
@@ -29,6 +30,7 @@ public class questIcon : MonoBehaviour
                     // reqNotMetToFinishIcon.SetActive(true);
                     animator.Play("question");
                     sprite.color = Color.white;
+                    sprite.enabled = true;
                 }
 
                 break;
@@ -39,11 +41,13 @@ public class questIcon : MonoBehaviour
                     // canFinishIcon.SetActive(true);
                     animator.Play("question");
                     sprite.color = Color.yellow;
+                    sprite.enabled = true;
                 }
                 break;
 
             case questState.FINISHED:
                 animator.Play("default");
+                sprite.enabled = false;
                 break;
 
             default:

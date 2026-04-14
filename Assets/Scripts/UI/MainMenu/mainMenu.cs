@@ -7,6 +7,7 @@ public class mainMenu : menu
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button loadGameButton;
     [SerializeField] private Button optionsButton;
+    [SerializeField] private AudioClip btnSFX;
 
     [Header("Menu Navigations")]
     [SerializeField] private saveSlotsMenu saveSlotsMenu;
@@ -45,6 +46,7 @@ public class mainMenu : menu
 
     void startGame()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         saveSlotsMenu.activateMenu(false);
         this.deactivateMenu();
     }
@@ -59,23 +61,27 @@ public class mainMenu : menu
 
     void onLoadGameClicked()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         saveSlotsMenu.activateMenu(true);
         this.deactivateMenu();
     }
 
     public void activateMenu()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.gameObject.SetActive(true);
         disableButtonsDependingOnData();
     }
 
     public void deactivateMenu()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.gameObject.SetActive(false);
     }
 
     public void onQuitPressed()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         Application.Quit();
     }
 }

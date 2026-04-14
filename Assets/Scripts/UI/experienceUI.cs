@@ -8,11 +8,7 @@ public class experienceUI : MonoBehaviour, IDataPersistence
     [SerializeField] private Slider expSlider;
     [SerializeField] private TextMeshProUGUI levelText;
 
-    private bool isMaxLevel = false;
-    // [SerializeField] private TextMeshProUGUI currentLevelText;
-
-
-    private void OnEnable()
+    void OnEnable()
     {
         gameEventsManager.instance.playerEvents.onPlayerExperienceChange += experienceGained;
         gameEventsManager.instance.playerEvents.onPlayerLevelChange += playerLevelUp;
@@ -26,29 +22,39 @@ public class experienceUI : MonoBehaviour, IDataPersistence
 
     void experienceGained(int exp)
     {
-        if (isMaxLevel == true)
-        {
-            expSlider.value = 100;
-            return;
-        }
-        else expSlider.value = (float)exp / (float)100;
+        // if (isMaxLevel == true)
+        // {
+        //     expSlider.value = 100;
+        //     return;
+        // }
+        
+        // expSlider.value = (float)exp / (float)100;
+        Debug.Log($"[Exp UI] RECEIVED EVENT: {exp}");
+        float percentage = (float)exp / globalConstants.experienceToLevelUp;
+        expSlider.value = percentage;
     }
 
     void playerLevelUp(int level)
     {
+        // if (level >= globalConstants.maxLevel)
+        // {
+        //     isMaxLevel = true;
+        //     levelText.text = "MAX Level";
+        //     return;
+        // }
+        // else levelText.text = "Level " + level;
         if (level >= globalConstants.maxLevel)
         {
-            isMaxLevel = true;
             levelText.text = "MAX Level";
-            return;
+            expSlider.value = 1f;
         }
         else levelText.text = "Level " + level;
     }
 
     public void loadData(gameData data)
     {
-        playerLevelUp(data.playerLvl);
         experienceGained(data.playerExp);
+        playerLevelUp(data.playerLvl);
 
     }
 

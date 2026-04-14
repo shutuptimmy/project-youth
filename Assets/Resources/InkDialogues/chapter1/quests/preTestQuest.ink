@@ -45,13 +45,19 @@ I'm supposed to be in a minigame #name:You
 	...However, as a teacher, no student should be left uneducated. I'm giving you this note as a chance to redeem yourself.
 	~itemReward("introForce2") 
 	In a meantime, try asking your classmates if they're willing to share notes with you.
-	~itemReward("callADay")
 	-> END
 
 = finished
-And don't even think about skipping class next time, hm? #name:Teacher #char:default
-Eheheh. #name:You #char:you
--> END
+{aftermathState:
+	- "IN_PROGRESS":
+		Good luck for tomorrow {playerName}. #name:Teacher #char:default
+		-> END
+
+	- else:
+		And don't even think about skipping class next time, hm? #name:Teacher #char:default
+		Eheheh. #name:You #char:you
+		-> END
+}
 
 /*
 {moduleState:

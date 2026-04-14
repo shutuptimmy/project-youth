@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class playerManager : MonoBehaviour, IDataPersistence
 {
     [Header("Configuration")]
     [SerializeField] private int startingLevel = 1;
     [SerializeField] private int startingExperience = 0;
+    [SerializeField] private AudioClip expSFX;
 
     private int currentLevel;
     private int currentExperience;
@@ -39,7 +36,7 @@ public class playerManager : MonoBehaviour, IDataPersistence
     {
         if (currentLevel >= globalConstants.maxLevel) return; // skip exp gain if maxed level
         currentExperience += experience;
-
+        
         // check if we're ready to level up
         while (currentExperience >= globalConstants.experienceToLevelUp)
         {
@@ -47,7 +44,11 @@ public class playerManager : MonoBehaviour, IDataPersistence
             currentLevel++;
             gameEventsManager.instance.playerEvents.PlayerLevelChange(currentLevel);
         }
+        
         gameEventsManager.instance.playerEvents.PlayerExperienceChange(currentExperience);
+
+        soundFXManager.instance.playSoundClip(expSFX, this.transform, 1f);
+        
         dataPersistenceManager.instance.saveGame();
     }
 
@@ -55,8 +56,8 @@ public class playerManager : MonoBehaviour, IDataPersistence
 
     public void loadData(gameData data)
     {
-        currentLevel = data.playerLvl;
-        currentExperience = data.playerExp;
+        this.currentLevel = data.playerLvl;
+        this.currentExperience = data.playerExp;
     }
 
     public void saveData(gameData data)

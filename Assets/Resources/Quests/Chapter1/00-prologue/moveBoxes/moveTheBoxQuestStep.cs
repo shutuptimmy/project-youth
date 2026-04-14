@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class moveTheBoxQuestStep : questStep
 {
@@ -13,7 +11,8 @@ public class moveTheBoxQuestStep : questStep
             return;
         }
         gameEventsManager.instance.miscEvents.questReward(id);
+        gameEventsManager.instance.miscEvents.questReward("prologue");
         gameEventsManager.instance.dialogueEvents.enterDialogue("prologueBoxCar");
-        finishQuestStep();
+        finishQuestStep(true);
     }
 }

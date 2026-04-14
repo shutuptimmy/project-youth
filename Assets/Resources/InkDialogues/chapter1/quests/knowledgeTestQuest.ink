@@ -1,6 +1,7 @@
 ﻿=== knowledgeTestQuest ===
 // quest ids (questId + "Id" for var name)
 VAR knowledgeTestId = "knowledgeTest"
+VAR randId = "yes"
 
 // quest states (questId + "State" for var name)
 VAR knowledgeTestState = "REQ_NOT_MET"
@@ -49,12 +50,26 @@ Sumthin else's missin's before I go. #name:You
 Good effort you made. You're learning quicker than I expected. #name:Christopher #char:chris
 Does that make me one of Newton's descendant? #name:You #char:you
 Pfft. You got me. #name:Christopher #char:chris
+Go talk to anyone to know more about the lessons.
+Each NPC has its own level and quest requirements. Check the quest log at the top right for more details.
+~itemReward("callADay")
 ~ finishQuest(knowledgeTestId)
 -> END
 
 = finished
-Go talk to anyone to know more about the lessons before settling today. #name:Christopher #char:chris
--> END
+{aftermathState:
+	- "IN_PROGRESS":
+		Got everything you need?
+		+ [Yep. Let's head to my appartment]
+			~finishDay(randId)
+			-> END
+		+ [Hang on]
+			-> END
+
+	- else:
+		Go talk to anyone to know more about the lessons before settling today. #name:Christopher #char:chris
+		-> END
+}
 
 = guideNoteDialogue
 I.. screw it up. #name:You #char:you

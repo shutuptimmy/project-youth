@@ -11,6 +11,10 @@ public abstract class MinigameManagerBase : MonoBehaviour
 
     [Header("Menu Panel")]
     [SerializeField] protected minigameMenuPanelUI minigameMenuPanelUI;
+
+    [Header("Result Audio")]
+    [SerializeField] protected AudioClip winSFX;
+    [SerializeField] protected AudioClip loseSFX;
     
     protected bool isQuestStepPresent;
     protected bool isGameActive = false;
@@ -28,7 +32,7 @@ public abstract class MinigameManagerBase : MonoBehaviour
         StartMenuBase();
     }
 
-    private void StartMenuBase()
+    protected void StartMenuBase()
     {
         gameplayGameObject.SetActive(true);
         mainContentParent.SetActive(false);
@@ -37,9 +41,8 @@ public abstract class MinigameManagerBase : MonoBehaviour
 
     protected void ResultMenuBase(string title, string status)
     {
-        bool showQuit = isQuestStepPresent || playerHasWon; // 
         mainContentParent.SetActive(false);
-        ShowResultMenu(title, status, showQuit);
+        ShowResultMenu(title, status);
     }
 
     protected void StartMinigameBase()
@@ -51,12 +54,12 @@ public abstract class MinigameManagerBase : MonoBehaviour
 
     private IEnumerator QuitMinigameBase()
     {
-        Debug.Log("sucess");
+        Debug.Log("success");
         gameEventsManager.instance.sceneEvents.quitMinigame();
         yield return new WaitForSeconds(1f);
         QuitMinigame();
         gameEventsManager.instance.playerEvents.EnablePlayerMovement();
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 
     public void QuitMinigameBtn()
@@ -70,7 +73,12 @@ public abstract class MinigameManagerBase : MonoBehaviour
         playerHasWon = playerWon;
         gameEventsManager.instance.playerEvents.DisablePlayerMovement();
         mainContentParent.SetActive(false);
+        
+        if (playerHasWon) soundFXManager.instance.playSoundClip(winSFX, this.transform, 1f);
+        else soundFXManager.instance.playSoundClip(loseSFX, this.transform, 1f);
+
         MinigameComplete(playerWon);
+        
     }
 
     public abstract void StartQuestStatus();
@@ -78,5 +86,5 @@ public abstract class MinigameManagerBase : MonoBehaviour
     public abstract void StartMinigame();
     public abstract void MinigameComplete(bool resultCheck);
     public abstract void QuitMinigame();
-    public abstract void ShowResultMenu(string title, string status, bool showQuit);
+    public abstract void ShowResultMenu(string title, string status);
 }

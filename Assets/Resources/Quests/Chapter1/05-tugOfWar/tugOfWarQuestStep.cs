@@ -1,11 +1,7 @@
-﻿using UnityEngine;
-
-public class tugOfWarQuestStep : questStep
+﻿public class tugOfWarQuestStep : questStep
 {
-    public void playerWon()
+    public void playerWon(bool resultCheck)
     {
-        Debug.Log("executing");
-        finishQuestStep();
+        finishQuestStep(resultCheck);
     }
-
 }

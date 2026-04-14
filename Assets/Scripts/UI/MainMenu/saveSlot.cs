@@ -14,7 +14,7 @@ public class saveSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI locationText;
-    [SerializeField] private TextMeshProUGUI playTimeText;
+    // [SerializeField] private TextMeshProUGUI playTimeText;
     [SerializeField] private Animator playerPortrait;
 
     [Header("Clear Data Button")]
@@ -50,7 +50,7 @@ public class saveSlot : MonoBehaviour
             nameText.text = data.playerName.ToString();
             levelText.text = $"Level {(data.playerLvl >= globalConstants.maxLevel ? "MAX" : data.playerLvl.ToString())}";
             locationText.text = data.playerLocation;
-            playTimeText.text = playTimeFormat(data.playTime);
+            // playTimeText.text = playTimeFormat(data.playTime);
 
             switch (data.playerGender)
             {
@@ -85,11 +85,11 @@ public class saveSlot : MonoBehaviour
         return locationText.text;
     }
 
-    private string playTimeFormat(float totalSeconds)
-    {
-        int hours = Mathf.FloorToInt(totalSeconds / 3600);
-        int minutes = Mathf.FloorToInt((totalSeconds % 3600) / 60);
+    // private string playTimeFormat(float totalSeconds)
+    // {
+    //     int hours = Mathf.FloorToInt(totalSeconds / 3600);
+    //     int minutes = Mathf.FloorToInt((totalSeconds % 3600) / 60);
 
-        return string.Format("Play Time: {0:00}:{1:00}", hours, minutes);
-    }
+    //     return string.Format("Play Time: {0:00}:{1:00}", hours, minutes);
+    // }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,6 +9,7 @@ public class confirmationPopupMenu : menu
     [SerializeField] private TextMeshProUGUI displayText;
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
+    [SerializeField] private AudioClip btnSFX;
 
     public void activateMenu(string displayText, UnityAction confirmAction, UnityAction cancelAction)
     {
@@ -39,6 +38,7 @@ public class confirmationPopupMenu : menu
 
     void deactivateMenu()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.gameObject.SetActive(false);
     }
 }

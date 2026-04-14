@@ -10,7 +10,11 @@ public class rocketController : MonoBehaviour
     [SerializeField] private float initialKickForce;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float turnSpeed;
-    // [SerializeField] private BoxCollider2D landCollider;
+
+    [Header("Audio Config")]
+    [SerializeField] private AudioSource boostAudioSource;
+    [SerializeField] private AudioClip boostSFX;
+    [SerializeField] private AudioClip explodeSFX;
 
     [Header("Fuel Config")]
     [SerializeField] private float maxFuel;
@@ -132,10 +136,19 @@ public class rocketController : MonoBehaviour
 
     void handleFuel()
     {
-        if (isBoosting && rocketFuel > 0) rocketFuel -= boostConsumptionPerSecond * Time.deltaTime;
-        else if (isSteering && rocketFuel > 0) rocketFuel -= steeringConsumptionPerSecond * Time.deltaTime;
+        if (isBoosting && rocketFuel > 0) 
+        {
+            rocketFuel -= boostConsumptionPerSecond * Time.deltaTime;
+            if (boostAudioSource != null && !boostAudioSource.isPlaying) boostAudioSource.Play();
+        }
+        else if (isSteering && rocketFuel > 0)
+        {
+            rocketFuel -= steeringConsumptionPerSecond * Time.deltaTime;
+            if (boostAudioSource != null && !boostAudioSource.isPlaying) boostAudioSource.Play();
+        }
         else
         {
+            boostAudioSource.Stop();
             isBoosting = false;
             isSteering = false;
             rocketFuel += boostRechargePerSecond * Time.deltaTime;
@@ -176,7 +189,8 @@ public class rocketController : MonoBehaviour
     void rocketCrashed()
     {
         gameEventsManager.instance.playerEvents.playerTookDamage();
-
+        boostAudioSource.Stop();
+        soundFXManager.instance.playSoundClip(explodeSFX, this.transform, 1f);
         hasCrashed = true;
         isBoosting = false;
         isSteering = false;

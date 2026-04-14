@@ -4,21 +4,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class sortingBoxesManager : MonoBehaviour
+public class sortingBoxesManager : MinigameManagerBase
 {
-    [Header("Components")]
-    [SerializeField] private GameObject mainContentParent;
+    [Header("Additional Components")]
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private GameObject gameplayGameObject;
     [SerializeField] private GameObject minigamePlayer;
+    [SerializeField] private AudioClip correctSFX;
+    [SerializeField] private AudioClip wrongSFX;
 
     [Header("Quest Step")]
     [SerializeField] private helpingHandQuestStep helpingHandQuestStep;
-    private bool isQuestStepPresent;
-
-    [Header("Menu Panel")]
-    [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
     [Header("Boxes Config")]
     [SerializeField] private Transform boxesParent;
@@ -43,8 +38,6 @@ public class sortingBoxesManager : MonoBehaviour
     private float timeElapsed;
     private int playerScore;
     private int boxesRemaining;
-    private bool isGameActive = false;
-    private bool playerHasWon = false;
 
     private void Awake()
     {
@@ -67,47 +60,34 @@ public class sortingBoxesManager : MonoBehaviour
     }
 
     // Hide the minigame before the crossfade
-    IEnumerator Start()
+    public override void StartQuestStatus()
     {
-        gameplayGameObject.SetActive(false);
-        mainContentParent.SetActive(false);
-
-        gameEventsManager.instance.sceneEvents.startMinigame();
-        yield return new WaitForSeconds(1f);
-
-        isQuestStepPresent = helpingHandQuestStep == null;
-        Debug.Log("Quest Step Status: " + helpingHandQuestStep);
-
-        showStartMenu();
+        isQuestStepPresent = helpingHandQuestStep != null;
     }
 
-    void showStartMenu()
+    public override void ShowStartMenu()
     {
-        gameplayGameObject.SetActive(true);
-
         minigameMenuPanelUI.activateMenu(
             "Sorting the Boxes",
             "Move the boxes to the right place before the timer runs out!",
             "All time record: ", // + GetHighScore()
-            () => startMinigame(),
+            () => StartMinigameBase(),
             "Start",
-            () => quitMinigameButton(),
-            isQuestStepPresent
+            () => QuitMinigameBtn(),
+            "Exit Minigame"
         );
     }
 
-    void ShowResultMenu(string title, string status)
+    public override void ShowResultMenu(string title, string status)
     {
-        bool showQuit = isQuestStepPresent || playerHasWon;
-
         minigameMenuPanelUI.activateMenu(
             title,
             status,
             "Total Score: " + playerScore,
-            () => startMinigame(),
+            () => StartMinigameBase(),
             "Retry",
-            () => quitMinigameButton(),
-            showQuit
+            () => QuitMinigameBtn(),
+            (playerHasWon && isQuestStepPresent)? "Complete Quest" : "Exit Minigame"
         );
     }
 
@@ -117,14 +97,12 @@ public class sortingBoxesManager : MonoBehaviour
         {
             timeElapsed -= Time.deltaTime;
             timerText.text = $"Time: {Mathf.FloorToInt(timeElapsed)}s";
-            if (timeElapsed < 0f) minigameComplete(false);
+            if (timeElapsed < 0f) MinigameCompleteBase(false);
         }
     }
 
-    public void startMinigame()
+    public override void StartMinigame()
     {
-        mainContentParent.SetActive(true);
-
         // reset game state when retry
         boxesRemaining = totalBoxes;
         playerScore = 0;
@@ -133,39 +111,17 @@ public class sortingBoxesManager : MonoBehaviour
         minigamePlayer.transform.position = new Vector2(0, 0);
         isGameActive = true;
         resetBoxes();
-
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
     }
 
-    IEnumerator quitMinigame()
+    public override void QuitMinigame()
     {
-        Debug.Log("suceess");
-        gameEventsManager.instance.sceneEvents.quitMinigame();
-        yield return new WaitForSeconds(1f);
-
-        helpingHandQuestStep?.playerWon();
-
-        Destroy(gameObject);
+        helpingHandQuestStep?.playerWon(playerHasWon);
     }
 
-    public void quitMinigameButton()
+    public override void MinigameComplete(bool playerWon)
     {
-        StartCoroutine(quitMinigame());
-    }
-
-    void minigameComplete(bool playerWon)
-    {
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
-        isGameActive = false;
-
-        mainContentParent.SetActive(false);
-
-        if (playerWon)
-        {
-            playerHasWon = true;
-            ShowResultMenu("All boxes cleared!", "You won!");
-        }
-        else ShowResultMenu("You Lost!", "Try again!");
+        if (playerWon) ResultMenuBase("All boxes cleared!", "You won!");
+        else ResultMenuBase("You Lost!", "Try again!");
     }
 
     void resetBoxes()
@@ -219,20 +175,24 @@ public class sortingBoxesManager : MonoBehaviour
 
     public void correctGoal(sortingBox box)
     {
+        soundFXManager.instance.playSoundClip(correctSFX, this.transform, 1f);
         playerScore += 100 + (int)(timeLimit / timeElapsed);
         scoreText.text = "Score: " + playerScore.ToString();
         timeElapsed += timeBonus;
         disableBox(box);
 
         boxesRemaining--;
-        if (boxesRemaining <= 0) minigameComplete(true);
+        if (boxesRemaining <= 0) MinigameCompleteBase(true);
     }
 
     public void wrongGoal(sortingBox box)
     {
-        boxesRemaining--;
+        soundFXManager.instance.playSoundClip(wrongSFX, this.transform, 1f);
+        timeElapsed -= timeBonus;
         disableBox(box);
-        if (boxesRemaining <= 0) minigameComplete(true);
+
+        boxesRemaining--;
+        if (boxesRemaining <= 0) MinigameCompleteBase(true);
 
     }
 }

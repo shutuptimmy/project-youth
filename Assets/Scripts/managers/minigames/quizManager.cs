@@ -35,6 +35,11 @@ public class quizManager : MonoBehaviour
     [SerializeField] private float questionHoldTime = 2f;
     [SerializeField] private int xpPerCorrectAnswer = 20;
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip correctSFX;
+    [SerializeField] private AudioClip wrongSFX;
+    [SerializeField] private AudioClip winSFX;
+
     private float timeElapsed;
     private int playerScore;
     private bool isGameActive = false;
@@ -48,11 +53,8 @@ public class quizManager : MonoBehaviour
 
         gameEventsManager.instance.sceneEvents.startMinigame();
 
-
         yield return new WaitForSeconds(1f);
-        isQuestStepPresent = preTestQuestStep == null;
-        Debug.Log("Quest Step Status: " + preTestQuestStep);
-
+        isQuestStepPresent = preTestQuestStep != null;
         showStartMenu();
 
     }
@@ -69,23 +71,23 @@ public class quizManager : MonoBehaviour
             () => startMinigame(),
             "Start",
             () => quitMinigameButton(),
-            true
+            "Exit Quiz"
         );
     }
 
     private void ShowResultMenu(string title, string status, int xpGained)
     {
-        bool showQuit = isQuestStepPresent;
         mainContentParent.SetActive(false);
+        soundFXManager.instance.playSoundClip(winSFX, this.transform, 1f);
 
         minigameMenuPanelUI.activateMenu(
             title,
             status,
             $"Score: {playerScore}/{questions.Length}\nXP Gained: {xpGained}",
             () => quitMinigameButton(), // one time quiz
-            "Finish",
+            "Complete Quest",
             () => quitMinigameButton(),
-            showQuit
+            "Complete Quest"
         );
     }
 
@@ -121,7 +123,7 @@ public class quizManager : MonoBehaviour
         gameEventsManager.instance.sceneEvents.quitMinigame();
         yield return new WaitForSeconds(1f);
 
-        preTestQuestStep?.quizFinished();
+        preTestQuestStep?.playerWon(true);
 
         Destroy(gameObject);
     }
@@ -198,7 +200,12 @@ public class quizManager : MonoBehaviour
 
         bool isCorrect = (selectedAnswer == currentQuestion.trueAnswer);
 
-        if (isCorrect) playerScore++;
+        if (isCorrect)
+        {
+            playerScore++;
+            soundFXManager.instance.playSoundClip(correctSFX, this.transform, 1f);
+        }
+        else soundFXManager.instance.playSoundClip(wrongSFX, this.transform, 1f);
 
         StartCoroutine(showFeedbackAndNext(isCorrect, clickedButtonObj));
     }

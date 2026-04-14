@@ -36,25 +36,6 @@ public class NPCInteraction : InteractableBase, IDataPersistence
             questId = questInfoForPoint.id;
         }
     }
-    private void Start()
-    {
-        if (!string.IsNullOrEmpty(questId))
-        {
-            quest quest = questManager.instance.getQuestById(questId);
-
-            // skip if quest not present
-            if (quest != null)
-            {
-                currentQuestState = quest.state;
-
-                if (questIcon != null)
-                {
-                    // Force the icon to update right now
-                    questIcon.setState(currentQuestState, startPoint, finishPoint);
-                }
-            }
-        }
-    }
 
     private void Reset()
     {
@@ -83,6 +64,10 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         if (questIcon != null)
         {
             questIcon.gameObject.SetActive(isActive);
+            if (isActive)
+            {
+                questIcon.setState(currentQuestState, startPoint, finishPoint);
+            }
         }
     }
 
@@ -134,6 +119,23 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         {
             // Standard NPC: Always visible
             SetVisualsActive(true);
+        }
+
+        if (!string.IsNullOrEmpty(questId))
+        {
+            quest quest = questManager.instance.getQuestById(questId);
+
+            // skip if quest not present
+            if (quest != null)
+            {
+                currentQuestState = quest.state;
+
+                if (questIcon != null)
+                {
+                    // Force the icon to update right now
+                    questIcon.setState(currentQuestState, startPoint, finishPoint);
+                }
+            }
         }
     }
 

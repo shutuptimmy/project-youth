@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-
-public class gravitationalResearchQuestStep : questStep
+﻿public class gravitationalResearchQuestStep : questStep
 {
-    public void playerWon()
+    public void playerWon(bool resultCheck)
     {
-        Debug.Log("executing");
-        finishQuestStep();
+        finishQuestStep(resultCheck);
     }
 }

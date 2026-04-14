@@ -13,6 +13,7 @@ public class newProfileMenu : menu
 
     [SerializeField] private confirmationPopupMenu confirmationPopupMenu;
     [SerializeField] private saveSlotsMenu saveSlotsMenu;
+    [SerializeField] private AudioClip btnSFX;
 
     // defualt variables for creating the profile
     private int playerGender; // 0 = boy, 1 = girl;
@@ -20,6 +21,7 @@ public class newProfileMenu : menu
 
     public void onCreateProfileClicked()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         if (playerNameInput.text == "")
         {
             confirmationPopupMenu.activateMenu(
@@ -41,13 +43,13 @@ public class newProfileMenu : menu
 
     public void onBackClicked()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.deactivateMenu();
         saveSlotsMenu.activateMenu(false);
     }
 
     public void girlGender()
     {
-
         placeholderName.text = "Jane";
         playerGender = 1;
         playerPortrait.Play("mcGirl");
@@ -65,6 +67,7 @@ public class newProfileMenu : menu
 
     public void activateMenu()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.gameObject.SetActive(true);
         saveSlotsMenu.deactivateMenu();
 
@@ -74,6 +77,7 @@ public class newProfileMenu : menu
 
     public void deactivateMenu()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.gameObject.SetActive(false);
 
         // reset the value after closing

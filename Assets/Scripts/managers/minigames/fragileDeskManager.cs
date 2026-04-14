@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class fragileDeskManager : MonoBehaviour
+public class fragileDeskManager : MinigameManagerBase
 {
-    [Header("Components")]
-    [SerializeField] private GameObject mainContentParent;
-    [SerializeField] private GameObject gameplayGameObject;
+    [Header("Additional Components")]
     [SerializeField] private desk desk;
     [SerializeField] private TextMeshProUGUI objPlacedText;
-    [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private GameObject stabilizeUI;
     [SerializeField] private TextMeshProUGUI stabilizeTimerText;
 
     [Header("Quest Step")]
     [SerializeField] private avoidAccountabilityQuestStep avoidAccountabilityQuestStep;
-    private bool isQuestStepPresent;
-
-    [Header("Menu Panel")]
-    [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
     [Header("Game Config")]
     [SerializeField] private float timeLimit;
@@ -37,9 +30,8 @@ public class fragileDeskManager : MonoBehaviour
     private float currentStableTimer;
     private float timeRemaining;
     private bool setObjsActive;
-    public bool isGameActive { get; private set; } = false;
+    public new bool isGameActive { get; private set; } = false;
     private bool areObjectsStill = false;
-    private bool playerHasWon = false;
 
     void Awake()
     {
@@ -60,55 +52,9 @@ public class fragileDeskManager : MonoBehaviour
         }
     }
 
-    IEnumerator Start()
+    public override void StartQuestStatus()
     {
-        mainContentParent.SetActive(false);
-        gameplayGameObject.SetActive(false);
-
-        // hide all objects at start of the game
-        setObjsActive = false;
-        objsParent.gameObject.SetActive(false);
-
-        gameEventsManager.instance.sceneEvents.startMinigame();
-        yield return new WaitForSeconds(1f);
-
-        // isQuestStepPresent = avoidAccountabilityQuestStep == null;
-        // Debug.Log("Quest Step Status: " + avoidAccountabilityQuestStep);
-
-        showStartMenu();
-    }
-
-    void showStartMenu()
-    {
-        gameplayGameObject.SetActive(true);
-        mainContentParent.SetActive(false);
-
-        minigameMenuPanelUI.activateMenu(
-            "Fragile Desk",
-            "Drag the objects and carefully place them to the desk with your shaky mouse before the timer runs out. Careful not to drop too hard."
-            ,
-            "All time record: ", // + GetHighScore()
-            () => startMinigame(),
-            "Start",
-            () => quitMinigameButton(),
-            isQuestStepPresent
-        );
-    }
-
-    void ShowResultMenu(string title, string status)
-    {
-        bool showQuit = isQuestStepPresent || playerHasWon;
-        mainContentParent.SetActive(false);
-
-        minigameMenuPanelUI.activateMenu(
-            title,
-            status,
-            "Time saved: " + timeRemaining,
-            () => startMinigame(),
-            "Retry",
-            () => quitMinigameButton(),
-            showQuit
-        );
+        isQuestStepPresent = avoidAccountabilityQuestStep != null;
     }
 
     private void Update()
@@ -118,7 +64,8 @@ public class fragileDeskManager : MonoBehaviour
 
         if (timeRemaining <= 0 || desk.isBroken)
         {
-            StartCoroutine(minigameComplete(false));
+            isGameActive = false;
+            StartCoroutine(DeskDestroyed());
             return;
         }
 
@@ -136,7 +83,11 @@ public class fragileDeskManager : MonoBehaviour
             currentStableTimer += Time.deltaTime;
             stabilizeTimerText.text = $"{(stableTimeRequired - currentStableTimer):F1}s";
 
-            if (currentStableTimer >= stableTimeRequired) StartCoroutine(minigameComplete(true));
+            if (currentStableTimer >= stableTimeRequired)
+            {
+                isGameActive = false;
+                MinigameCompleteBase(true);
+            }
         }
         else
         {
@@ -149,11 +100,35 @@ public class fragileDeskManager : MonoBehaviour
         timerText.text = Mathf.CeilToInt(timeRemaining).ToString();
     }
 
-    public void startMinigame()
+    public override void ShowStartMenu()
     {
-        mainContentParent.SetActive(true);
-        stabilizeUI.SetActive(false);
+        minigameMenuPanelUI.activateMenu(
+            "Fragile Desk",
+            "Drag the objects and carefully place them to the desk with your shaky hand (mouse) before the timer runs out. Careful not to drop too hard."
+            ,
+            "All time record: ", // + GetHighScore()
+            () => StartMinigameBase(),
+            "Start",
+            () => QuitMinigameBtn(),
+            "Exit Minigame"
+        );
+    }
 
+    public override void ShowResultMenu(string title, string status)
+    {
+        minigameMenuPanelUI.activateMenu(
+            title,
+            status,
+            "Time saved: " + timeRemaining,
+            () => StartMenuBase(),
+            "Retry",
+            () => QuitMinigameBtn(),
+            (playerHasWon && isQuestStepPresent)? "Complete Quest" : "Exit Minigame"
+        );
+    }
+
+    public override void StartMinigame()
+    {
         if (!setObjsActive)
         {
             setObjsActive = true;
@@ -166,38 +141,24 @@ public class fragileDeskManager : MonoBehaviour
         isGameActive = true;
         desk.resetDesk();
         resetObjs();
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
     }
 
-    IEnumerator quitMinigame()
+    public override void QuitMinigame()
     {
-        Debug.Log("suceess");
-        gameEventsManager.instance.sceneEvents.quitMinigame();
-        yield return new WaitForSeconds(1f);
-
-        avoidAccountabilityQuestStep?.playerWon();
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
-
-        Destroy(gameObject);
+        avoidAccountabilityQuestStep?.playerWon(playerHasWon);
     }
 
-    public void quitMinigameButton()
+    public override void MinigameComplete(bool playerWon)
     {
-        StartCoroutine(quitMinigame());
+        if (playerWon) ResultMenuBase("Good Job!", "Nobody knows the difference.");
+        else ResultMenuBase("You Failed!", desk.isBroken ? "The desk collapsed!" : "Time ran out!");
     }
 
-    IEnumerator minigameComplete(bool playerWon)
+    IEnumerator DeskDestroyed()
     {
-
-        isGameActive = false;
-        playerHasWon = playerWon;
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
-
         mainContentParent.SetActive(false);
         yield return new WaitForSeconds(1.5f);
-
-        if (playerWon) ShowResultMenu("Good Job!", "Nobody knows the difference.");
-        else ShowResultMenu("You Failed!", desk.isBroken ? "The desk collapsed!" : "Time ran out!");
+        MinigameCompleteBase(false);
     }
 
     void resetObjs()

@@ -15,7 +15,7 @@ VAR spaceState = "REQ_NOT_MET"
 	}
 
 = reqNotMet
-Hello, {playerName}. #name:Cassie #char:default
+Hey there, {playerName}. #name:Cassie #char:default
 -> END
 
 = canStart

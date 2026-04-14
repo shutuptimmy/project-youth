@@ -3,20 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class fallingApplesManager : MonoBehaviour
+public class fallingApplesManager : MinigameManagerBase
 {
-    [Header("Components")]
-    [SerializeField] private GameObject mainContentParent;
-    [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private GameObject gameplayGameObject;
+    [Header("Player Script")]
     [SerializeField] private PlayerController minigamePlayer;
 
     [Header("Quest Step")]
     [SerializeField] private gravitationalResearchQuestStep gravitationalResearchQuestStep;
-    private bool isQuestStepPresent;
-
-    [Header("Menu Panel")]
-    [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
     [Header("Lives UI")]
     [SerializeField] private Image[] heartImages; // 3 Heart Image gameobjects based on maxLives
@@ -38,24 +31,11 @@ public class fallingApplesManager : MonoBehaviour
     private int maxLives = 3;
     private int currentLives;
     private float timeElapsed;
-    private bool isGameActive = false;
-    private bool playerHasWon = false;
 
     // Hide the minigame before the crossfade
-    IEnumerator Start()
+    public override void StartQuestStatus()
     {
-        mainContentParent.SetActive(false);
-        gameplayGameObject.SetActive(false);
-
-        gameEventsManager.instance.sceneEvents.startMinigame();
-        yield return new WaitForSeconds(1f);
-
-        objectPooler = objectPooler.instance;
-
-        isQuestStepPresent = gravitationalResearchQuestStep == null;
-        Debug.Log("Quest Step Status: " + gravitationalResearchQuestStep);
-
-        showStartMenu();
+        isQuestStepPresent = gravitationalResearchQuestStep != null;
     }
 
     private void OnEnable()
@@ -68,41 +48,6 @@ public class fallingApplesManager : MonoBehaviour
         gameEventsManager.instance.playerEvents.onPlayerTookDamage -= playerHit;
     }
 
-    void showStartMenu()
-    {
-        gameplayGameObject.SetActive(true);
-        mainContentParent.SetActive(false);
-
-        minigameMenuPanelUI.activateMenu(
-            "Dodge the Falling Apples",
-            "Survive from falling apples for more than " + timeCompletion + " seconds to pass the game!"
-            // TODO: if queststep isn't present, set this string instead
-            // "Get the highest possible time record if you can!"
-            ,
-            "All time record: ", // + GetHighScore()
-            () => startMinigame(),
-            "Start",
-            () => quitMinigameButton(),
-            isQuestStepPresent
-        );
-    }
-
-    void ShowResultMenu(string title, string status)
-    {
-        bool showQuit = isQuestStepPresent || playerHasWon;
-        mainContentParent.SetActive(false);
-
-        minigameMenuPanelUI.activateMenu(
-            title,
-            status,
-            "Time survived: " + timeElapsed,
-            () => startMinigame(),
-            "Retry",
-            () => quitMinigameButton(),
-            showQuit
-        );
-    }
-
     private void Update()
     {
         if (isGameActive)
@@ -112,9 +57,37 @@ public class fallingApplesManager : MonoBehaviour
         }
     }
 
-    public void startMinigame()
+    public override void ShowStartMenu()
     {
-        mainContentParent.SetActive(true);
+        minigameMenuPanelUI.activateMenu(
+            "Dodge the Falling Apples",
+            "Survive from falling apples for more than " + timeCompletion + " seconds to pass the game!"
+            // TODO: if queststep isn't present, set this string instead
+            // "Get the highest possible time record if you can!"
+            ,
+            "All time record: ", // + GetHighScore()
+            () => StartMinigameBase(),
+            "Start",
+            () => QuitMinigameBtn(),
+            "Exit Minigame"
+        );
+    }
+
+    public override void ShowResultMenu(string title, string status)
+    {
+        minigameMenuPanelUI.activateMenu(
+            title,
+            status,
+            "Time survived: " + timeElapsed,
+            () => StartMenuBase(),
+            "Retry",
+            () => QuitMinigameBtn(),
+            (playerHasWon && isQuestStepPresent)? "Complete Quest" : "Exit Minigame"
+        );
+    }
+
+    public override void StartMinigame()
+    {
         // reset game state when retry
         currentLives = maxLives;
         timeElapsed = 0f;
@@ -122,41 +95,19 @@ public class fallingApplesManager : MonoBehaviour
         isGameActive = true;
         updateLives();
         StartCoroutine(SpawnerRoutine());
-
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
     }
 
-    IEnumerator quitMinigame()
+    public override void QuitMinigame()
     {
-        Debug.Log("suceess");
-        gameEventsManager.instance.sceneEvents.quitMinigame();
-        yield return new WaitForSeconds(1f);
-
-        gravitationalResearchQuestStep?.playerWon();
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
-
-        Destroy(gameObject);
+        gravitationalResearchQuestStep?.playerWon(playerHasWon);
     }
 
-    public void quitMinigameButton()
+    public override void MinigameComplete(bool resultCheck)
     {
-        StartCoroutine(quitMinigame());
-    }
-
-    void minigameComplete(bool playerWon)
-    {
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
         StopCoroutine(SpawnerRoutine());
-        isGameActive = false;
 
-        mainContentParent.SetActive(false);
-
-        if (playerWon)
-        {
-            playerHasWon = true;
-            ShowResultMenu("Game completed!", "You won!");
-        }
-        else ShowResultMenu("You Lost!", "Try again!");
+        if (resultCheck) ResultMenuBase("Game completed!", "You won!");
+        else ResultMenuBase("You Lost!", "Try again!");
     }
 
     void spawnApple(float speed)
@@ -190,8 +141,8 @@ public class fallingApplesManager : MonoBehaviour
 
     private void checkGameState()
     {
-        if (timeElapsed >= timeCompletion) minigameComplete(true);
-        else if (timeElapsed < timeCompletion) minigameComplete(false);
+        if (timeElapsed >= timeCompletion) MinigameCompleteBase(true);
+        else if (timeElapsed < timeCompletion) MinigameCompleteBase(false);
     }
 
     IEnumerator SpawnerRoutine()
@@ -200,7 +151,7 @@ public class fallingApplesManager : MonoBehaviour
         {
             // --- DIFFICULTY LOGIC ---
             // Calculate progress (0.0 to 1.0)
-            float progress = Mathf.Clamp01(timeElapsed / 60f);
+            float progress = Mathf.Clamp01(timeElapsed / 25f);
 
             // Ease In curve
             float curvedProgress = progress * progress;

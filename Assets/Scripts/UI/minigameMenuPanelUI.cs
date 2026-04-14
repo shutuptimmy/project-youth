@@ -11,8 +11,9 @@ public class minigameMenuPanelUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerHighscoreText;
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private AudioClip btnSFX;
 
-    public void activateMenu(string titleText, string displayText, string playerHighscoreText, UnityAction StartAction, string startText, UnityAction QuitAction, bool showQuit)
+    public void activateMenu(string titleText, string displayText, string playerHighscoreText, UnityAction StartAction, string startText, UnityAction QuitAction, string quitText)
     {
         this.gameObject.SetActive(true);
 
@@ -21,8 +22,7 @@ public class minigameMenuPanelUI : MonoBehaviour
         this.playerHighscoreText.text = playerHighscoreText;
 
         startButton.GetComponentInChildren<TextMeshProUGUI>().text = startText;
-
-        quitButton.gameObject.SetActive(showQuit);
+        quitButton.GetComponentInChildren<TextMeshProUGUI>().text = quitText;
 
         startButton.onClick.RemoveAllListeners();
         quitButton.onClick.RemoveAllListeners();
@@ -41,6 +41,7 @@ public class minigameMenuPanelUI : MonoBehaviour
 
     void deactivateMenu()
     {
+        soundFXManager.instance.playSoundClip(btnSFX, this.transform, 1f);
         this.gameObject.SetActive(false);
     }
 }

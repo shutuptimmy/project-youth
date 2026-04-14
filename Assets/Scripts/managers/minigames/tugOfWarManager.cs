@@ -5,30 +5,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class tugOfWarManager : MonoBehaviour
+public class tugOfWarManager : MinigameManagerBase
 {
-    [Header("Components")]
-    [SerializeField] private GameObject mainContentParent;
-    [SerializeField] private GameObject gameplayGameObject;
-    [SerializeField] private TextMeshProUGUI timerText;
+    [Header("Additional Components")]
     [SerializeField] private Button[] choiceButtons;
     [SerializeField] private rope rope;
     [SerializeField] private PlayerController minigamePlayer;
     [SerializeField] private Slider gaugeBar;
+    [SerializeField] private AudioClip pullSFX;
+    [SerializeField] private AudioClip powerUpSFX;
+    [SerializeField] private AudioClip correctSFX;
+    [SerializeField] private AudioClip wrongSFX;
 
     [Header("Quest Step")]
     [SerializeField] private tugOfWarQuestStep tugOfWarQuestStep;
-    private bool isQuestStepPresent;
-
-    [Header("Menu Panel")]
-    // The UI must be disabled in the inspector to blend in with the crossfade
-    [SerializeField] private minigameMenuPanelUI minigameMenuPanelUI;
 
     [Header("Choices Btns")]
-    // public Question[] questions;
-    // private List<Question> availableQuestions;
-    // private Question currentQuestion;
-
     [SerializeField] private string[] rightAnswerPool;
     [SerializeField] private string[] wrongAnswerPool;
     private List<string> availableAnswers;
@@ -44,56 +36,13 @@ public class tugOfWarManager : MonoBehaviour
 
     private float correctStreak;
     private float timeElapsed;
-    private bool isGameActive = false;
     private bool isQuestionActive = false;
     private bool isPowerUpActivated = false;
-    private bool playerHasWon = false;
 
     // Hide the minigame before the crossfade
-    IEnumerator Start()
+    public override void StartQuestStatus()
     {
-        mainContentParent.SetActive(false);
-        gameplayGameObject.SetActive(false);
-        gameEventsManager.instance.sceneEvents.startMinigame();
-
-        yield return new WaitForSeconds(1f);
-
-        isQuestStepPresent = tugOfWarQuestStep == null;
-        Debug.Log("Quest Step Status: " + tugOfWarQuestStep);
-
-        showStartMenu();
-    }
-
-    void showStartMenu()
-    {
-        gameplayGameObject.SetActive(true);
-        mainContentParent.SetActive(false);
-
-        minigameMenuPanelUI.activateMenu(
-            "Tug of War",
-            "Choose answers that are related to contact force to pull the rope to your side!",
-            "Best Time: ", // + GetHighScore()
-            () => startMinigame(),
-            "Start",
-            () => quitMinigameButton(),
-            isQuestStepPresent
-        );
-    }
-
-    void ShowResultMenu(string title, string status)
-    {
-        bool showQuit = isQuestStepPresent || playerHasWon;
-        mainContentParent.SetActive(false);
-
-        minigameMenuPanelUI.activateMenu(
-            title,
-            status,
-            title == "VICTORY!" ? "Time Record: " + Mathf.FloorToInt(timeElapsed) + "s" : "",
-            () => startMinigame(),
-            "Retry",
-            () => quitMinigameButton(),
-            showQuit
-        );
+        isQuestStepPresent = tugOfWarQuestStep != null;
     }
 
     private void Update()
@@ -106,10 +55,34 @@ public class tugOfWarManager : MonoBehaviour
         }
     }
 
-    public void startMinigame()
+    public override void ShowStartMenu()
     {
-        mainContentParent.SetActive(true);
+        minigameMenuPanelUI.activateMenu(
+            "Tug of War",
+            "Choose answers that are related to Contact Force to pull the rope to your side!",
+            "Best Time: ", // + GetHighScore()
+            () => StartMinigameBase(),
+            "Start",
+            () => QuitMinigameBtn(),
+            "Exit Minigame"
+        );
+    }
 
+    public override void ShowResultMenu(string title, string status)
+    {
+        minigameMenuPanelUI.activateMenu(
+            title,
+            status,
+            title == "VICTORY!" ? "Time Record: " + Mathf.FloorToInt(timeElapsed) + "s" : "",
+            () => StartMenuBase(),
+            "Retry",
+            () => QuitMinigameBtn(),
+            (playerHasWon && isQuestStepPresent)? "Complete Quest" : "Exit Minigame"
+        );
+    }
+
+    public override void StartMinigame()
+    {
         // reset game state when retry
         timeElapsed = 0f;
         rope.currentRopeValue = 0f;
@@ -119,49 +92,26 @@ public class tugOfWarManager : MonoBehaviour
 
         // TODO: Make the player and npc walk to look like they're pulling the rope
         minigamePlayer.setAnimation(0);
-        // npcObject.setAnimation(0);
-        gameEventsManager.instance.playerEvents.DisablePlayerMovement();
 
         setAnswerBoxes();
         StartCoroutine(AIAutoPull());
     }
 
-    IEnumerator quitMinigame()
+    public override void QuitMinigame()
     {
-        Debug.Log("suceess");
-        gameEventsManager.instance.sceneEvents.quitMinigame();
-        yield return new WaitForSeconds(1f);
-
-        gameEventsManager.instance.playerEvents.EnablePlayerMovement();
-
-
-        tugOfWarQuestStep?.playerWon();
-
-        Destroy(gameObject);
+        tugOfWarQuestStep?.playerWon(playerHasWon);
     }
 
-    public void quitMinigameButton()
-    {
-        StartCoroutine(quitMinigame());
-    }
-
-    void minigameComplete(bool playerWon)
+    public override void MinigameComplete(bool playerWon)
     {
         minigamePlayer.setAnimation(1);
 
-        isGameActive = false;
         isQuestionActive = false;
         StopCoroutine(AIAutoPull());
         availableAnswers.Clear();
 
-        mainContentParent.SetActive(false);
-
-        if (playerWon)
-        {
-            playerHasWon = true;
-            ShowResultMenu("VICTORY!", "You pulled the rope to your side!");
-        }
-        else ShowResultMenu("DEFEAT!", "Your rival overpowered you. Try again!");
+        if (playerWon) ResultMenuBase("VICTORY!", "You pulled the rope to your side!");
+        else ResultMenuBase("DEFEAT!", "Your rival overpowered you. Try again!");
     }
 
     void setAnswerBoxes()
@@ -252,8 +202,15 @@ public class tugOfWarManager : MonoBehaviour
 
     IEnumerator showFeedbackAndNext(bool isCorrect, int selectedBtn)
     {
-        isQuestionActive = false; // pause the gameplay
         ropePull(isCorrect);
+
+        if (isCorrect)
+        {
+            isQuestionActive = false; // pause the gameplay to review. Ignore pause when wrong answer
+            soundFXManager.instance.playSoundClip(correctSFX, this.transform, 1f);
+            soundFXManager.instance.playSoundClip(pullSFX, this.transform, 1f);
+        }
+        else soundFXManager.instance.playSoundClip(wrongSFX, this.transform, 1f);
 
         // Loop using index to access both Arrays easily
         for (int i = 0; i < choiceButtons.Length; i++)
@@ -279,7 +236,7 @@ public class tugOfWarManager : MonoBehaviour
 
     void ropePull(bool playerCorrect)
     {
-        int direction = playerCorrect ? -1 : 0;
+        int direction = playerCorrect ? -1 : 1;
         if (playerCorrect) correctStreak++;
         else correctStreak = 0f;
 
@@ -294,7 +251,7 @@ public class tugOfWarManager : MonoBehaviour
     {
         while (isGameActive)
         {
-            float AIPullSeconds = Random.Range(.5f, 1f);
+            float AIPullSeconds = Random.Range(.8f, 1.3f);
             yield return new WaitForSeconds(AIPullSeconds);
             if (isQuestionActive && !isPowerUpActivated)
             {
@@ -321,6 +278,7 @@ public class tugOfWarManager : MonoBehaviour
         isPowerUpActivated = true;
         float timeStopRemaining = timeStopLength;
         Debug.Log("Power Up Activated");
+        soundFXManager.instance.playSoundClip(powerUpSFX, this.transform, 1f);
 
         while (timeStopRemaining >= 0f)
         {
@@ -338,8 +296,8 @@ public class tugOfWarManager : MonoBehaviour
     {
         float value = rope.currentRopeValue;
 
-        if (value <= -maxRopeDistance) minigameComplete(true);
-        else if (value >= maxRopeDistance) minigameComplete(false);
+        if (value <= -maxRopeDistance) MinigameCompleteBase(true);
+        else if (value >= maxRopeDistance) MinigameCompleteBase(false);
     }
 
     // Helper to shuffle the list of sprites

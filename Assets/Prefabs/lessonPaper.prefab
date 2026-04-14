@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableVisualCue: {fileID: 6322997710231424504}
-  paperId: introForce
   lessonInfo: {fileID: 11400000, guid: 839551580b918d66ca67c8acb9a225a8, type: 2}
+  pickUpSFX: {fileID: 8300000, guid: 678844ee03e4b74cf95e76cfa54fe293, type: 3}
 --- !u!61 &6641192381822940290
 BoxCollider2D:
   m_ObjectHideFlags: 0

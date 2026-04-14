@@ -929,11 +929,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainContentParent: {fileID: 2093017873628539796}
-  timerText: {fileID: 2093017874878745740}
   gameplayGameObject: {fileID: 2093017874288552652}
+  timerText: {fileID: 2093017874878745740}
+  minigameMenuPanelUI: {fileID: 7191828385947718122}
+  winSFX: {fileID: 8300000, guid: 9a11312e1ca373b42a6338aab01b87d0, type: 3}
+  loseSFX: {fileID: 8300000, guid: 59b2984804ec76417bf2f51cb0adc532, type: 3}
   minigamePlayer: {fileID: 5898538025339372291}
   gravitationalResearchQuestStep: {fileID: 0}
-  minigameMenuPanelUI: {fileID: 7191828385947718122}
   heartImages:
   - {fileID: 2093017873571428485}
   - {fileID: 2093017874503447604}
@@ -1211,6 +1213,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2093017874288552653}
     m_Modifications:
+    - target: {fileID: 5534983038983430648, guid: d266ba09dd3cea911994937947c80b11,
+        type: 3}
+      propertyPath: hitSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: c9c34dd8b11e3c8dfaa748c370777338, type: 3}
+    - target: {fileID: 5534983038983430648, guid: d266ba09dd3cea911994937947c80b11,
+        type: 3}
+      propertyPath: dashSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 13cc3e3f3b617fdef8b597e2ef6fbb06, type: 3}
     - target: {fileID: 5534983038983430648, guid: d266ba09dd3cea911994937947c80b11,
         type: 3}
       propertyPath: dashSpeed

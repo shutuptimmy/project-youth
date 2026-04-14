@@ -83,7 +83,7 @@ SpriteRenderer:
   m_Size: {x: 0.15, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &8445423815514303546
@@ -121,6 +121,8 @@ MonoBehaviour:
   questIcon: {fileID: 8445423815609345203}
   startPoint: 1
   finishPoint: 1
+  aftermathQuestInfo: {fileID: 11400000, guid: d3480cd3274415f0ba9791b0eb132bce, type: 2}
+  isShowOnAftermath: 0
 --- !u!1 &8445423815609345213
 GameObject:
   m_ObjectHideFlags: 0

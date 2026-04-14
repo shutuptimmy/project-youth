@@ -13,14 +13,19 @@ INCLUDE chapter1/quests/aftermathQuest.ink
 EXTERNAL startQuest(questId)
 EXTERNAL advanceQuest(questId)
 EXTERNAL finishQuest(questId)
+EXTERNAL finishDay(questId)
 EXTERNAL expGained(exp)
 EXTERNAL itemReward(itemId)
 
 VAR playerName = ""
 VAR guideNote = false
 
-=== doorLocked ===
-... Locked. #name:You #char:you
+=== npc1 ===
+Yo, bruh. #name:Classmate #char:default
+-> END
+
+=== npc2 ===
+If you need anything, talk to my boss next to the stairs. #name:Classmate #char:default
 -> END
 
 === computer ===

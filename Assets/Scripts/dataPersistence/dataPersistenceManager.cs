@@ -15,7 +15,7 @@ public class dataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> dataPersistenceObjects;
     private fileDataHandler dataHandler;
     private string selectedProfileId = "";
-    private float playerPlayTime;
+    // private float playerPlayTime;
 
     public static dataPersistenceManager instance { get; private set; }
 
@@ -53,19 +53,19 @@ public class dataPersistenceManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void Update()
-    {
-        if (gameData != null && Time.timeScale > 0)
-        {
-            playerPlayTime += Time.deltaTime;
+    // void Update()
+    // {
+    //     if (gameData != null && Time.timeScale > 0)
+    //     {
+    //         playerPlayTime += Time.deltaTime;
 
-            if (playerPlayTime >= 1f)
-            {
-                gameData.playTime += 1;
-                playerPlayTime -= 1f;
-            }
-        }
-    }
+    //         if (playerPlayTime >= 1f)
+    //         {
+    //             gameData.playTime += 1;
+    //             playerPlayTime -= 1f;
+    //         }
+    //     }
+    // }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -78,7 +78,7 @@ public class dataPersistenceManager : MonoBehaviour
     {
         Debug.Log("Minigame Data loaded");
         this.dataPersistenceObjects = findAllDataPersistenceObjects();
-        loadGame();        
+        loadGame();
     }
 
     public void changeSelectedProfileId(string newProfileId)

@@ -6,6 +6,7 @@ public class lessonPaper : InteractableBase, IDataPersistence
 {
     [Header("Components")]
     [SerializeField] private lessonInfoSO lessonInfo;
+    [SerializeField] private AudioClip pickUpSFX;
     private string paperId;
     private SpriteRenderer sprite;
     private BoxCollider2D boxCollider;
@@ -59,6 +60,7 @@ public class lessonPaper : InteractableBase, IDataPersistence
         {
             return;
         }
+        soundFXManager.instance.playSoundClip(pickUpSFX, this.transform, 1f);
         gameEventsManager.instance.miscEvents.showLessonPanel(lessonInfo);
         gameEventsManager.instance.miscEvents.questReward(paperId + "_READ");
         Destroy(this.gameObject);

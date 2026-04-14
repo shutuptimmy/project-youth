@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     [SerializeField] private float dashSpeed;
     [SerializeField] private float dashDuration;
     [SerializeField] private float dashCooldown;
+    [SerializeField] private AudioClip dashSFX;
+    [SerializeField] private AudioClip hitSFX;
     private bool isDashing = false;
     private bool canDash = true;
     private bool isInvincible = false;
@@ -140,7 +142,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         canDash = false;
         isDashing = true;
-
+        soundFXManager.instance.playSoundClip(dashSFX, this.transform, 1f);
         // apples go through the player's head while dashing instead of hiding it
         gameObject.layer = LayerMask.NameToLayer("playerInvincible");
         isInvincible = true;
@@ -190,6 +192,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         {
             if (!isInvincible)
             {
+                soundFXManager.instance.playSoundClip(hitSFX, this.transform, 1f);
                 gameEventsManager.instance.playerEvents.playerTookDamage();
                 StartCoroutine(InvincibilityRoutine());
             }

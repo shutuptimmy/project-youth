@@ -2013,16 +2013,21 @@ MonoBehaviour:
   mainContentParent: {fileID: 7656976965241994342}
   gameplayGameObject: {fileID: 7656976964962989376}
   timerText: {fileID: 7656976965701608178}
+  minigameMenuPanelUI: {fileID: 834320431314251564}
+  winSFX: {fileID: 8300000, guid: 9a11312e1ca373b42a6338aab01b87d0, type: 3}
+  loseSFX: {fileID: 8300000, guid: 59b2984804ec76417bf2f51cb0adc532, type: 3}
   choiceButtons:
   - {fileID: 1337657457}
   - {fileID: 526024193}
   - {fileID: 1812006624}
   rope: {fileID: 7656976965682356638}
   minigamePlayer: {fileID: 7656976964704724873}
-  npcObject: {fileID: 0}
   gaugeBar: {fileID: 6624162127222808927}
+  pullSFX: {fileID: 8300000, guid: 13cc3e3f3b617fdef8b597e2ef6fbb06, type: 3}
+  powerUpSFX: {fileID: 8300000, guid: 5eb333e4ccfaa9bb79126fd7b10bb721, type: 3}
+  correctSFX: {fileID: 8300000, guid: 2ad4045c90e7acbaeb80cf762f798c8a, type: 3}
+  wrongSFX: {fileID: 8300000, guid: 4577c97745aaf8581acac063283b43ef, type: 3}
   tugOfWarQuestStep: {fileID: 0}
-  minigameMenuPanelUI: {fileID: 834320431314251564}
   rightAnswerPool:
   - Hitting a Ball with Bat
   - Pulling a Zipper
@@ -2572,6 +2577,8 @@ MonoBehaviour:
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
+  dashSFX: {fileID: 0}
+  hitSFX: {fileID: 0}
   rivalAnimator: {fileID: 1033251454535113131}
 --- !u!95 &7656976965848559577
 Animator:

@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class spaceQuestStep : questStep
+﻿public class spaceQuestStep : questStep
 {
-    public void playerWon()
+    public void playerWon(bool resultCheck)
     {
-        finishQuestStep();
+        finishQuestStep(resultCheck);
     }
 }

@@ -29,6 +29,7 @@ public class questManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.questEvents.onStartQuest += startQuest;
         gameEventsManager.instance.questEvents.onAdvanceQuest += advanceQuest;
         gameEventsManager.instance.questEvents.onFinishQuest += finishQuest;
+        gameEventsManager.instance.questEvents.onRevertQuest += revertQuest;
         gameEventsManager.instance.questEvents.onQuestStepStateChange += questStepStateChange;
 
         gameEventsManager.instance.playerEvents.onPlayerLevelChange += playerLevelChanged;
@@ -39,6 +40,7 @@ public class questManager : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.questEvents.onStartQuest -= startQuest;
         gameEventsManager.instance.questEvents.onAdvanceQuest -= advanceQuest;
         gameEventsManager.instance.questEvents.onFinishQuest -= finishQuest;
+        gameEventsManager.instance.questEvents.onRevertQuest -= revertQuest;
         gameEventsManager.instance.questEvents.onQuestStepStateChange -= questStepStateChange;
         gameEventsManager.instance.playerEvents.onPlayerLevelChange -= playerLevelChanged;
     }
@@ -122,6 +124,7 @@ public class questManager : MonoBehaviour, IDataPersistence
         quest quest = getQuestById(id);
         claimRewards(quest);
         changeQuestState(quest.info.id, questState.FINISHED);
+        dataPersistenceManager.instance.saveGame();
     }
 
     private void revertQuest(string id)

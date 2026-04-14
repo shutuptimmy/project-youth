@@ -15,15 +15,9 @@ MonoBehaviour:
   lessonId: contentVocab
   lessonTitle: Content Vocabulary
   lessonImage: {fileID: 0}
-  lessonDesc: 'Force - A push and pull that can cause an object to change its speed,
-    direction, and shape.
-
-    Contact Force - Forces that are equal in strength
-    and opposite in direction, resulting in no net force on an object.
-
-    Non-Contact
+  lessonDesc: "    Force - A push and pull that can cause an object to change its
+    speed, direction, and shape.\n    Contact Force - Forces that are equal in strength
+    and opposite in direction, resulting in no net force on an object.\n    Non-Contact
     Force - Forces that act on an object without physical contact, such as gravity
-    or magnetism.
-
-    Balanced Force - Forces that act on an object through direct
-    physical contact, such as friction or normal force.'
+    or magnetism.\n    Balanced Force - Forces that act on an object through direct
+    physical contact, such as friction or normal force."

@@ -180,12 +180,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainContentParent: {fileID: 3882905897941763688}
-  scoreText: {fileID: 7864702782616470840}
-  timerText: {fileID: 3882905896382502471}
   gameplayGameObject: {fileID: 3882905896698698461}
-  minigamePlayer: {fileID: 8733306410736839395}
-  helpingHandQuestStep: {fileID: 0}
+  timerText: {fileID: 3882905896382502471}
   minigameMenuPanelUI: {fileID: 2710083993890549642}
+  winSFX: {fileID: 8300000, guid: 9a11312e1ca373b42a6338aab01b87d0, type: 3}
+  loseSFX: {fileID: 8300000, guid: 59b2984804ec76417bf2f51cb0adc532, type: 3}
+  scoreText: {fileID: 7864702782616470840}
+  minigamePlayer: {fileID: 8733306410736839395}
+  correctSFX: {fileID: 8300000, guid: 5eb333e4ccfaa9bb79126fd7b10bb721, type: 3}
+  wrongSFX: {fileID: 8300000, guid: 4577c97745aaf8581acac063283b43ef, type: 3}
+  helpingHandQuestStep: {fileID: 0}
   boxesParent: {fileID: 3882905896355175582}
   boxInfoPanel: {fileID: 3882905897029340922}
   boxNameText: {fileID: 3882905897897817510}
@@ -5232,7 +5236,7 @@ SpriteRenderer:
   m_Size: {x: 0.15, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &8733306410736839393
@@ -5294,11 +5298,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c1fd937a1c4570283488fa6a8bfcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPartOfMinigame: 0
   fallingApplesManager: {fileID: 0}
   dashTrail: {fileID: 0}
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
+  dashSFX: {fileID: 0}
+  hitSFX: {fileID: 0}
+  rivalAnimator: {fileID: 0}
 --- !u!95 &3882905897092072610
 Animator:
   serializedVersion: 3

@@ -17,7 +17,7 @@ VAR tugOfWarState = "REQ_NOT_MET"
 = reqNotMet
 {preTestTimeState:
 	- "FINISHED":
-		Hey, Weasel? #name:You #char:you
+		Hey, Wallace? #name:You #char:you
 		Ha? #name:Wallace #char:wallace
 		Erm.. The teacher said you have a paper from our previous lesson. Can I.. have it? #name:You #char:you
 		Pfft, hahahah! Like hell i'm givin' this that easy! Now scram! #name:Wallace #char:wallace
@@ -53,7 +53,15 @@ Ugh, fine. As promised.
 -> END
 
 = finished
-To be honest, that note I gave ya was from Harry's. #name:Wallace #char:wallace
-Too lazy to write your own? #name:You #char:you
-Sybau. He owed me a favor so now we're even. #name:Wallace #char:wallace
--> END
+{aftermathState:
+	- "IN_PROGRESS":
+		The fresh feeling of sunset before ending the day. #name:Wallace #char:wallace
+		(I don't know if he can help me with my studies later on.) #name:You #char:you
+		-> END
+
+	- else:
+		To be honest, that note I gave ya was from Harry's. #name:Wallace #char:wallace
+		Too lazy to write your own? #name:You #char:you
+		Shut up. #name:Wallace #char:wallace
+		-> END
+}

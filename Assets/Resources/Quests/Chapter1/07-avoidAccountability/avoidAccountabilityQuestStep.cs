@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-
-public class avoidAccountabilityQuestStep : questStep
+﻿public class avoidAccountabilityQuestStep : questStep
 {
-    public void playerWon()
+    public void playerWon(bool resultCheck)
     {
-        Debug.Log("executing");
-        finishQuestStep();
+        finishQuestStep(resultCheck);
     }
 }

@@ -26,4 +26,11 @@ public class sceneEvents
     {
         onQuitMinigame?.Invoke();
     }
+
+    public event Action<string> onFinishDay;
+    public void finishDay(string id)
+    {
+        onFinishDay?.Invoke(id);
+    }
+
 }

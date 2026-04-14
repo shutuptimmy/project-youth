@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HUDUI : MonoBehaviour
 {
-    [SerializeField] private GameObject contentParent;
+    [SerializeField] private CanvasGroup contentCanvasGroup;
 
     void OnEnable()
     {
@@ -25,7 +25,17 @@ public class HUDUI : MonoBehaviour
     {
         inputEventContext currentContext = gameEventsManager.instance.inputEvents.inputEventContext;
         
-        if (currentContext.Equals(inputEventContext.DEFAULT)) contentParent.SetActive(false);
-        else contentParent.SetActive(true);
+        if (currentContext.Equals(inputEventContext.DEFAULT))
+        {
+            contentCanvasGroup.alpha = 0f;
+            contentCanvasGroup.blocksRaycasts = false;
+            contentCanvasGroup.interactable = false;
+        }
+        else 
+        {
+            contentCanvasGroup.alpha = 1f;
+            contentCanvasGroup.blocksRaycasts = true;
+            contentCanvasGroup.interactable = true;
+        }
     }
 }

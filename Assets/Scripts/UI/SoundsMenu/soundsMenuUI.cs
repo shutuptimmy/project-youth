@@ -10,6 +10,10 @@ public class soundsMenuUI : MonoBehaviour
 
     void Start()
     {
+        masterSlider.value = PlayerPrefs.GetFloat("masterVolume", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 0.75f);
+        soundFXSlider.value = PlayerPrefs.GetFloat("soundFXVolume", 0.75f);
+
         masterSlider.onValueChanged.RemoveAllListeners();
         masterSlider.onValueChanged.AddListener(soundMixerManager.instance.setMasterVolume);
 
@@ -28,6 +32,7 @@ public class soundsMenuUI : MonoBehaviour
     public void deactivateMenu()
     {
         contentParent.SetActive(false);
+        soundMixerManager.instance.SaveVolumeSettings();
     }
 
 

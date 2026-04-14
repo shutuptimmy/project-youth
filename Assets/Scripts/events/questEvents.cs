@@ -20,6 +20,12 @@ public class questEvents
         onFinishQuest?.Invoke(id);
     }
 
+    public event Action<string> onRevertQuest;
+    public void revertQuest(string id)
+    {
+        onRevertQuest?.Invoke(id);
+    }
+
     public event Action<quest> onQuestStateChange;
     public void questStateChange(quest quest)
     {
