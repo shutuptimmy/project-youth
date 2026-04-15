@@ -77,7 +77,11 @@ public class backToEarthManager : MinigameManagerBase
 
     public override void MinigameComplete(bool resultCheck)
     {
-        if (resultCheck) ResultMenuBase("Mission Accomplished!", "You have returned home safely.");
+        if (resultCheck)
+        {
+            playerHasWon = true;
+            ResultMenuBase("Mission Accomplished!", "You have returned home safely.");
+        }
         else ResultMenuBase("You Crashed!", "Try again.");
     }
 

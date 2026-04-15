@@ -106,7 +106,11 @@ public class fallingApplesManager : MinigameManagerBase
     {
         StopCoroutine(SpawnerRoutine());
 
-        if (resultCheck) ResultMenuBase("Game completed!", "You won!");
+        if (resultCheck)
+        {
+            playerHasWon = true;
+            ResultMenuBase("Game completed!", "You won!");
+        }
         else ResultMenuBase("You Lost!", "Try again!");
     }
 

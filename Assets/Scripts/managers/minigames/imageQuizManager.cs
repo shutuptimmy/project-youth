@@ -163,7 +163,7 @@ public class imageQuizManager : MonoBehaviour
 
         isGameActive = false;
         isQuestionActive = false;
-        playerHasWon = playerWon;
+        // playerHasWon = playerWon;
         availableQuestions.Clear();
 
         mainContentParent.SetActive(false);
@@ -173,6 +173,7 @@ public class imageQuizManager : MonoBehaviour
 
         if (playerWon)
         {
+            playerHasWon = true;
             soundFXManager.instance.playSoundClip(winSFX, this.transform, 1f);
             ShowResultMenu("You have Passed!", "You aced the test!");
         }

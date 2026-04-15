@@ -120,7 +120,11 @@ public class sortingBoxesManager : MinigameManagerBase
 
     public override void MinigameComplete(bool playerWon)
     {
-        if (playerWon) ResultMenuBase("All boxes cleared!", "You won!");
+        if (playerWon)
+        {
+            playerHasWon = true;
+            ResultMenuBase("All boxes cleared!", "You won!");
+        }
         else ResultMenuBase("You Lost!", "Try again!");
     }
 

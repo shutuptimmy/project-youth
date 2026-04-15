@@ -150,7 +150,11 @@ public class fragileDeskManager : MinigameManagerBase
 
     public override void MinigameComplete(bool playerWon)
     {
-        if (playerWon) ResultMenuBase("Good Job!", "Nobody knows the difference.");
+        if (playerWon)
+        {
+            playerHasWon = true;
+            ResultMenuBase("Good Job!", "Nobody knows the difference.");
+        }
         else ResultMenuBase("You Failed!", desk.isBroken ? "The desk collapsed!" : "Time ran out!");
     }
 

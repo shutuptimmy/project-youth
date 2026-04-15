@@ -110,7 +110,11 @@ public class tugOfWarManager : MinigameManagerBase
         StopCoroutine(AIAutoPull());
         availableAnswers.Clear();
 
-        if (playerWon) ResultMenuBase("VICTORY!", "You pulled the rope to your side!");
+        if (playerWon)
+        {
+            playerHasWon = true;
+            ResultMenuBase("VICTORY!", "You pulled the rope to your side!");
+        }
         else ResultMenuBase("DEFEAT!", "Your rival overpowered you. Try again!");
     }
 
