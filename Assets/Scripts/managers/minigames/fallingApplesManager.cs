@@ -27,10 +27,12 @@ public class fallingApplesManager : MinigameManagerBase
     [SerializeField] private float maxSpawnRate = 0.08f; // the lower the value, the faster it spawns over time
     [SerializeField] private float initialFallSpeed = 0.1f;
     [SerializeField] private float maxFallSpeed = 1f; // falls faster over time
+    [SerializeField] private AudioClip timeCompleteSFX;
 
     private int maxLives = 3;
     private int currentLives;
     private float timeElapsed;
+    private bool hasPassedTimeCompletion = false;
 
     // Hide the minigame before the crossfade
     public override void StartQuestStatus()
@@ -54,6 +56,13 @@ public class fallingApplesManager : MinigameManagerBase
         {
             timeElapsed += Time.deltaTime;
             timerText.text = Mathf.FloorToInt(timeElapsed).ToString() + "s";
+
+            if (timeElapsed >= timeCompletion && !hasPassedTimeCompletion)
+        {
+            hasPassedTimeCompletion = true;
+            soundFXManager.instance.playSoundClip(timeCompleteSFX, this.transform, 1f);
+            Debug.Log("Quest Requirement Met! Keep playing for high score!");
+        }
         }
     }
 
@@ -89,6 +98,7 @@ public class fallingApplesManager : MinigameManagerBase
     public override void StartMinigame()
     {
         // reset game state when retry
+        hasPassedTimeCompletion = false;
         currentLives = maxLives;
         timeElapsed = 0f;
         minigamePlayer.transform.position = new Vector2(0, -0.35f);
@@ -145,8 +155,8 @@ public class fallingApplesManager : MinigameManagerBase
 
     private void checkGameState()
     {
-        if (timeElapsed >= timeCompletion) MinigameCompleteBase(true);
-        else if (timeElapsed < timeCompletion) MinigameCompleteBase(false);
+        if (hasPassedTimeCompletion) MinigameCompleteBase(true);
+        else MinigameCompleteBase(false);
     }
 
     IEnumerator SpawnerRoutine()

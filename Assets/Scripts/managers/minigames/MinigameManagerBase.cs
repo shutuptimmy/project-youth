@@ -71,7 +71,11 @@ public abstract class MinigameManagerBase : MonoBehaviour
     {
         isGameActive = false;
 
-        // playerHasWon = playerWon;
+        if (playerWon) 
+        {
+            playerHasWon = true;
+        }
+
         gameEventsManager.instance.playerEvents.DisablePlayerMovement();
         mainContentParent.SetActive(false);
         

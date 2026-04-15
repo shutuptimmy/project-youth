@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.inputEvents.onSubmitPressed += performDash;
         gameEventsManager.instance.playerEvents.onDisablePlayerMovement += DisablePlayerMovement;
         gameEventsManager.instance.playerEvents.onEnablePlayerMovement += EnablePlayerMovement;
-        animator.SetInteger("gender", playerGender);
+        // animator.SetInteger("gender", playerGender);
     }
 
     private void OnDestroy()
@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     private void UpdateAnimations()
     {
+        animator.SetInteger("gender", playerGender);
+
         // handles sprite animation
         animator.SetFloat(horizontal, velocity.x);
         animator.SetFloat(vertical, velocity.y);
@@ -225,7 +227,13 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     {
         if (!isPartOfMinigame) this.transform.position = data.playerPosition;
         this.playerGender = data.playerGender;
-        Debug.Log("Player Data Loaded");
+
+        // if (animator != null)
+        // {
+        //     animator.SetInteger("gender", this.playerGender);
+        // }
+
+        Debug.Log($"Player Data Loaded. Gender set to: {(playerGender == 0 ? "Boy" : "Girl")}");
     }
 
     public void saveData(gameData data)

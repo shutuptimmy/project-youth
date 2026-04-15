@@ -950,6 +950,7 @@ MonoBehaviour:
   maxSpawnRate: 0.08
   initialFallSpeed: 0.1
   maxFallSpeed: 1
+  timeCompleteSFX: {fileID: 8300000, guid: 5eb333e4ccfaa9bb79126fd7b10bb721, type: 3}
 --- !u!1 &2093017874878745738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,8 +1273,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -8940373477665507674, guid: cd9341a42692275d7b22a92f337e541c,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5534983038983430650, guid: d266ba09dd3cea911994937947c80b11,
         type: 3}
       propertyPath: m_SortingLayer
