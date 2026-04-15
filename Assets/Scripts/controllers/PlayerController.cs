@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         gameEventsManager.instance.inputEvents.onSubmitPressed += performDash;
         gameEventsManager.instance.playerEvents.onDisablePlayerMovement += DisablePlayerMovement;
         gameEventsManager.instance.playerEvents.onEnablePlayerMovement += EnablePlayerMovement;
-        // animator.SetInteger("gender", playerGender);
+        animator.SetInteger("gender", playerGender);
     }
 
     private void OnDestroy()
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour, IDataPersistence
 
     private void UpdateAnimations()
     {
-        animator.SetInteger("gender", playerGender);
+        // animator.SetInteger("gender", playerGender);
 
         // handles sprite animation
         animator.SetFloat(horizontal, velocity.x);
