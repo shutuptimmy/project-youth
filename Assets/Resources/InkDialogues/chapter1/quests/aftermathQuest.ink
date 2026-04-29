@@ -15,7 +15,7 @@ VAR aftermathState = "REQ_NOT_MET"
 	}
 
 = canStart
-Finish the day and reflect all your studies?
+Is it time to wrap things up? When proceed, any unfinished quests would no longer be accessible.
     + [Yes]
         ~ startQuest(aftermathId)
 	~ itemReward("gameFinish")

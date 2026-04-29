@@ -16,7 +16,7 @@ VAR knowledgeTestState = "REQ_NOT_MET"
 	}
 
 = reqNotMet
-{preTestTimeState:
+{ preTestTimeState:
 	- "FINISHED": { guideNote: -> notReady | -> guideNoteDialogue }
 	- else:
 		{playerName}. Where were you yesterday? #name:Christopher #char:chris

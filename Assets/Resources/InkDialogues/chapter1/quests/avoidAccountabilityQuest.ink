@@ -15,25 +15,37 @@ VAR avoidAccountabilityState = "REQ_NOT_MET"
 	}
 
 = reqNotMet
-Hey. #name:You #char:you
-(Swings his hand uncontrollably) #name:Michael #char:default
-(His music can hear all the way here.) #name:You #char:you
--> END
+{ aftermathState == "IN_PROGRESS":
+	Oh man.. oh man oh man. #name:Michael #char:default
+	-> END
+- else:
+	Hey. #name:You #char:you
+	(Blasting Rock & Roll on his headphones) #name:Michael #char:default
+	His music can hear all the way here.. #name:You #char:you
+	-> END
+}
 
 = canStart
-Hey. Uh, do you have a minute? #name:Michael #char:default
-What's up? #name:You #char:you
-It's.. erm.. #name:Michael #char:default
-I made a grave mistake to the teacher's desk.
-What happened? #name:You #char:you
-While I was doing a schizo drum thing, I hit it too hard and the sound..... #name:Michael #char:default
-It may look fine, but it's about to break. Can you help me place her things back carefully?
-+ [I can help, but you have to do it on your own.]
-	Eh!? Uh.. alright.
-	~ startQuest(avoidAccountabilityId)
-+ [I think my hands are full]
-	Oh man..
-- -> END
+{ aftermathState == "IN_PROGRESS":
+	Oh man.. oh man oh man. #name:Michael #char:default
+	-> END
+- else:
+	Hey. Uh, do you have a minute? #name:Michael #char:default
+	What's up? #name:You #char:you
+	It's.. erm.. #name:Michael #char:default
+	I made a grave mistake to the teacher's desk.
+	What happened? #name:You #char:you
+	While I was doing a schizo drum thing, I hit it too hard and the sound..... #name:Michael #char:default
+	It may look fine, but it's about to break. Can you help me place her things back carefully?
+	+ [I can help, but you have to do it on yourself.]
+		Eh!? Uh.. alright.
+		~ startQuest(avoidAccountabilityId)
+		-> END
+	+ [I think my hands are full]
+		Oh man..
+		-> END
+}
+
 
 = inProgress
 I'm supposed to be in a minigame #name:You
@@ -41,12 +53,12 @@ I'm supposed to be in a minigame #name:You
 
 = canFinish
 Phew. I can't thank you enough, {playerName}. #name:Michael #char:default
-Don't mention it. (I'd still going to talk to the teacher regardless.) #name:You #char:you
+Don't mention it. (I'm still going to tell Teacher regardless.) #name:You #char:you
 ~ itemReward("deskBooks")
 ~ finishQuest(avoidAccountabilityId)
 -> END
 
 = finished
-(Swings his hand uncontrollably again) #name:Michael #char:default
+(Back to listening music like it never happened) #name:Michael #char:default
 This guy... #name:You #char:you
 -> END

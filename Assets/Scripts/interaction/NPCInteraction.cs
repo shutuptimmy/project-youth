@@ -14,13 +14,14 @@ public class NPCInteraction : InteractableBase, IDataPersistence
     [Header("Quest")]
     [SerializeField] private questInfoSO questInfoForPoint;
     [SerializeField] private questIcon questIcon;
-    [SerializeField] private bool isShowOnAftermath;
+    [SerializeField] private questInfoSO aftermathQuest;
+    private string questId;
+    private string aftermathQuestId;
 
     [Header("Config")]
     [SerializeField] private bool startPoint = true;
     [SerializeField] private bool finishPoint = true;
 
-    private string questId;
     private questState currentQuestState;
 
     protected override void Awake()
@@ -31,10 +32,8 @@ public class NPCInteraction : InteractableBase, IDataPersistence
         circleCollider = GetComponent<CircleCollider2D>();
 
         // Safety Check. Not all NPCs have quests.
-        if (questInfoForPoint != null)
-        {
-            questId = questInfoForPoint.id;
-        }
+        if (questInfoForPoint != null) questId = questInfoForPoint.id;
+        if (aftermathQuest != null) aftermathQuestId = aftermathQuest.id;
     }
 
     private void Reset()
@@ -96,6 +95,11 @@ public class NPCInteraction : InteractableBase, IDataPersistence
             questIcon.setState(currentQuestState, startPoint, finishPoint);
             Debug.Log("quest id: " + questId + " updated to state: " + currentQuestState);
         }
+
+        if (quest.info.id.Equals(aftermathQuestId) && quest.state.Equals(questState.IN_PROGRESS))
+        {
+            questIcon.gameObject.SetActive(false);
+        }
     }
 
     void rewardUnlocked(string id)
@@ -110,20 +114,21 @@ public class NPCInteraction : InteractableBase, IDataPersistence
 
     public void loadData(gameData data)
     {
+        // visibility check
         if (!string.IsNullOrEmpty(npcId))
         {
             bool isUnlocked = data.unlockedRewardIds.Contains(npcId);
             SetVisualsActive(isUnlocked);
         }
-        else
-        {
-            // Standard NPC: Always visible
-            SetVisualsActive(true);
-        }
+        // if ordinary NPC, always visible
+        else SetVisualsActive(true);
 
+        // quest status check
         if (!string.IsNullOrEmpty(questId))
         {
             quest quest = questManager.instance.getQuestById(questId);
+            quest aftermathQuest = questManager.instance.getQuestById(aftermathQuestId);
+            Debug.Log($"aftermath quest state: {aftermathQuest}");
 
             // skip if quest not present
             if (quest != null)
@@ -135,6 +140,11 @@ public class NPCInteraction : InteractableBase, IDataPersistence
                     // Force the icon to update right now
                     questIcon.setState(currentQuestState, startPoint, finishPoint);
                 }
+            }
+
+            if (aftermathQuest != null && aftermathQuest.state == questState.IN_PROGRESS)
+            {
+                questIcon.gameObject.SetActive(false);                
             }
         }
     }
