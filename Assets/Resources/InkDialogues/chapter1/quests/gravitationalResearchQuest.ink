@@ -17,7 +17,7 @@ VAR gravitationalResearchState = "REQ_NOT_MET"
 = reqNotMet
 {preTestTimeState:
 	- "FINISHED":
-		Hey, April. I was hoping if I can copy your notes that I've missed yesterday. #name:You #char:you
+		Hey, April. I'm hoping if I can copy your notes that I've missed yesterday. #name:You #char:you
 		... #name:April #char:april
 		..April? *Pokes her* #name:You #char:you
 		Wha- huh? Oh, {playerName}. I'm currently reading my notes. Come back later. #name:April #char:april
@@ -31,6 +31,11 @@ VAR gravitationalResearchState = "REQ_NOT_MET"
 }
 
 = canStart
+{ aftermathState == "IN_PROGRESS":
+	That's all for today. I'll see you tomorrow, {playerName}. #name:April #char:april
+	-> END
+
+- else:
 	Hey, April. Can you help me with something? #name:You #char:you
 	I heard everything. #name:April #char:april
 	You do? #name:You #char:you
@@ -39,9 +44,11 @@ VAR gravitationalResearchState = "REQ_NOT_MET"
 	+ [Sounds fair]
 		Great. Come with me at the rooftops.
 		~ startQuest(gravitationalResearchId)
+		-> END
 	+ [Let me think of it.]
 		If you made up your mind, come talk to me.
-- -> END
+		-> END
+}
 
 = inProgress
 Sumthin else's missin's before I go. #name:You
@@ -58,5 +65,22 @@ Sumthin else's missin's before I go. #name:You
 -> END
 
 = finished
-	Thanks again. Now, I have plenty of ideas to work with. #name:April #char:april
--> END
+{ aftermathState:
+	- "IN_PROGRESS":
+		{playerName}. You won't mind if I can hangout at your place? #name:April #char:april
+		Of course! Feel free to come along. #name:You #char:you
+		Excellent. For this, I can continue my experime- I mean research about this. #name:April #char:april
+		(Experiment? What is she planning..?) #name:You #char:you
+		-> END
+
+	- "FINISHED":
+		I came up some fascinating concepts of defying gravity. #name:April #char:april
+		Is that going to help us for tomorrow? #name:You #char:you
+		Maybe. Maybe not. This is more likely a part of my hobby rather than the exam. Unless.. huhu. #name:April #char:april
+		Don't even think about involving me into one of your shenanigans. #name:You #char:you
+		-> END	
+
+	- else:
+		Thanks again. Now, I have plenty of ideas to work with. #name:April #char:april
+		-> END
+}

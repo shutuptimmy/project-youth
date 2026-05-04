@@ -53,15 +53,29 @@ Ugh, fine. As promised.
 -> END
 
 = finished
-{aftermathState:
+{ aftermathState:
 	- "IN_PROGRESS":
-		The fresh feeling of sunset before ending the day. #name:Wallace #char:wallace
+		A fresh feeling of sunset before setting the day. #name:Wallace #char:wallace
 		(I don't know if he can help me with my studies later on.) #name:You #char:you
+		-> END
+
+	- "FINISHED":
+		Yo, {playerName}. How about a 1v1 match at yo computer? #name:Wallace #char:wallace
+		We're supposed to study for the exam. #name:You #char:you
+		Yeah yeah. We still have plenty of time to slack off so take it EZ. #name:Wallace #char:wallace
+		..Fine. Just one game. #name:You #char:you
+		Five. #name:Wallace #char:wallace
+		Two games. #name:You #char:you
+		Five. No less. #name:Wallace #char:wallace
+		Three and i'll shut the computer down. #name:You #char:you
+		I got a copy of Two Piece Vol. 64. #name:Wallace #char:wallace
+		You- I.. ugh fine. #name:You #char:you
+		Hahah! That's the spirit! #name:Wallace #char:wallace
 		-> END
 
 	- else:
 		To be honest, that note I gave ya was from Harry's. #name:Wallace #char:wallace
 		Too lazy to write your own? #name:You #char:you
-		Shut up. #name:Wallace #char:wallace
+		Very funny, smarty pants. #name:Wallace #char:wallace
 		-> END
 }

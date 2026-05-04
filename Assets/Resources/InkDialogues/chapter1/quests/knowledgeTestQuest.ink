@@ -59,15 +59,21 @@ Each NPC has its own level and quest requirements. Check the quest log at the to
 = finished
 {aftermathState:
 	- "IN_PROGRESS":
-		Got everything you need?
+		Got everything you need? #name:Christopher #char:chris
 		+ [Yep. Let's head to my appartment]
 			~finishDay(randId)
 			-> END
 		+ [Hang on]
 			-> END
 
+	- "FINISHED":
+		I appreciated that you invited me over, {playerName}. Know that I would have less problem in here compare to where I live. #name:Christopher #char:chris
+		Anytime. The note you gave me is handful and all. #name:You #char:you
+		And we can write more if we study sooner than later. #name:Christopher #char:chris
+		-> END
+
 	- else:
-		Go talk to anyone to know more about the lessons before settling today. #name:Christopher #char:chris
+		Go talk to anyone to know more about the lessons before finishing today. #name:Christopher #char:chris
 		-> END
 }
 

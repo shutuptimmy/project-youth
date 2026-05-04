@@ -224,6 +224,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8445423815514303546, guid: dcbfeb6983c3184759a677ee85981bf0,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 8445423815514303547, guid: dcbfeb6983c3184759a677ee85981bf0,
         type: 3}
       propertyPath: m_Sprite
@@ -385,7 +390,7 @@ MonoBehaviour:
   dialogueKnotName: npc2
   questInfoForPoint: {fileID: 0}
   questIcon: {fileID: 0}
-  isShowOnAftermath: 0
+  aftermathQuest: {fileID: 0}
   startPoint: 0
   finishPoint: 0
 --- !u!58 &457980829

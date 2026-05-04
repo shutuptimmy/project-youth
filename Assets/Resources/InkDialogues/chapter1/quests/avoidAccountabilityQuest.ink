@@ -20,7 +20,7 @@ VAR avoidAccountabilityState = "REQ_NOT_MET"
 	-> END
 - else:
 	Hey. #name:You #char:you
-	(Blasting Rock & Roll on his headphones) #name:Michael #char:default
+	(Blasting Rock & Roll in his headphones) #name:Michael #char:default
 	His music can hear all the way here.. #name:You #char:you
 	-> END
 }
@@ -35,8 +35,8 @@ VAR avoidAccountabilityState = "REQ_NOT_MET"
 	It's.. erm.. #name:Michael #char:default
 	I made a grave mistake to the teacher's desk.
 	What happened? #name:You #char:you
-	While I was doing a schizo drum thing, I hit it too hard and the sound..... #name:Michael #char:default
-	It may look fine, but it's about to break. Can you help me place her things back carefully?
+	While I was tapping the desk like a drum, I hit it too hard and the sound... well.. not so good. #name:Michael #char:default
+	It may look fine, but it's legs are about to break. Can you help me place her things back carefully?
 	+ [I can help, but you have to do it on yourself.]
 		Eh!? Uh.. alright.
 		~ startQuest(avoidAccountabilityId)
@@ -59,6 +59,6 @@ Don't mention it. (I'm still going to tell Teacher regardless.) #name:You #char:
 -> END
 
 = finished
-(Back to listening music like it never happened) #name:Michael #char:default
+(Back to jamming music like it never happened) #name:Michael #char:default
 This guy... #name:You #char:you
 -> END

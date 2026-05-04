@@ -15,7 +15,7 @@ VAR aftermathState = "REQ_NOT_MET"
 	}
 
 = canStart
-Is it time to wrap things up? When proceed, any unfinished quests would no longer be accessible.
+Do you want to skip until the class ends? When proceed, any unfinished quests would no longer accessible.
     + [Yes]
         ~ startQuest(aftermathId)
 	~ itemReward("gameFinish")

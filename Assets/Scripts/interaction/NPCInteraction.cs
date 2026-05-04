@@ -144,7 +144,10 @@ public class NPCInteraction : InteractableBase, IDataPersistence
 
             if (aftermathQuest != null && aftermathQuest.state == questState.IN_PROGRESS)
             {
-                questIcon.gameObject.SetActive(false);                
+                if (questIcon != null)
+                {
+                    questIcon.gameObject.SetActive(false);                
+                }
             }
         }
     }
